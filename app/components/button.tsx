@@ -1,19 +1,25 @@
-const Button = ({ title, variant, children }) => {
-  let bgColor;
-  let textColor;
+interface Props {
+  title: string
+  variant?: string
+  children?: string
+}
+
+const Button = ({ title, variant, children }: Props) => {
+  let bgColor
+  let textColor
   if (
     variant === 'warning' ||
     variant === 'error' ||
     variant === 'success' ||
     variant === 'cancel'
   ) {
-    bgColor = `bg-${variant}`;
-    textColor = 'text-black';
-    console.log('correct type passed');
+    bgColor = `bg-${variant}`
+    textColor = 'text-black'
+    console.log('correct type passed')
   } else {
-    bgColor = 'bg-purple';
-    textColor = 'text-yellow';
-    console.log('incorrect or no type passed');
+    bgColor = 'bg-purple'
+    textColor = 'text-yellow'
+    console.log('incorrect or no type passed')
   }
 
   return (
@@ -24,7 +30,7 @@ const Button = ({ title, variant, children }) => {
         {title}
       </button>
     </>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button
