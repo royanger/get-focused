@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl  = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+   id             String   @id @default(uuid())
+   email          String   @unique
+   name           String
+   task           Task[]
+   wellness       Wellness[]
+   exercise       Exercise[]
+   productivity   Productivity[]
+   note           Note[]
+}
+
+model TaskStatus {
+   id       String   @id @default(uuid())
+   name     String
+   tasks    Task[]
+}
+
+model Task {
+   id          String      @id @default(uuid())
+   name        String
+   userId      String
+   user        User        @relation(fields: [userId], references:[id])
+   date        DateTime    @db.Date
+   goalTime    String
+   actualTime  String
+   timeTracker Int
+   statusId    String
+   status      TaskStatus  @relation(fields: [statusId], references:[id])
+}
+
+model Exercise {
+   id          String   @id @default(uuid())
+   userId      String
+   user        User     @relation(fields: [userId], references:[id])
+   completed   Boolean  @default(false)
+   date        DateTime @db.Date
+}
+
+model Wellness {
+   id          String   @id @default(uuid())
+   userId      String
+   user        User     @relation(fields: [userId], references:[id])
+   rating      Int
+   date        DateTime @db.Date
+}
+
+model Productivity {
+   id          String   @id @default(uuid())
+   userId      String
+   user        User     @relation(fields: [userId], references:[id])
+   score       Int
+   date        DateTime @db.Date
+}
+
+model Note {
+   id          String   @id @default(uuid())
+   userId      String
+   user        User     @relation(fields:[userId], references:[id])
+   note        String
+   date        DateTime @db.Date
+}
