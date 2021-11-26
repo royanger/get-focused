@@ -22,6 +22,16 @@ model User {
    note           Note[]
 }
 
+model Date {
+   id             String      @id @default(uuid())
+   date           DateTime    @db.Date
+   wellness       Wellness[]
+   exercise       Exercise[]
+   tasks          Task[]
+   notes          Note[]
+   productivity   Productivity[]
+}
+
 model TaskStatus {
    id       String   @id @default(uuid())
    name     String
@@ -33,7 +43,8 @@ model Task {
    name        String
    userId      String
    user        User        @relation(fields: [userId], references:[id])
-   date        DateTime    @db.Date
+   dateId      String
+   date        Date        @relation(fields: [dateId], references:[id])
    goalTime    String
    actualTime  String
    timeTracker Int
@@ -46,7 +57,8 @@ model Exercise {
    userId      String
    user        User     @relation(fields: [userId], references:[id])
    completed   Boolean  @default(false)
-   date        DateTime @db.Date
+   dateId      String
+   date        Date     @relation(fields: [dateId], references:[id])
 }
 
 model Wellness {
@@ -54,7 +66,8 @@ model Wellness {
    userId      String
    user        User     @relation(fields: [userId], references:[id])
    rating      Int
-   date        DateTime @db.Date
+   dateId      String
+   date        Date     @relation(fields: [dateId], references:[id])
 }
 
 model Productivity {
@@ -62,7 +75,8 @@ model Productivity {
    userId      String
    user        User     @relation(fields: [userId], references:[id])
    score       Int
-   date        DateTime @db.Date
+   dateId      String
+   date        Date     @relation(fields: [dateId], references:[id])
 }
 
 model Note {
@@ -70,5 +84,6 @@ model Note {
    userId      String
    user        User     @relation(fields:[userId], references:[id])
    note        String
-   date        DateTime @db.Date
+   dateId      String
+   date        Date     @relation(fields: [dateId], references:[id])
 }
