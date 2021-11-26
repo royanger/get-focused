@@ -2,123 +2,20 @@ import { useLoaderData } from 'remix'
 import Container from '~/components/container'
 import Button from '~/components/button'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
+import { getDate } from '~/libs/getDate'
+import { findTasks } from '~/queries/findTasks'
+import { db } from '../../prisma/db'
 
 export let loader = async () => {
-  // TODO All of these queries need to be cleaned up.
-  // Maybe use Graphql, have a Model that stores an entry for each data where something happened (task, exercise, wellness, productivity, note)
-  // Key all other Models off that + user
+  let date = getDate()
 
-  //   const date = new Date()
-  //   const dailyTasks = await db.prisma.task.findMany({
-  //     where: {
-  //       AND: [
-  //         {
-  //           date: {
-  //             gte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  //             ),
-  //           },
-  //         },
-  //         {
-  //           date: {
-  //             lte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${
-  //                 date.getDate() + 1
-  //               }`
-  //             ),
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   })
-  //   const wellness = await db.prisma.wellness.findMany({
-  //     where: {
-  //       AND: [
-  //         {
-  //           date: {
-  //             gte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  //             ),
-  //           },
-  //         },
-  //         {
-  //           date: {
-  //             lte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${
-  //                 date.getDate() + 1
-  //               }`
-  //             ),
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   })
-  //   const exercise = await db.prisma.exercise.findMany({
-  //     where: {
-  //       AND: [
-  //         {
-  //           date: {
-  //             gte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  //             ),
-  //           },
-  //         },
-  //         {
-  //           date: {
-  //             lte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${
-  //                 date.getDate() + 1
-  //               }`
-  //             ),
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   })
-  //   const notes = await db.prisma.note.findMany({
-  //     where: {
-  //       AND: [
-  //         {
-  //           date: {
-  //             gte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  //             ),
-  //           },
-  //         },
-  //         {
-  //           date: {
-  //             lte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${
-  //                 date.getDate() + 1
-  //               }`
-  //             ),
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   })
-  //   const productivity = await db.prisma.productivity.findMany({
-  //     where: {
-  //       AND: [
-  //         {
-  //           date: {
-  //             gte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  //             ),
-  //           },
-  //         },
-  //         {
-  //           date: {
-  //             lte: new Date(
-  //               `${date.getFullYear()}-${date.getMonth() + 1}-${
-  //                 date.getDate() + 1
-  //               }`
-  //             ),
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   })
+  // TODO This needs to be replaced -- hardcoded userId
+  // userId for my user for testing
+  let user = '267744ec-215f-4012-812b-ddfba3704257'
+
+  let tasks = await findTasks('0c0ece7f-4eb5-40d6-8400-c1bf6fb37937', user)
+
+  console.log(tasks)
   //   return {
   //     tasks: dailyTasks,
   //     wellness: wellness,
@@ -131,7 +28,7 @@ export let loader = async () => {
 
 export default function DailyPlanner() {
   let data = useLoaderData()
-  //   console.log(data)
+  console.log(data)
   return (
     <>
       <Container>
