@@ -1,85 +1,12 @@
 import { useLoaderData } from 'remix'
-import { db } from '../../prisma/db'
 import Container from '~/components/container'
 import Button from '~/components/button'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
-import { findUsers } from '~/graphql/queries/userQueries'
-import { schema } from '~/graphql/schema'
-import {
-  graphql,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-  buildSchema,
-} from 'graphql'
-import { typeDefs } from '~/graphql/typeDefs'
-import { resolvers } from '~/graphql/resolvers.js'
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
 
 export let loader = async () => {
   // TODO All of these queries need to be cleaned up.
   // Maybe use Graphql, have a Model that stores an entry for each data where something happened (task, exercise, wellness, productivity, note)
   // Key all other Models off that + user
-
-  //   let testing = await findUsers()
-  //   console.log('test', testing)
-
-  //   var schema = new GraphQLSchema({
-  //    query: new GraphQLObjectType({
-  //      name: 'RootQueryType',
-  //      fields: {
-  //        hello: {
-  //          type: GraphQLString,
-  //          resolve() {
-  //            return 'world';
-  //          },
-  //        },
-  //      },
-  //    }),
-  //  });
-
-  // if I get this working I would need to create this for each query
-  // no big deal
-  var schema = buildSchema(`
-
-  type Query {
-   # Find a user by their email
-   email: String
-  }
-`)
-
-  var root = {
-    email: () => {
-      return 'Hello world!'
-    },
-  }
-
-  let root2 = {
-    //  findUserByEmail: (_parent, args, context) => {
-    email: async () => {
-      let query = await prisma.user.findUnique({
-        where: {
-          email: 'royanger@gmailcom',
-        },
-      })
-      console.log('query', query)
-      return query
-    },
-    //  },
-  }
-
-  graphql(schema, '{ email }', root2).then(response => {
-    console.log(response)
-  })
-  //   let testing = await graphql(typeDefs, '', resolvers)
-  //   console.log('loader test', testing)
-
-  //   graphqlHTTP({
-  //    schema: schema,
-  //    context: db,
-  //    graphiql: true,
-  //  })
 
   //   const date = new Date()
   //   const dailyTasks = await db.prisma.task.findMany({
