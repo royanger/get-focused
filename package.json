@@ -4,10 +4,14 @@
   "description": "",
   "license": "",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
+    "build": "npm run tailwind-prod && npm run build:remix",
+    "build:remix": "remix build",
+    "dev": "concurrently \"remix dev\" \"npm run dev:css\"",
+    "dev:remix": "remix dev",
+    "dev:css": "npm run tailwind-dev",
     "postinstall": "remix setup node",
-    "start": "remix-serve build",
+    "start": "npm run tailwind-prod && npm run start:remix",
+    "start:remix": "remix-serve build",
     "tailwind-dev": "tailwindcss --output ./app/styles/tailwind.css --config ./config/tailwind.js --watch",
     "tailwind-prod": "tailwindcss --output ./app/styles/tailwind.css --config ./config/tailwind.js --minify"
   },
@@ -29,6 +33,7 @@
     "@remix-run/dev": "^1.0.4",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "concurrently": "^6.4.0",
     "typescript": "^4.1.2"
   },
   "engines": {

@@ -2,10 +2,16 @@
 
 Get Focused is a Todo list app that focuses not on all the various tasks you need to do over the current day, week and the upcoming weeks but instead on the tasks you **need** to finish now. Get focused on the things you need to complete and don't bogged down in long lists with multiple buckets.
 
-## Run App
+## Dev or Build App
 
-In two console tabs, perform the following:
+`npm run dev`
 
-`npm run dev npm run tailwind-dev`
+Concurrently run Tailwind in JIT mode with non-minifed CSS and Remix App
 
-This should be updated to one command run all dev scripts smoothly, if possible.
+`npm run start`
+
+Run Tailwind and build minified CSS, then run Remix App
+
+`npm run build`
+
+Build minified Tailwind CSS file, build Remix App
