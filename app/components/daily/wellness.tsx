@@ -3,7 +3,7 @@ import { HeaderTwo } from '../headlines'
 
 let items = [...Array(10)]
 
-let RadioInputs = items.map((item, index) => {
+let radioInputs = items.map((item, index) => {
   return (
     <div key={index}>
       <Radio value={index} />
@@ -11,9 +11,13 @@ let RadioInputs = items.map((item, index) => {
   )
 })
 
-console.log(RadioInputs)
+export default function Wellness({ user, date }) {
+  //   let dateObj = new Date()
+  //   let targetDate =
+  //     date === 'today'
+  //       ? `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  //       : 'asdfsadf'
 
-export default function Wellness() {
   {
     /* <p>From DB: {data?.wellness && data.wellness[0]?.rating}</p> */
   }
@@ -23,7 +27,7 @@ export default function Wellness() {
       <p>Rate how you are feeling out of 10.</p>
       <div className="flex-shrink flex">
         <div className="grid grid-cols-10 mb-6">
-          {RadioInputs}
+          {radioInputs}
           <div>1</div>
           <div>2</div>
           <div>3</div>

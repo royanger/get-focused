@@ -1,28 +1,18 @@
 import { db } from '../../prisma/db'
+import { getDate } from '~/libs/getDate'
 
-let findNotes = async targetDate => {
-  let date = new Date(targetDate)
+export let findNotes = async (targetDate, userId) => {
+  let date = getDate(targetDate)
 
-  let notes = await db.prisma.note.findMany({
+  let dateResults = await db.date.findUnique({
     where: {
-      AND: [
-        {
-          date: {
-            gte: new Date(
-              `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-            ),
-          },
-        },
-        {
-          date: {
-            lte: new Date(
-              `${date.getFullYear()}-${date.getMonth() + 1}-${
-                date.getDate() + 1
-              }`
-            ),
-          },
-        },
-      ],
+      date: date,
+    },
+  })
+
+  let notes = await db.note.findMany({
+    where: {
+      AND: [{ dateId: dateResults.id }, { userId: userId }],
     },
   })
   return notes

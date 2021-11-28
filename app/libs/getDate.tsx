@@ -1,5 +1,5 @@
 export let getDate = date => {
-  if (date) {
+  if (date != 'today') {
     // use 2021-12-25 format
     // TODO should confirm correct string/format was passed
     return `${date}T00:00:00.000Z`

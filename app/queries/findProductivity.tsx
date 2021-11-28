@@ -1,28 +1,18 @@
 import { db } from '../../prisma/db'
+import { getDate } from '~/libs/getDate'
 
-let findProductivity = async targetDate => {
-  let date = new Date(targetDate)
+export let findProductivity = async (targetDate, userId) => {
+  let date = getDate(targetDate)
 
-  const productivity = await db.prisma.productivity.findMany({
+  let dateResults = await db.date.findUnique({
     where: {
-      AND: [
-        {
-          date: {
-            gte: new Date(
-              `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-            ),
-          },
-        },
-        {
-          date: {
-            lte: new Date(
-              `${date.getFullYear()}-${date.getMonth() + 1}-${
-                date.getDate() + 1
-              }`
-            ),
-          },
-        },
-      ],
+      date: date,
+    },
+  })
+
+  const productivity = await db.productivity.findMany({
+    where: {
+      AND: [{ dateId: dateResults.id }, { userId: userId }],
     },
   })
   return productivity

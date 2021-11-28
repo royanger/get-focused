@@ -24,7 +24,7 @@ model User {
 
 model Date {
    id             String      @id @default(uuid())
-   date           DateTime    @db.Date
+   date           DateTime    @db.Date @unique
    wellness       Wellness[]
    exercise       Exercise[]
    tasks          Task[]
