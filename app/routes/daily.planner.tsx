@@ -44,15 +44,15 @@ export default function DailyPlanner() {
         <div className="mt-8">
           <HeaderOne>Daily Planner</HeaderOne>
 
-          <Wellness />
+          <Wellness entries={data.wellness} />
 
-          <Exercise />
+          <Exercise entries={data.exercise} />
 
-          <Tasks />
+          <Tasks entries={data.tasks} />
 
-          <Notes />
+          <Notes entries={data.notes} />
 
-          <Productivity />
+          <Productivity entries={data.productivity} />
         </div>
       </Container>
     </>

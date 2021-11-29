@@ -3,7 +3,7 @@ import { findOrCreateDate } from './findOrCreateDate'
 
 async function tasksQuery(date: string, userId: string) {
   await prisma.$connect()
-  let tasksResults = await prisma.task.findFirst({
+  let tasksResults = await prisma.task.findMany({
     where: {
       userId: userId,
       dateId: date,

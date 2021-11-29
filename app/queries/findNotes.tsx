@@ -3,7 +3,7 @@ import { findOrCreateDate } from './findOrCreateDate'
 
 async function noteQuery(date: string, userId: string) {
   await prisma.$connect()
-  let noteResults = await prisma.note.findFirst({
+  let noteResults = await prisma.note.findMany({
     where: {
       userId: userId,
       dateId: date,

@@ -1,28 +1,24 @@
 import Radio from '../forms/radio'
 import { HeaderTwo } from '../headlines'
 
-let items = [...Array(10)]
-
-let radioInputs = items.map((item, index) => {
-  return (
-    <div key={index}>
-      <Radio value={index} />
-    </div>
-  )
-})
-
 // TODO Don't need this unless I move queries into Components
 interface Wellness {
-  user?: string
-  date?: string
+  entries?: Object
 }
 
-export default function Wellness({ user, date }: Wellness) {
-  //   let dateObj = new Date()
-  //   let targetDate =
-  //     date === 'today'
-  //       ? `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-  //       : 'asdfsadf'
+export default function Wellness({ entries }: Wellness) {
+  let items = [...Array(10)]
+
+  let radioInputs = items.map((item, index) => {
+    return (
+      <div key={index}>
+        <Radio
+          value={index}
+          checked={index + 1 <= entries.rating ? true : false}
+        />
+      </div>
+    )
+  })
 
   {
     /* <p>From DB: {data?.wellness && data.wellness[0]?.rating}</p> */

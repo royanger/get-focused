@@ -1,19 +1,21 @@
-import Checkbox from '../forms/checkbox'
+import CheckboxThing from '../forms/checkbox'
 import { HeaderTwo } from '../headlines'
 
-export default function Exercise() {
-  {
-    /* <p>From DB: {data?.exercise[0]?.completed ? 'true' : 'false'}</p> */
+interface Exercise {
+  entries: {
+    completed?: boolean
   }
+}
 
+export default function Exercise({ entries }: Exercise) {
   return (
     <>
       <HeaderTwo>Did you exercise today?</HeaderTwo>
       <div>
-        <Checkbox checked={true} label="Yes" />
+        <CheckboxThing status={entries.completed} label="exercise-yes" />
       </div>
       <div>
-        <Checkbox checked={false} label="No" />
+        <CheckboxThing status={!entries.completed} label="exercise-no" />
       </div>
     </>
   )

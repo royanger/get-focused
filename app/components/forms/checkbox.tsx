@@ -1,7 +1,14 @@
-export default function Checkbox({ checked, label }) {
+interface Checkbox {
+  status?: boolean
+  label: string
+}
+
+export default function CheckboxThing({ status, label }: Checkbox) {
   return (
     <>
-      <input type="checkbox" defaultChecked={checked} /> {label}
+      <label htmlFor={label}>
+        <input name={label} type="checkbox" defaultChecked={status} /> {label}
+      </label>
     </>
   )
 }
