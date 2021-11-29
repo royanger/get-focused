@@ -1,20 +1,35 @@
-import { db } from '../../prisma/db'
-import { getDate } from '~/libs/getDate'
+import { prisma } from '../../prisma/db'
+import { findOrCreateDate } from './findOrCreateDate'
 
-export let findWellness = async (targetDate, userId) => {
-  let date = getDate(targetDate)
-
-  console.log(date)
-  let dateResults = await db.date.findUnique({
+async function wellnessQuery(date: string, userId: string) {
+  await prisma.$connect()
+  let wellnessResults = await prisma.wellness.findFirst({
     where: {
-      date: date,
+      userId: userId,
+      dateId: date,
     },
   })
 
-  let wellness = await db.wellness.findMany({
-    where: {
-      AND: [{ dateId: dateResults.id }, { userId: userId }],
-    },
-  })
-  return wellness
+  return wellnessResults
+}
+
+export let findWellnessEntries = async (
+  targetDate: string,
+  userId: string | undefined
+) => {
+  let dateResults = await findOrCreateDate(targetDate)
+
+  if (dateResults && userId) {
+    let wellnessResults = await wellnessQuery(dateResults.id, userId)
+      .catch(e => {
+        throw e
+      })
+      .finally(async () => {
+        await prisma.$disconnect()
+      })
+
+    return wellnessResults
+  } else {
+    return null
+  }
 }

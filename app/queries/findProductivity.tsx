@@ -1,19 +1,35 @@
-import { db } from '../../prisma/db'
-import { getDate } from '~/libs/getDate'
+import { prisma } from '../../prisma/db'
+import { findOrCreateDate } from './findOrCreateDate'
 
-export let findProductivity = async (targetDate, userId) => {
-  let date = getDate(targetDate)
-
-  let dateResults = await db.date.findUnique({
+async function productivityQuery(date: string, userId: string) {
+  await prisma.$connect()
+  let productivityResults = await prisma.productivity.findFirst({
     where: {
-      date: date,
+      userId: userId,
+      dateId: date,
     },
   })
 
-  const productivity = await db.productivity.findMany({
-    where: {
-      AND: [{ dateId: dateResults.id }, { userId: userId }],
-    },
-  })
-  return productivity
+  return productivityResults
+}
+
+export let findProductivityEntries = async (
+  targetDate: string,
+  userId: string | undefined
+) => {
+  let dateResults = await findOrCreateDate(targetDate)
+
+  if (dateResults && userId) {
+    let productivityResults = await productivityQuery(dateResults.id, userId)
+      .catch(e => {
+        throw e
+      })
+      .finally(async () => {
+        await prisma.$disconnect()
+      })
+
+    return productivityResults
+  } else {
+    return null
+  }
 }

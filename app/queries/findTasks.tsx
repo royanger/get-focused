@@ -1,19 +1,35 @@
-import { db } from '../../prisma/db'
-import { getDate } from '~/libs/getDate'
+import { prisma } from '../../prisma/db'
+import { findOrCreateDate } from './findOrCreateDate'
 
-export let findTasks = async (targetDate, userId) => {
-  let date = getDate(targetDate)
-
-  let dateResults = await db.date.findUnique({
+async function tasksQuery(date: string, userId: string) {
+  await prisma.$connect()
+  let tasksResults = await prisma.task.findFirst({
     where: {
-      date: date,
+      userId: userId,
+      dateId: date,
     },
   })
 
-  let dailyTasks = await db.task.findMany({
-    where: {
-      AND: [{ dateId: dateResults.id }, { userId: userId }],
-    },
-  })
-  return dailyTasks
+  return tasksResults
+}
+
+export let findTasksEntries = async (
+  targetDate: string,
+  userId: string | undefined
+) => {
+  let dateResults = await findOrCreateDate(targetDate)
+
+  if (dateResults && userId) {
+    let tasksResults = await tasksQuery(dateResults.id, userId)
+      .catch(e => {
+        throw e
+      })
+      .finally(async () => {
+        await prisma.$disconnect()
+      })
+
+    return tasksResults
+  } else {
+    return null
+  }
 }

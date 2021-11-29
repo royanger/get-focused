@@ -11,7 +11,13 @@ let radioInputs = items.map((item, index) => {
   )
 })
 
-export default function Wellness({ user, date }) {
+// TODO Don't need this unless I move queries into Components
+interface Wellness {
+  user?: string
+  date?: string
+}
+
+export default function Wellness({ user, date }: Wellness) {
   //   let dateObj = new Date()
   //   let targetDate =
   //     date === 'today'

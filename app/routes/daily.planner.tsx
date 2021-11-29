@@ -7,21 +7,23 @@ import Tasks from '~/components/daily/tasks'
 import Notes from '~/components/daily/notes'
 import Productivity from '~/components/daily/productivity'
 import { returnUserId } from '~/libs/user'
-import { findWellness } from '~/queries/findWellness'
-import { findExercise } from '~/queries/findExercise'
-import { findTasks } from '~/queries/findTasks'
-import { findNotes } from '~/queries/findNotes'
-import { findProductivity } from '~/queries/findProductivity'
+import { findWellnessEntries } from '~/queries/findWellness'
+import { findExerciseEntries } from '~/queries/findExercise'
+import { findTasksEntries } from '~/queries/findTasks'
+import { findNotesEntries } from '~/queries/findNotes'
+import { findProductivityEntries } from '~/queries/findProductivity'
 
 export let loader = async () => {
-  let wellness = await findWellness('today', returnUserId())
-  let exercise = await findExercise('today', returnUserId())
-  let dailyTasks = await findTasks('today', returnUserId())
-  let notes = await findNotes('today', returnUserId())
-  let productivity = await findProductivity('today', returnUserId())
+  interface userId {
+    userId: string
+  }
+  let userId = returnUserId()
 
-  //   let tasks = await findTasks('0c0ece7f-4eb5-40d6-8400-c1bf6fb37937', user)
-  //   console.log(tasks)
+  let wellness = await findWellnessEntries('today', userId)
+  let exercise = await findExerciseEntries('today', userId)
+  let dailyTasks = await findTasksEntries('today', userId)
+  let notes = await findNotesEntries('today', userId)
+  let productivity = await findProductivityEntries('today', userId)
 
   return {
     tasks: dailyTasks,
@@ -34,7 +36,7 @@ export let loader = async () => {
 
 export default function DailyPlanner() {
   let data = useLoaderData()
-  console.log(data)
+  console.log('DATA', data)
 
   return (
     <>
