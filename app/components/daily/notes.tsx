@@ -20,7 +20,14 @@ export default function Notes({ entries }: Notes) {
       </p>
 
       {entries.map(data => {
-        return <NoteEl id={data.id} note={data.note} dateId={data.dateId} />
+        return (
+          <NoteEl
+            key={data.id}
+            id={data.id}
+            note={data.note}
+            dateId={data.dateId}
+          />
+        )
       })}
     </>
   )
