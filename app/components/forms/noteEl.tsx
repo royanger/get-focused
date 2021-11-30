@@ -8,7 +8,6 @@ interface Note {
 }
 
 export default function NoteEl({ id, dateId, note }: Note) {
-  console.log('notes', id)
   return (
     <>
       {/* {id}

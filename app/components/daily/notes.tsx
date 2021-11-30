@@ -11,7 +11,6 @@ interface Notes {
 }
 
 export default function Notes({ entries }: Notes) {
-  console.log('ENTRIES', entries)
   return (
     <>
       <HeaderTwo>Notes</HeaderTwo>
