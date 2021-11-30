@@ -1,22 +1,25 @@
 import { HeaderTwo } from '../headlines'
 import Radio from '../forms/radio'
 import { findNotesEntries } from '~/queries/findNotes'
-import { Productivity } from '.prisma/client'
 
 interface Productivity {
-  entries?: Object
+  entries: {
+    id: string
+    userId: string
+    dateId: string
+    score: number
+  }
 }
 
-export default function Productivity({ entries }: Productivity) {
+export default function Productivity({
+  entries: { id, userId, dateId, score },
+}: Productivity) {
   let items = [...Array(10)]
 
   let radioInputs = items.map((item, index) => {
     return (
       <div key={index}>
-        <Radio
-          value={index}
-          checked={index + 1 <= entries.score ? true : false}
-        />
+        <Radio value={index} checked={index + 1 <= score ? true : false} />
       </div>
     )
   })

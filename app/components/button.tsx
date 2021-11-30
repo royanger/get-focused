@@ -15,11 +15,9 @@ const Button = ({ title, variant, children }: Props) => {
   ) {
     bgColor = `bg-${variant}`
     textColor = 'text-black'
-    console.log('correct type passed')
   } else {
     bgColor = 'bg-purple'
     textColor = 'text-yellow'
-    console.log('incorrect or no type passed')
   }
 
   return (
