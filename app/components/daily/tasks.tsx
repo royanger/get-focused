@@ -1,7 +1,6 @@
-import dotenv from 'dotenv'
-dotenv.config()
 import TasksTitle from './tasksTitle'
 import TaskElement from '../forms/taskEl'
+import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
 
 interface Tasks {
   entries: {
@@ -45,9 +44,7 @@ function tasksByPriority({ tasks, title, info }: TasksByPriority) {
 }
 
 export default function Tasks({ entries }: Tasks) {
-  let priorityOneTasks = entries.filter(
-    task => task.statusId === process.env.REACT_APP_P1
-  )
+  let priorityOneTasks = entries.filter(task => task.statusId === PRIORITY_1)
 
   let generatedP1Tasks
   let p1Title = 'What is your most important goal(s) today?'
@@ -60,9 +57,7 @@ export default function Tasks({ entries }: Tasks) {
     })
   }
 
-  let priorityTwoTasks = entries.filter(
-    task => task.statusId === process.env.REACT_APP_P2
-  )
+  let priorityTwoTasks = entries.filter(task => task.statusId === PRIORITY_2)
   let generatedP2Tasks
   let p2Title = 'Important Goals and Tasks'
   let p2Info =
@@ -75,9 +70,7 @@ export default function Tasks({ entries }: Tasks) {
     })
   }
 
-  let priorityThreeTasks = entries.filter(
-    task => task.statusId === process.env.REACT_APP_P3
-  )
+  let priorityThreeTasks = entries.filter(task => task.statusId === PRIORITY_3)
   let generatedP3Tasks
   let p3Title = 'Bonus Goals and Tasks'
   let p3Info =
