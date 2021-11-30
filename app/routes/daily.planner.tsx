@@ -36,8 +36,7 @@ export let loader = async () => {
 
 export default function DailyPlanner() {
   let data = useLoaderData()
-  console.log('DATA', data)
-
+  //   console.log('DATA', data)
   return (
     <>
       <Container>

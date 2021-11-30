@@ -4,12 +4,22 @@ import TaskRadio from './taskRadio'
 import TaskSave from './taskSave'
 import TaskCancel from './taskCancel'
 
-export default function TaskElement() {
+interface Tasks {
+  id?: string
+  completed?: boolean
+  statusId?: string
+  name: string
+  actualTime?: string
+  goalTime?: string
+  timeTracker?: number
+}
+
+export default function TaskElement({ name }: Tasks) {
   return (
     <>
       <div>
         <div className="flex flex-row items-center">
-          <Input />
+          <Input value={name} />
           <TaskCheckbox />
           <div className="w-32 flex flex-row justify-center ">
             <TaskRadio />

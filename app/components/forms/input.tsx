@@ -1,4 +1,4 @@
-export default function Input() {
+export default function Input({ value }) {
   return (
     <div className="flex-grow flex">
       <input
@@ -6,6 +6,7 @@ export default function Input() {
         type="text"
         placeholder="Important Goals"
         aria-label="Important Goals"
+        defaultValue={value}
       />
     </div>
   )

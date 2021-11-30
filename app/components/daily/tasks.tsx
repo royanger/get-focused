@@ -1,20 +1,100 @@
-import TasksP1 from './tasksP1'
-import TasksP2 from './tasksP2'
-import TasksP3 from './tasksP3'
+import dotenv from 'dotenv'
+dotenv.config()
+import TasksTitle from './tasksTitle'
+import TaskElement from '../forms/taskEl'
 
-{
-  /* <p>From DB: {data?.tasks && data.tasks[0]?.name}</p> */
+interface Tasks {
+  entries: {
+    id: string
+    userId: string
+    dateId: string
+    statusId: string
+    name: string
+    actualTime: string
+    goalTime: string
+    timeTracker: number
+  }[]
 }
-{
-  /* <p>From DB: {data?.task[1]?.name && data.task[1].name}</p> */
+interface TasksByPriority {
+  tasks: {
+    id: string
+    userId: string
+    dateId: string
+    statusId: string
+    name: string
+    actualTime: string
+    goalTime: string
+    timeTracker: number
+  }[]
+  title: string
+  info: string
 }
 
-export default function Tasks() {
+// function tasksByPriority({ tasks, title, info }: TasksByPriority) {
+function tasksByPriority({ tasks, title, info }: TasksByPriority) {
+  let taskList = tasks.map(task => {
+    return <TaskElement key={task.id} name={task.name} />
+  })
+
   return (
     <>
-      <TasksP1 />
-      <TasksP2 />
-      <TasksP3 />
+      <TasksTitle title={title} info={info} />
+      {taskList}
+    </>
+  )
+}
+
+export default function Tasks({ entries }: Tasks) {
+  let priorityOneTasks = entries.filter(
+    task => task.statusId === process.env.REACT_APP_P1
+  )
+
+  let generatedP1Tasks
+  let p1Title = 'What is your most important goal(s) today?'
+  let p1Info = 'Try to focus on one goal, but you can focus on a few.'
+  if (priorityOneTasks.length > -1) {
+    generatedP1Tasks = tasksByPriority({
+      tasks: priorityOneTasks,
+      title: p1Title,
+      info: p1Info,
+    })
+  }
+
+  let priorityTwoTasks = entries.filter(
+    task => task.statusId === process.env.REACT_APP_P2
+  )
+  let generatedP2Tasks
+  let p2Title = 'Important Goals and Tasks'
+  let p2Info =
+    'These tasks and goals are secondary to your most important goal, but are things you really want to finish today.'
+  if (priorityTwoTasks.length > -1) {
+    generatedP2Tasks = tasksByPriority({
+      tasks: priorityTwoTasks,
+      title: p2Title,
+      info: p2Info,
+    })
+  }
+
+  let priorityThreeTasks = entries.filter(
+    task => task.statusId === process.env.REACT_APP_P3
+  )
+  let generatedP3Tasks
+  let p3Title = 'Bonus Goals and Tasks'
+  let p3Info =
+    'If you finish all of the above tasks and goals, what are some tasks that would be awesome to finish today?'
+  if (priorityThreeTasks.length > -1) {
+    generatedP3Tasks = tasksByPriority({
+      tasks: priorityThreeTasks,
+      title: p3Title,
+      info: p3Info,
+    })
+  }
+
+  return (
+    <>
+      {generatedP1Tasks}
+      {generatedP2Tasks}
+      {generatedP3Tasks}
     </>
   )
 }

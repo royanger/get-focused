@@ -1,7 +1,6 @@
 import Radio from '../forms/radio'
 import { HeaderTwo } from '../headlines'
 
-// TODO Don't need this unless I move queries into Components
 interface Wellness {
   entries?: Object
 }

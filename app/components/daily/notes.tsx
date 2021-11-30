@@ -1,7 +1,12 @@
 import { HeaderTwo } from '../headlines'
-import NotesEl from '../forms/noteEl'
+import NoteEl from '../forms/noteEl'
 
-export default function Notes() {
+interface Notes {
+  entries?: Object
+}
+
+export default function Notes({ entries }: Notes) {
+  console.log('ENTRIES', entries)
   return (
     <>
       <HeaderTwo>Notes</HeaderTwo>
@@ -9,7 +14,10 @@ export default function Notes() {
         Jot down any notes. These will be shown on the Weekly Review and can be
         accessed through your dashboard.
       </p>
-      <NotesEl />
+
+      {entries.map(data => {
+        return <NoteEl id={data.id} note={data.note} dateId={data.dateId} />
+      })}
     </>
   )
 }

@@ -32,12 +32,6 @@ model Date {
    productivity   Productivity[]
 }
 
-model TaskStatus {
-   id       String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
-   name     String
-   tasks    Task[]
-}
-
 model Task {
    id          String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
    name        String
@@ -48,8 +42,8 @@ model Task {
    goalTime    String
    actualTime  String
    timeTracker Int
-   statusId    String      @db.ObjectId
-   status      TaskStatus  @relation(fields: [statusId], references:[id])
+   statusId    String
+   completed   Boolean     @default(false)
 }
 
 model Exercise {

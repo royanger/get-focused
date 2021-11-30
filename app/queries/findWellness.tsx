@@ -9,7 +9,7 @@ async function wellnessQuery(date: string, userId: string) {
       dateId: date,
     },
   })
-
+  console.log('wellness ersults', wellnessResults)
   return wellnessResults
 }
 
