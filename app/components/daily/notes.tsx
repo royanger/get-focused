@@ -2,7 +2,12 @@ import { HeaderTwo } from '../headlines'
 import NoteEl from '../forms/noteEl'
 
 interface Notes {
-  entries?: Object
+  entries: {
+    id: string
+    userId: string
+    dateId: string
+    note: string
+  }[]
 }
 
 export default function Notes({ entries }: Notes) {
