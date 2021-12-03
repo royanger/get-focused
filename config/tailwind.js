@@ -5,8 +5,8 @@ module.exports = {
   theme: {
     fontSize: {
       xs: ['10px', { lineHeight: '14px', letterspacing: '-0.03em' }],
-      sm: ['16px', { lineHeight: '28px', letterspacing: '-0.03em' }],
-      lg: ['18px', { lineHeight: '28px', letterspacing: '-0.03em' }],
+      sm: ['14px', { lineHeight: '18px', letterspacing: '-0.03em' }],
+      lg: ['18px', { lineHeight: '24px', letterspacing: '-0.03em' }],
       xl: ['24px', { lineHeight: '36px', letterspacing: '-0.03em' }],
       '2xl': ['30px', { lineHeight: '48px', letterspacing: '-0.032em' }],
       '3xl': ['38px', { lineHeight: '56px', letterspacing: '-0.032em' }],
@@ -60,6 +60,8 @@ module.exports = {
       },
       success: 'rgb(74, 173, 82)',
       grey: {
+        100: 'rgb(245,245,245)',
+        200: 'rgb(235,235,235)',
         300: 'rgb(146, 153, 160)',
         DEFAULT: 'rgb(108, 117, 125)',
         700: 'rgb(85, 92, 98)',
