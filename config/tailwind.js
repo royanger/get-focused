@@ -14,7 +14,7 @@ module.exports = {
       '5xl': ['80px', { lineHeight: '80px', letterspacing: '-0.032em' }],
     },
     fontFamily: {
-      body: ['Hind', 'sans-serif'],
+      body: ['Lato', 'sans-serif'],
       title: ['Montserrat', 'sans-serif'],
     },
     screens: {

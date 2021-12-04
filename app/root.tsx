@@ -26,7 +26,51 @@ import tailwindUrl from './styles/tailwind.css'
  * https://remix.run/api/app#links
  */
 export let links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: tailwindUrl }]
+  return [
+    //  {
+    //    rel: 'preload',
+    //    as: 'fonts',
+    //    href: '/fonts/Lato-Regular.ttf',
+    //    type: '/font/ttf',
+    //    crossOrigin: 'anonymous',
+    //  },
+    //  {
+    //    rel: 'preload',
+    //    as: 'fonts',
+    //    href: '/fonts/Hind-SemiBold.ttf',
+    //    type: '/font/ttf',
+    //    crossOrigin: 'anonymous',
+    //  },
+    //  {
+    //    rel: 'preload',
+    //    as: 'fonts',
+    //    href: '/fonts/Montserrat-Regular.ttf',
+    //    type: '/font/ttf',
+    //    crossOrigin: 'anonymous',
+    //  },
+    //  {
+    //    rel: 'preload',
+    //    as: 'fonts',
+    //    href: '/fonts/Montserrat-SemiBold.ttf',
+    //    type: '/font/ttf',
+    //    crossOrigin: 'anonymous',
+    //  },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.googleapis.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.gstatic.com',
+      crossOrigin: 'anonymous',
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@400;700&display=swap',
+    },
+
+    { rel: 'stylesheet', href: tailwindUrl },
+  ]
 }
 
 /**
@@ -60,7 +104,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="font-body">
         {children}
         <RouteChangeAnnouncement />
         <ScrollRestoration />

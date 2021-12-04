@@ -937,10 +937,6 @@ select {
   border-width: 2px;
 }
 
-.border-b-2 {
-  border-bottom-width: 2px;
-}
-
 .border-b-\[1px\] {
   border-bottom-width: 1px;
 }
@@ -962,11 +958,6 @@ select {
 .bg-purple {
   --tw-bg-opacity: 1;
   background-color: rgba(66, 0, 57, var(--tw-bg-opacity));
-}
-
-.bg-grey-100 {
-  --tw-bg-opacity: 1;
-  background-color: rgba(245, 245, 245, var(--tw-bg-opacity));
 }
 
 .bg-grey-200 {
@@ -1002,6 +993,10 @@ select {
 
 .align-bottom {
   vertical-align: bottom;
+}
+
+.font-body {
+  font-family: Lato, sans-serif;
 }
 
 .font-title {
