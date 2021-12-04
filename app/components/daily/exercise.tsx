@@ -1,4 +1,4 @@
-import CheckboxThing from '../forms/checkbox'
+import Checkbox from '../forms/checkbox'
 import { HeaderTwo } from '../headlines'
 
 interface Exercise {
@@ -12,10 +12,10 @@ export default function Exercise({ entries }: Exercise) {
     <>
       <HeaderTwo>Did you exercise today?</HeaderTwo>
       <div>
-        <CheckboxThing status={entries.completed} label="exercise-yes" />
+        <Checkbox status={entries.completed} label="Yes" />
       </div>
       <div>
-        <CheckboxThing status={!entries.completed} label="exercise-no" />
+        <Checkbox status={!entries.completed} label="No" />
       </div>
     </>
   )

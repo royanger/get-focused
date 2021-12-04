@@ -3,7 +3,7 @@ interface Checkbox {
   label: string
 }
 
-export default function CheckboxThing({ status, label }: Checkbox) {
+export default function Checkbox({ status, label }: Checkbox) {
   return (
     <>
       <label htmlFor={label}>
