@@ -8,16 +8,22 @@ import Edit from '../icons/edit'
 import { Form } from 'remix'
 
 interface Tasks {
-  id?: string
+  id: string
   completed?: boolean
   statusId?: string
   name: string
-  actualTime?: string
-  goalTime?: string
-  timeTracker?: number
+  actualTime: string
+  goalTime: string
+  timeTracker: number
 }
 
-export default function TaskElement({ name }: Tasks) {
+export default function TaskElement({
+  id,
+  name,
+  goalTime,
+  actualTime,
+  timeTracker,
+}: Tasks) {
   // this controls changes for all elements. Pass this as a prop as needed
   let [formState, setFormState] = React.useState('default')
 
@@ -47,11 +53,29 @@ export default function TaskElement({ name }: Tasks) {
       <Form>
         <div className="p-2 grid grid-cols-10">
           <div className="flex flex-row items-center col-span-7">
-            <Input value={name} formState={formState} />
+            <Input
+              value={name}
+              formState={formState}
+              name="taskname"
+              placeholder="Enter your task here..."
+            />
           </div>
           <div className="row-start-1 row-end-3 col-start-8 col-end-11">
             <div className="flex flex-row items-center">
-              <TaskCheckbox />
+              <Input
+                value={goalTime}
+                formState={formState}
+                name="goaltime"
+                placeholder=""
+              />
+              {/* // Keep for styling ideas for the moment
+              // TODO delete ASAP */}
+              {/* <input
+                type="text"
+                name="target"
+                className="mx-1 w-10 p-1 h-6 text-sm"
+              /> */}
+              {/* <TaskCheckbox /> */}
               <div className="w-36 flex flex-row justify-center ">
                 <TaskRadio />
                 <TaskRadio />
@@ -59,7 +83,12 @@ export default function TaskElement({ name }: Tasks) {
                 <TaskRadio />
                 <TaskRadio />
               </div>
-              <TaskCheckbox />
+              <Input
+                value={actualTime}
+                formState={formState}
+                name="actualtime"
+                placeholder=""
+              />
               <div className="w-12 first:w-7 text-purple h-auto flex justify-center">
                 <button
                   className="border-1 border-orange first:w-6 w-full "

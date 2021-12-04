@@ -54,7 +54,9 @@ module.exports = {
       orange: {
         DEFAULT: 'rgb(238, 132, 52)',
       },
-      warning: 'rgb(238, 132, 52)',
+      warning: {
+        DEFAULT: 'rgb(238, 132, 52)',
+      },
       green: {
         DEFAULT: 'rgb(74, 173, 82)',
       },
@@ -66,7 +68,7 @@ module.exports = {
         DEFAULT: 'rgb(108, 117, 125)',
         700: 'rgb(85, 92, 98)',
       },
-      cancel: 'rgb(108, 117, 125)',
+      cancel: 'rgb(206, 45, 79)',
     },
     extend: {
       spacing: {

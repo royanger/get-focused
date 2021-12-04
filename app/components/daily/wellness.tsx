@@ -29,7 +29,7 @@ export default function Wellness({
   return (
     <>
       <HeaderTwo>How do you feel?</HeaderTwo>
-      <p>Rate how you are feeling out of 10.</p>
+      <p className="mb-2">Rate how you are feeling out of 10.</p>
       <div className="flex-shrink flex">
         <div className="grid grid-cols-10 mb-6">
           {radioInputs}

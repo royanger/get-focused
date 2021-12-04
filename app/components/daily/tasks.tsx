@@ -32,7 +32,16 @@ interface TasksByPriority {
 // function tasksByPriority({ tasks, title, info }: TasksByPriority) {
 function tasksByPriority({ tasks, title, info }: TasksByPriority) {
   let taskList = tasks.map(task => {
-    return <TaskElement key={task.id} name={task.name} />
+    return (
+      <TaskElement
+        key={task.id}
+        id={task.id}
+        name={task.name}
+        goalTime={task.goalTime}
+        actualTime={task.actualTime}
+        timeTracker={task.timeTracker}
+      />
+    )
   })
 
   return (

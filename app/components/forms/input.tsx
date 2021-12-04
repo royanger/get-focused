@@ -1,10 +1,11 @@
 import * as React from 'react'
 interface Input {
   value: string
+  name: string
   formState?: React.ReactChild
 }
 
-export default function Input({ value, formState }: Input) {
+export default function Input({ value, name, formState }: Input) {
   // set some styles for the form for 'default' and 'edit' states
   // TODO probably add 'error' state later after form validation
   let defaultState = 'border-0 border-b-[1px] border-purple border-opacity-50'
@@ -21,6 +22,7 @@ export default function Input({ value, formState }: Input) {
       <input
         className={`flex-grow ${currentState}`}
         type="text"
+        name={name}
         placeholder="Important Goals"
         aria-label="Important Goals"
         defaultValue={value}

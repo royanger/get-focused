@@ -23,7 +23,7 @@ const Button = ({ title, variant, children }: Props) => {
   return (
     <>
       <button
-        className={`${bgColor} ${textColor} m-1 px-3 pb-1 text-sm rounded shadow-lg font-semibold`}
+        className={`${bgColor} ${textColor} m-1 px-3 pb-1 text-sm rounded shadow-lg  uppercase`}
       >
         {title}
       </button>
