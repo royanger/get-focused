@@ -1,31 +1,56 @@
 interface Props {
   title: string
   variant?: string
+  size?: string
   children?: string
 }
 
-const Button = ({ title, variant, children }: Props) => {
-  let bgColor
-  let textColor
-  if (
-    variant === 'warning' ||
-    variant === 'error' ||
-    variant === 'success' ||
-    variant === 'cancel'
-  ) {
-    bgColor = `bg-${variant}`
-    textColor = 'text-black'
+const Button = ({ title, variant, size, children }: Props) => {
+  let baseStyles = 'rounded shadow-lg uppercase'
+
+  let stylesMap: any = {
+    default: 'bg-purple text-yellow',
+    warning: 'bg-warning text-green',
+    error: 'bg-red text-black',
+    success: 'bg-green text-black',
+    cancel: 'bg-cancel text-black',
+  }
+
+  //   let buttonSize = !size ? 'default' : size
+  let buttonSize
+  if (!size) {
+    buttonSize = 'default'
   } else {
-    bgColor = 'bg-purple'
-    textColor = 'text-yellow'
+    buttonSize = size
+  }
+
+  let sizeMap: any = {
+    default: 'm-2 px-3 pb-2',
+    sm: 'text-sm px-2 pb-2 m-1',
+    lg: 'text-lg px-4 pb-3 m-3',
+  }
+
+  console.log('BUTTONSIZE', buttonSize)
+  if (variant === 'warning') {
+    return (
+      <button
+        className={`${baseStyles} ${stylesMap[variant]} ${sizeMap[buttonSize]}`}
+      >
+        {title}
+      </button>
+    )
   }
 
   return (
     <>
       <button
-        className={`${bgColor} ${textColor} m-1 px-3 pb-1 text-sm rounded shadow-lg  uppercase`}
+        className={`
+        ${baseStyles}
+         ${stylesMap['default']}
+         ${sizeMap[buttonSize]}
+         `}
       >
-        {title}
+        {title} XX
       </button>
     </>
   )
