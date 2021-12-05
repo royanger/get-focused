@@ -10,13 +10,12 @@ const Button = ({ title, variant, size, children }: Props) => {
 
   let stylesMap: any = {
     default: 'bg-purple text-yellow',
-    warning: 'bg-warning text-green',
-    error: 'bg-red text-black',
-    success: 'bg-green text-black',
+    warning: 'bg-warning text-black',
+    error: 'bg-error text-black',
+    success: 'bg-success text-black',
     cancel: 'bg-cancel text-black',
   }
 
-  //   let buttonSize = !size ? 'default' : size
   let buttonSize
   if (!size) {
     buttonSize = 'default'
@@ -25,13 +24,17 @@ const Button = ({ title, variant, size, children }: Props) => {
   }
 
   let sizeMap: any = {
-    default: 'm-2 px-3 pb-2',
-    sm: 'text-sm px-2 pb-2 m-1',
-    lg: 'text-lg px-4 pb-3 m-3',
+    default: 'm-2 px-3 pb-2 pt-1',
+    sm: 'text-sm px-2 pb-2 m-1 pt-1',
+    lg: 'text-lg px-4 pb-3 m-3 pt-2',
   }
 
-  console.log('BUTTONSIZE', buttonSize)
-  if (variant === 'warning') {
+  if (
+    variant === 'warning' ||
+    variant === 'cancel' ||
+    variant === 'success' ||
+    variant === 'error'
+  ) {
     return (
       <button
         className={`${baseStyles} ${stylesMap[variant]} ${sizeMap[buttonSize]}`}
@@ -50,7 +53,7 @@ const Button = ({ title, variant, size, children }: Props) => {
          ${sizeMap[buttonSize]}
          `}
       >
-        {title} XX
+        {title}
       </button>
     </>
   )

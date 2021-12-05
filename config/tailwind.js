@@ -50,17 +50,12 @@ module.exports = {
       red: {
         DEFAULT: 'rgb(206, 45, 79)',
       },
+      orange: 'rgb(238, 132, 52)',
       error: 'rgb(206, 45, 79)',
-      orange: {
-        DEFAULT: 'rgb(238, 132, 52)',
-      },
-      warning: {
-        DEFAULT: 'rgb(238, 132, 52)',
-      },
-      green: {
-        DEFAULT: 'rgb(74, 173, 82)',
-      },
+      warning: 'rgb(238, 132, 52)',
+      cancel: 'rgb(206, 45, 79)',
       success: 'rgb(74, 173, 82)',
+      green: 'rgb(74, 173, 82)',
       grey: {
         100: 'rgb(245,245,245)',
         200: 'rgb(235,235,235)',
@@ -68,7 +63,6 @@ module.exports = {
         DEFAULT: 'rgb(108, 117, 125)',
         700: 'rgb(85, 92, 98)',
       },
-      cancel: 'rgb(206, 45, 79)',
     },
     extend: {
       spacing: {

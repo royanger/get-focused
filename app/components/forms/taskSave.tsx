@@ -3,7 +3,7 @@ import Button from '../button'
 export default function TaskSave() {
   return (
     <>
-      <Button title="Save" />
+      <Button title="Save" size="sm" />
     </>
   )
 }
