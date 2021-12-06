@@ -56,13 +56,14 @@ export default function TaskElement({
     <div className={`mb-3 ${currentStateDiv}`}>
       <Form>
         <div className="p-2 grid grid-cols-10">
-          <div className="flex flex-row items-center col-span-7">
+          <div className="flex flex-row items-center col-span-7  pr-4">
             <Input
               value={name}
               formState={formState}
               name="taskname"
               placeholder="Enter your task here..."
               setFormState={setFormState}
+              width="flex-grow"
             />
           </div>
           <div className="row-start-1 row-end-3 col-start-8 col-end-11">
@@ -73,16 +74,9 @@ export default function TaskElement({
                 name="goaltime"
                 placeholder=""
                 setFormState={setFormState}
+                width="w-14"
               />
-              {/* // Keep for styling ideas for the moment
-              // TODO delete ASAP */}
-              {/* <input
-                type="text"
-                name="target"
-                className="mx-1 w-10 p-1 h-6 text-sm"
-              /> */}
-              {/* <TaskCheckbox /> */}
-              <div className="w-36 flex flex-row justify-center ">
+              <div className="w-36 flex flex-row justify-center px-4">
                 <TaskRadio />
                 <TaskRadio />
                 <TaskRadio />
@@ -95,6 +89,7 @@ export default function TaskElement({
                 name="actualtime"
                 placeholder=""
                 setFormState={setFormState}
+                width="w-14"
               />
               <div className="w-12 first:w-7 text-purple h-auto flex justify-center">
                 <button

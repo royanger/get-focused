@@ -14,7 +14,7 @@ const Button = ({ title, variant, size, children, onClick }: Props) => {
     warning: 'bg-warning text-black',
     error: 'bg-error text-black',
     success: 'bg-success text-black',
-    cancel: 'bg-cancel text-black',
+    cancel: 'bg-cancel text-white',
   }
 
   let buttonSize
@@ -25,9 +25,9 @@ const Button = ({ title, variant, size, children, onClick }: Props) => {
   }
 
   let sizeMap: any = {
-    default: 'm-2 px-3 pb-2 pt-1',
-    sm: 'text-sm px-2 pb-2 m-1 pt-1',
-    lg: 'text-lg px-4 pb-3 m-3 pt-2',
+    default: 'm-2 px-4 pb-2 pt-[.4rem]',
+    sm: 'text-sm px-3 pb-2 m-1 pt-[.4rem] ',
+    lg: 'text-lg px-5 pb-3 m-3 pt-2',
   }
 
   if (

@@ -53,7 +53,8 @@ module.exports = {
       orange: 'rgb(238, 132, 52)',
       error: 'rgb(206, 45, 79)',
       warning: 'rgb(238, 132, 52)',
-      cancel: 'rgb(206, 45, 79)',
+      // cancel: 'rgb(206, 45, 79)',
+      cancel: 'rgb(85, 92, 98)',
       success: 'rgb(74, 173, 82)',
       green: 'rgb(74, 173, 82)',
       grey: {
