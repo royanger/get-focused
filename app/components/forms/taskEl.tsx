@@ -39,7 +39,6 @@ export default function TaskElement({
   React.useEffect(() => {
     if (formState === 'edit') {
       setCurrentStateButtons(editButtons)
-      console.log('edit buttons', editButtons)
       setCurrentStateDiv(editDiv)
     }
     if (formState === 'default') {
@@ -47,6 +46,11 @@ export default function TaskElement({
       setCurrentStateButtons(defaultButtons)
     }
   }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
+
+  function clickHandler() {
+    console.log('child input clicked')
+    setFormState('edit')
+  }
 
   return (
     <div className={`mb-3 ${currentStateDiv}`}>
@@ -58,6 +62,7 @@ export default function TaskElement({
               formState={formState}
               name="taskname"
               placeholder="Enter your task here..."
+              setFormState={setFormState}
             />
           </div>
           <div className="row-start-1 row-end-3 col-start-8 col-end-11">
@@ -67,6 +72,7 @@ export default function TaskElement({
                 formState={formState}
                 name="goaltime"
                 placeholder=""
+                setFormState={setFormState}
               />
               {/* // Keep for styling ideas for the moment
               // TODO delete ASAP */}
@@ -88,11 +94,12 @@ export default function TaskElement({
                 formState={formState}
                 name="actualtime"
                 placeholder=""
+                setFormState={setFormState}
               />
               <div className="w-12 first:w-7 text-purple h-auto flex justify-center">
                 <button
                   className="border-1 border-orange first:w-6 w-full "
-                  onClick={e => setFormState('edit')}
+                  onClick={() => setFormState('edit')}
                 >
                   <Edit />
                 </button>
@@ -116,7 +123,7 @@ export default function TaskElement({
           </div>
           <div className={`${currentStateButtons} col-span-7`}>
             <TaskSave />
-            <TaskCancel />
+            <TaskCancel setFormState={setFormState} />
           </div>
         </div>
       </Form>

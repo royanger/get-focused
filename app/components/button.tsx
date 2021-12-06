@@ -3,9 +3,10 @@ interface Props {
   variant?: string
   size?: string
   children?: string
+  onClick: (values: string) => void
 }
 
-const Button = ({ title, variant, size, children }: Props) => {
+const Button = ({ title, variant, size, children, onClick }: Props) => {
   let baseStyles = 'rounded shadow-lg uppercase'
 
   let stylesMap: any = {
@@ -38,6 +39,7 @@ const Button = ({ title, variant, size, children }: Props) => {
     return (
       <button
         className={`${baseStyles} ${stylesMap[variant]} ${sizeMap[buttonSize]}`}
+        onClick={() => onClick('default')}
       >
         {title}
       </button>
