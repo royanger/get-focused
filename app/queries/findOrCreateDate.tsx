@@ -3,10 +3,18 @@ import { prisma } from '../../prisma/db'
 export let findOrCreateDate = async (targetDate: string) => {
   // if string is equal to 'today' then get today's date
   // if string is not 'today' then convert passed info and create date
-  let date
+
+  let regex = /\d\d\d\d-[01][012]-[0123]\d/
   if (targetDate != 'today') {
-    // use 2021-12-25 format
-    // TODO should confirm correct string/format was passed
+    if (!targetDate.match(regex)) {
+      console.log('Target date provided was incorrect format')
+      return null
+    }
+  }
+
+  let date
+
+  if (targetDate != 'today') {
     date = `${targetDate}T00:00:00.000Z`
   } else {
     // no date was passed, use current date
@@ -14,9 +22,7 @@ export let findOrCreateDate = async (targetDate: string) => {
     date = `${today}T00:00:00.000Z`
   }
 
-  // once date is ready, query DB to see if entry exists on Date Collection
-  // if so, return that id
-  // if not, create entry and return id of new entry
+  // query to see if date entry exists
   async function dateQuery(date: string) {
     await prisma.$connect()
     return await prisma.date.findUnique({
@@ -26,6 +32,17 @@ export let findOrCreateDate = async (targetDate: string) => {
     })
   }
 
+  // query to create date entry
+  async function createDateEntry(date: string) {
+    await prisma
+    return await prisma.date.create({
+      data: {
+        date: date,
+      },
+    })
+  }
+
+  // check if date exists using above query
   let results = await dateQuery(date)
     .catch(e => {
       throw e
@@ -33,5 +50,19 @@ export let findOrCreateDate = async (targetDate: string) => {
     .finally(async () => {
       await prisma.$disconnect()
     })
+
+  // if date doesn't exist, create a new entry and return data
+  if (!results) {
+    let newDateResults = await createDateEntry(date)
+      .catch(e => {
+        throw e
+      })
+      .finally(async () => {
+        await prisma.$disconnect()
+      })
+    return newDateResults
+  }
+
+  // if date did exist, return that data
   return results
 }
