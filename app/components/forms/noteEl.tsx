@@ -3,7 +3,7 @@ import NoteCancel from './noteCancel'
 
 interface Note {
   id: string
-  dateId: string
+  dateId?: string
   note: string
 }
 
