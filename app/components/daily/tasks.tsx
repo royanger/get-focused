@@ -29,7 +29,6 @@ interface TasksByPriority {
   info: string
 }
 
-// function tasksByPriority({ tasks, title, info }: TasksByPriority) {
 function tasksByPriority({ tasks, title, info }: TasksByPriority) {
   let taskList = tasks.map(task => {
     return (
@@ -48,23 +47,31 @@ function tasksByPriority({ tasks, title, info }: TasksByPriority) {
     <>
       <TasksTitle title={title} info={info} />
       {taskList}
+      <TaskElement
+        key="newtask"
+        id="newtask"
+        name="Create a new task"
+        goalTime="0"
+        actualTime="0"
+        timeTracker={0}
+      />
     </>
   )
 }
 
 export default function Tasks({ entries }: Tasks) {
   let priorityOneTasks = entries.filter(task => task.statusId === PRIORITY_1)
+  console.log('task', priorityOneTasks)
 
   let generatedP1Tasks
   let p1Title = 'What is your most important goal(s) today?'
   let p1Info = 'Try to focus on one goal, but you can focus on a few.'
-  if (priorityOneTasks.length > -1) {
-    generatedP1Tasks = tasksByPriority({
-      tasks: priorityOneTasks,
-      title: p1Title,
-      info: p1Info,
-    })
-  }
+
+  generatedP1Tasks = tasksByPriority({
+    tasks: priorityOneTasks,
+    title: p1Title,
+    info: p1Info,
+  })
 
   let priorityTwoTasks = entries.filter(task => task.statusId === PRIORITY_2)
   let generatedP2Tasks

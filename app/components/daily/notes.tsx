@@ -29,6 +29,7 @@ export default function Notes({ entries }: Notes) {
           />
         )
       })}
+      <NoteEl key="newnote" id="newnote" note="" />
     </>
   )
 }

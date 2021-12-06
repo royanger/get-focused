@@ -11,18 +11,31 @@ interface Productivity {
   }
 }
 
-export default function Productivity({
-  entries: { id, userId, dateId, score },
-}: Productivity) {
+export default function Productivity({ entries }: Productivity) {
   let items = [...Array(10)]
 
-  let radioInputs = items.map((item, index) => {
-    return (
-      <div key={index}>
-        <Radio value={index} checked={index + 1 <= score ? true : false} />
-      </div>
-    )
-  })
+  let radioInputs
+
+  if (entries?.id) {
+    radioInputs = items.map((item, index) => {
+      return (
+        <div key={index}>
+          <Radio
+            value={index}
+            checked={index + 1 <= entries.score ? true : false}
+          />
+        </div>
+      )
+    })
+  } else {
+    radioInputs = items.map((item, index) => {
+      return (
+        <div key={index}>
+          <Radio value={index} checked={false} />
+        </div>
+      )
+    })
+  }
 
   return (
     <>

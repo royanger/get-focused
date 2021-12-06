@@ -10,22 +10,33 @@ interface Wellness {
   }
 }
 
-export default function Wellness({
-  entries: { id, userId, rating, dateId },
-}: Wellness) {
+export default function Wellness({ entries }: Wellness) {
   let items = [...Array(10)]
+  let radioInputs
 
-  let radioInputs = items.map((item, index) => {
-    return (
-      <div key={index}>
-        <Radio value={index} checked={index + 1 <= rating ? true : false} />
-      </div>
-    )
-  })
-
-  {
-    /* <p>From DB: {data?.wellness && data.wellness[0]?.rating}</p> */
+  if (entries?.id) {
+    // use existing rating to build elements
+    radioInputs = items.map((item, index) => {
+      return (
+        <div key={index}>
+          <Radio
+            value={index}
+            checked={index + 1 <= entries.rating ? true : false}
+          />
+        </div>
+      )
+    })
+  } else {
+    // build empty elements for page
+    radioInputs = items.map((item, index) => {
+      return (
+        <div key={index}>
+          <Radio value={index} checked={false} />
+        </div>
+      )
+    })
   }
+
   return (
     <>
       <HeaderTwo>How do you feel?</HeaderTwo>

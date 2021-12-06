@@ -12,10 +12,16 @@ export default function Exercise({ entries }: Exercise) {
     <div className="mb-4">
       <HeaderTwo>Did you exercise today?</HeaderTwo>
       <div>
-        <Checkbox status={entries.completed} label="Yes" />
+        <Checkbox
+          status={entries?.completed ? entries.completed : false}
+          label="Yes"
+        />
       </div>
       <div>
-        <Checkbox status={!entries.completed} label="No" />
+        <Checkbox
+          status={entries?.completed ? !entries.completed : false}
+          label="No"
+        />
       </div>
     </div>
   )
