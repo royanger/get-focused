@@ -54,7 +54,7 @@ export default function TaskElement({
 
   return (
     <div className={`mb-3 ${currentStateDiv}`}>
-      <Form>
+      <Form method="post" action="/daily/planner">
         <div className="p-2 grid grid-cols-10">
           <div className="flex flex-row items-center col-span-7  pr-4">
             <Input
