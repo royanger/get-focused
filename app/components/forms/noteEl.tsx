@@ -1,5 +1,6 @@
 import NoteSave from './noteSave'
 import NoteCancel from './noteCancel'
+import { Form } from 'remix'
 
 interface Note {
   id: string
@@ -10,17 +11,18 @@ interface Note {
 export default function NoteEl({ id, dateId, note }: Note) {
   return (
     <>
-      {/* {id}
-      {dateId}
-      {note} */}
-      <input
-        type="textarea"
-        defaultValue={note}
-        className="w-full h-36 border-2 border-purple rounded"
-      />
-      <NoteSave />
+      <Form method="post" action="/daily/planner">
+        <input type="hidden" name="formType" value="note" />
+        <input
+          type="textarea"
+          defaultValue={note}
+          name={id}
+          className="w-full h-36 border-2 border-purple rounded"
+        />
+        <NoteSave />
 
-      <NoteCancel />
+        <NoteCancel />
+      </Form>
     </>
   )
 }
