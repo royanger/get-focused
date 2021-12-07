@@ -1,12 +1,13 @@
-interface Props {
+interface Button {
   title: string
   variant?: string
   size?: string
   children?: string
-  onClick: (values: string) => void
+  type?: string
+  onClick?: (values: string) => void
 }
 
-const Button = ({ title, variant, size, children, onClick }: Props) => {
+const Button = ({ title, variant, size, children, type, onClick }: Button) => {
   let baseStyles = 'rounded shadow-lg uppercase'
 
   let stylesMap: any = {
@@ -30,6 +31,15 @@ const Button = ({ title, variant, size, children, onClick }: Props) => {
     lg: 'text-lg px-5 pb-3 m-3 pt-2',
   }
 
+  let buttonType
+  if (type && type === 'submit') {
+    buttonType = 'submit'
+  } else if (type && type === 'reset') {
+    buttonType = 'reset'
+  } else {
+    buttonType = 'button'
+  }
+
   if (
     variant === 'warning' ||
     variant === 'cancel' ||
@@ -40,6 +50,7 @@ const Button = ({ title, variant, size, children, onClick }: Props) => {
       <button
         className={`${baseStyles} ${stylesMap[variant]} ${sizeMap[buttonSize]}`}
         onClick={() => onClick('default')}
+        type={buttonType}
       >
         {title}
       </button>
@@ -54,6 +65,7 @@ const Button = ({ title, variant, size, children, onClick }: Props) => {
          ${stylesMap['default']}
          ${sizeMap[buttonSize]}
          `}
+        type={buttonType}
       >
         {title}
       </button>

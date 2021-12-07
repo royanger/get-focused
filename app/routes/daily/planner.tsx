@@ -12,6 +12,7 @@ import { findExerciseEntries } from '~/queries/findExercise'
 import { findTasksEntries } from '~/queries/findTasks'
 import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
+import type { ActionFunction } from 'remix'
 
 export let loader = async () => {
   interface userId {
@@ -32,6 +33,14 @@ export let loader = async () => {
     notes: notes,
     productivity: productivity,
   }
+}
+
+export const action: ActionFunction = async ({ request }) => {
+  console.log('action triggered')
+
+  const formData = await request.formData()
+  console.log('form data', formData)
+  return 'action testing'
 }
 
 export default function DailyPlanner() {

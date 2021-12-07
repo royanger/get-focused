@@ -1,3 +1,5 @@
+import { Form } from 'remix'
+import Button from '../button'
 import Radio from '../forms/radio'
 import { HeaderTwo } from '../headlines'
 
@@ -21,6 +23,7 @@ export default function Wellness({ entries }: Wellness) {
         <div key={index}>
           <Radio
             value={index}
+            name={index}
             checked={index + 1 <= entries.rating ? true : false}
           />
         </div>
@@ -31,7 +34,7 @@ export default function Wellness({ entries }: Wellness) {
     radioInputs = items.map((item, index) => {
       return (
         <div key={index}>
-          <Radio value={index} checked={false} />
+          <Radio value={index} name="newwellness" checked={false} />
         </div>
       )
     })
@@ -41,21 +44,29 @@ export default function Wellness({ entries }: Wellness) {
     <>
       <HeaderTwo>How do you feel?</HeaderTwo>
       <p className="mb-2">Rate how you are feeling out of 10.</p>
-      <div className="flex-shrink flex">
-        <div className="grid grid-cols-10 mb-6">
-          {radioInputs}
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
-          <div>5</div>
-          <div>6</div>
-          <div>7</div>
-          <div>8</div>
-          <div>9</div>
-          <div>10</div>
+      <Form method="post" action="/daily/planner">
+        <input type="hidden" value="wellness" name="formtype" />
+        <div className="flex-shrink flex">
+          <div className="grid grid-cols-12 mb-6">
+            {radioInputs}
+            <div className="row-start-1 row-end-3 col-start-11 col-end-13">
+              <Button type="submit" title="Save">
+                Save
+              </Button>
+            </div>
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+          </div>
         </div>
-      </div>
+      </Form>
     </>
   )
 }
