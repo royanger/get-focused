@@ -61,7 +61,6 @@ function tasksByPriority({ tasks, title, info }: TasksByPriority) {
 
 export default function Tasks({ entries }: Tasks) {
   let priorityOneTasks = entries.filter(task => task.statusId === PRIORITY_1)
-  console.log('task', priorityOneTasks)
 
   let generatedP1Tasks
   let p1Title = 'What is your most important goal(s) today?'

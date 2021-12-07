@@ -45,14 +45,12 @@ export default function Wellness({ entries }: Wellness) {
       <HeaderTwo>How do you feel?</HeaderTwo>
       <p className="mb-2">Rate how you are feeling out of 10.</p>
       <Form method="post" action="/daily/planner">
-        <input type="hidden" value="wellness" name="formtype" />
+        <input type="hidden" value="wellness" name="formType" />
         <div className="flex-shrink flex">
           <div className="grid grid-cols-12 mb-6">
             {radioInputs}
             <div className="row-start-1 row-end-3 col-start-11 col-end-13">
-              <Button type="submit" title="Save">
-                Save
-              </Button>
+              <Button type="submit" title="Save" />
             </div>
             <div>1</div>
             <div>2</div>
