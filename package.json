@@ -13,7 +13,8 @@
     "start": "npm run tailwind-prod && npm run start:remix",
     "start:remix": "remix-serve build",
     "tailwind-dev": "tailwindcss --output ./app/styles/tailwind.css --config ./config/tailwind.js --watch",
-    "tailwind-prod": "tailwindcss --output ./app/styles/tailwind.css --config ./config/tailwind.js --minify"
+    "tailwind-prod": "tailwindcss --output ./app/styles/tailwind.css --config ./config/tailwind.js --minify",
+    "prisma": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^3.6.0",
