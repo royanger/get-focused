@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from 'remix'
+import { createCookieSessionStorage, Session } from 'remix'
 
 export let sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -11,4 +11,8 @@ export let sessionStorage = createCookieSessionStorage({
   },
 })
 
-export let { getSession, commitSession, destroySession } = sessionStorage
+export function getSession(request: Request): Promise<Session> {
+  return sessionStorage.getSession(request.headers.get('Cookie'))
+}
+
+export let { commitSession, destroySession } = sessionStorage

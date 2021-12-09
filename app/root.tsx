@@ -8,10 +8,12 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  LoaderFunction,
   useLoaderData,
   useLocation,
 } from 'remix'
 import type { LinksFunction } from 'remix'
+import { authenticator } from '~/services/auth.server'
 import Stars from './components/icons/stars'
 import Container from './components/container'
 
@@ -144,8 +146,14 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
             >
               Weekly Review
             </Link>
-            <Link className="text-xl hover:text-grey-300" to="/daily/planner">
+            <Link
+              className="text-xl mr-8 hover:text-grey-300"
+              to="/daily/planner"
+            >
               Daily Planner
+            </Link>
+            <Link className="text-xl hover:text-grey-300" to="/logout">
+              Logout
             </Link>
           </div>
         </header>

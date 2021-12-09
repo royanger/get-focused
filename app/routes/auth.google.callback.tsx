@@ -3,7 +3,7 @@ import { authenticator } from '~/services/auth.server'
 
 export let loader: LoaderFunction = async ({ request }) => {
   await authenticator.authenticate('google', request, {
-    successRedirect: '/',
+    successRedirect: '/dashboard',
     failureRedirect: '/login',
   })
 }

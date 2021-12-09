@@ -20,9 +20,7 @@ export let loader: LoaderFunction = async ({ request }) => {
 
 export default function Login() {
   return (
-    <form action="/login" method="post">
-      <input type="text" name="username" required />
-      <input type="password" name="password" required />
+    <form action="/auth/google" method="post">
       <button>Log In</button>
     </form>
   )

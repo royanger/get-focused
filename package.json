@@ -16,7 +16,7 @@
     "tailwind-prod": "tailwindcss --output ./app/styles/tailwind.css --config ./config/tailwind.js --minify"
   },
   "dependencies": {
-    "@prisma/client": "^3.5.0",
+    "@prisma/client": "^3.6.0",
     "@remix-run/react": "^1.0.4",
     "@remix-run/serve": "^1.0.4",
     "@tailwindcss/forms": "^0.3.4",
