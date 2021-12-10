@@ -11,6 +11,7 @@ import {
   LoaderFunction,
   useLoaderData,
   useLocation,
+  Form,
 } from 'remix'
 import type { LinksFunction } from 'remix'
 import { authenticator } from '~/services/auth.server'
@@ -75,6 +76,11 @@ export let links: LinksFunction = () => {
   ]
 }
 
+export let loader: LoaderFunction = async ({ request }) => {
+  let user = await authenticator.isAuthenticated(request)
+  return { user }
+}
+
 /**
  * The root module's default export is a component that renders the current
  * route via the `<Outlet />` component. Think of this as the global layout
@@ -118,6 +124,7 @@ function Document({
 }
 
 function Layout({ children }: React.PropsWithChildren<{}>) {
+  let data = useLoaderData<{ user: User; message: string }>()
   return (
     <>
       <Container bgColor="bg-purple">
@@ -131,30 +138,29 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
             </Link>
           </div>
           <div className="flex flex-row items-center">
-            <Link className="text-xl mr-8 hover:text-grey-300" to="/dashboard">
+            <Link className="mr-8 hover:text-grey-300" to="/dashboard">
               Dashboard
             </Link>
-            <Link
-              className="text-xl mr-8 hover:text-grey-300"
-              to="/weekly/planner"
-            >
+            <Link className="mr-8 hover:text-grey-300" to="/weekly/planner">
               Weekly Planner
             </Link>
-            <Link
-              className="text-xl mr-8 hover:text-grey-300"
-              to="/weekly/review"
-            >
+            <Link className="mr-8 hover:text-grey-300" to="/weekly/review">
               Weekly Review
             </Link>
-            <Link
-              className="text-xl mr-8 hover:text-grey-300"
-              to="/daily/planner"
-            >
+            <Link className="mr-8 hover:text-grey-300" to="/daily/planner">
               Daily Planner
             </Link>
-            <Link className="text-xl hover:text-grey-300" to="/logout">
-              Logout
-            </Link>
+            {data.user ? (
+              <>
+                <Form action="/logout" method="post">
+                  <button>Logout</button>
+                </Form>
+              </>
+            ) : (
+              <form action="/auth/google" method="post">
+                <button>Log In</button>
+              </form>
+            )}
           </div>
         </header>
       </Container>
