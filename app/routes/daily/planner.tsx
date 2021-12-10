@@ -6,25 +6,22 @@ import Exercise from '~/components/daily/exercise'
 import Tasks from '~/components/daily/tasks'
 import Notes from '~/components/daily/notes'
 import Productivity from '~/components/daily/productivity'
-import { returnUserId } from '~/libs/user'
 import { findWellnessEntries } from '~/queries/findWellness'
 import { findExerciseEntries } from '~/queries/findExercise'
 import { findTasksEntries } from '~/queries/findTasks'
 import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
-import type { ActionFunction } from 'remix'
+import type { ActionFunction, LoaderFunction } from 'remix'
+import { authenticator } from '~/services/auth.server'
 
-export let loader = async () => {
-  interface userId {
-    userId: string
-  }
-  let userId = returnUserId()
+export let loader: LoaderFunction = async ({ request }) => {
+  let user = await authenticator.isAuthenticated(request)
 
-  let wellness = await findWellnessEntries('today', userId)
-  let exercise = await findExerciseEntries('today', userId)
-  let dailyTasks = await findTasksEntries('today', userId)
-  let notes = await findNotesEntries('today', userId)
-  let productivity = await findProductivityEntries('today', userId)
+  let wellness = await findWellnessEntries('today', user.id)
+  let exercise = await findExerciseEntries('today', user.id)
+  let dailyTasks = await findTasksEntries('today', user.id)
+  let notes = await findNotesEntries('today', user.id)
+  let productivity = await findProductivityEntries('today', user.id)
 
   return {
     tasks: dailyTasks,
