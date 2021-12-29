@@ -17,19 +17,26 @@ import { authenticator } from '~/services/auth.server'
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
 
-  let wellness = await findWellnessEntries('today', user.id)
-  let exercise = await findExerciseEntries('today', user.id)
-  let dailyTasks = await findTasksEntries('today', user.id)
-  let notes = await findNotesEntries('today', user.id)
-  let productivity = await findProductivityEntries('today', user.id)
+  let wellness = findWellnessEntries('today', user.id)
+  let exercise = findExerciseEntries('today', user.id)
+  let dailyTasks = findTasksEntries('today', user.id)
+  let notes = findNotesEntries('today', user.id)
+  let productivity = findProductivityEntries('today', user.id)
 
-  return {
-    tasks: dailyTasks,
-    wellness: wellness,
-    exercise: exercise,
-    notes: notes,
-    productivity: productivity,
-  }
+  let data = {}
+  await Promise.all([wellness, exercise, dailyTasks, notes, productivity]).then(
+    results => {
+      console.log('test', results[0])
+
+      data.wellness = results[0]
+      data.exercise = results[1]
+      data.tasks = results[2]
+      data.notes = results[3]
+      data.productivity = results[4]
+    }
+  )
+
+  return data
 }
 
 export const action: ActionFunction = async ({ request }) => {
