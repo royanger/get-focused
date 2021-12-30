@@ -1,4 +1,9 @@
-import { useLoaderData } from 'remix'
+import {
+  useLoaderData,
+  ActionFunction,
+  LoaderFunction,
+  useActionData,
+} from 'remix'
 import Container from '~/components/container'
 import { HeaderOne } from '~/components/headlines'
 import Wellness from '~/components/daily/wellness'
@@ -11,8 +16,8 @@ import { findExerciseEntries } from '~/queries/findExercise'
 import { findTasksEntries } from '~/queries/findTasks'
 import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
-import type { ActionFunction, LoaderFunction } from 'remix'
 import { authenticator } from '~/services/auth.server'
+import { validateWellnessForm } from '~/libs/wellness'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -26,8 +31,6 @@ export let loader: LoaderFunction = async ({ request }) => {
   let data = {}
   await Promise.all([wellness, exercise, dailyTasks, notes, productivity]).then(
     results => {
-      console.log('test', results[0])
-
       data.wellness = results[0]
       data.exercise = results[1]
       data.tasks = results[2]
@@ -43,12 +46,19 @@ export const action: ActionFunction = async ({ request }) => {
   console.log('action triggered')
 
   const formData = await request.formData()
-  console.log('form data', formData)
+
+  if (formData.get('formType') === 'wellness') {
+    let results = validateWellnessForm(formData)
+    console.log('results', results)
+    return results
+  }
+
   return 'action testing'
 }
 
 export default function DailyPlanner() {
   let data = useLoaderData()
+  const errors = useActionData()
 
   return (
     <>
@@ -56,7 +66,10 @@ export default function DailyPlanner() {
         <div className="mt-8">
           <HeaderOne>Daily Planner</HeaderOne>
 
-          <Wellness entries={data.wellness} />
+          <Wellness
+            entries={data.wellness}
+            errors={errors?.formType === 'wellness' ? errors : null}
+          />
 
           <Exercise entries={data.exercise} />
 
