@@ -66,12 +66,17 @@ function tasksByPriority({
       {taskList}
       <TaskElement
         key={`newtask-${type}`}
-        id="newtask"
+        id={`newtask-${type}`}
         name="Create a new task"
         goalTime="0"
         actualTime="0"
         timeTracker={0}
       />
+      {errors && errors.id === `newtask-${type}` ? (
+        <div className="text-sm text-error mb-6 h-5">
+          {errors ? errors.msg : ''}
+        </div>
+      ) : null}
     </React.Fragment>
   )
 }
