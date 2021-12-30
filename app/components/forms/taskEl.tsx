@@ -56,6 +56,7 @@ export default function TaskElement({
     <div className={`mb-3 ${currentStateDiv}`}>
       <Form method="post" action="/daily/planner">
         <input type="hidden" name="formType" value="task" />
+        <input type="hidden" name="id" value={id} />
         <div className="p-2 grid grid-cols-10">
           <div className="flex flex-row items-center col-span-7  pr-4">
             <Input
@@ -94,6 +95,7 @@ export default function TaskElement({
               />
               <div className="w-12 first:w-7 text-purple h-auto flex justify-center">
                 <button
+                  type="button"
                   className="border-1 border-orange first:w-6 w-full "
                   onClick={() => setFormState('edit')}
                 >

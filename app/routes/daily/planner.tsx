@@ -17,8 +17,9 @@ import { findTasksEntries } from '~/queries/findTasks'
 import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
 import { authenticator } from '~/services/auth.server'
-import { validateWellnessForm } from '~/libs/wellness'
-import { validateExerciseForm } from '~/libs/exercise'
+import { validateWellnessForm } from '~/libs/wellnessActions'
+import { validateExerciseForm } from '~/libs/exerciseActions'
+import { validateTaskForm } from '~/libs/taskActions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -59,6 +60,11 @@ export const action: ActionFunction = async ({ request }) => {
     console.log('results', results)
     return results
   }
+  if (formData.get('formType') === 'task') {
+    let results = validateTaskForm(formData)
+    console.log('results - task validation', results)
+    return results
+  }
 
   return 'action testing'
 }
@@ -83,7 +89,10 @@ export default function DailyPlanner() {
             errors={errors?.formType === 'exercise' ? errors : null}
           />
 
-          <Tasks entries={data.tasks} />
+          <Tasks
+            entries={data.tasks}
+            errors={errors?.formType === 'task' ? errors : null}
+          />
 
           <Notes entries={data.notes} />
 
