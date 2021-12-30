@@ -18,6 +18,7 @@ import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
 import { authenticator } from '~/services/auth.server'
 import { validateWellnessForm } from '~/libs/wellness'
+import { validateExerciseForm } from '~/libs/exercise'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -53,6 +54,12 @@ export const action: ActionFunction = async ({ request }) => {
     return results
   }
 
+  if (formData.get('formType') === 'exercise') {
+    let results = validateExerciseForm(formData)
+    console.log('results', results)
+    return results
+  }
+
   return 'action testing'
 }
 
@@ -71,7 +78,10 @@ export default function DailyPlanner() {
             errors={errors?.formType === 'wellness' ? errors : null}
           />
 
-          <Exercise entries={data.exercise} />
+          <Exercise
+            entries={data.exercise}
+            errors={errors?.formType === 'exercise' ? errors : null}
+          />
 
           <Tasks entries={data.tasks} />
 
