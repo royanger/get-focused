@@ -6,24 +6,24 @@ export async function updateOrCreateWellness(
   rating: number,
   userId: string
 ) {
-  console.log('id', id, 'rating', rating, 'userId', userId)
   let dateResults = await findOrCreateDate('today')
 
   await prisma.$connect()
 
-  let user
+  let wellness
+  // if there was no wellness entry, create one
   if (id === 'new') {
-    console.log('create wellness entry')
-    let user = await prisma.wellness.create({
+    let wellness = await prisma.wellness.create({
       data: {
         rating: parseInt(rating),
         userId: userId,
         dateId: dateResults.id,
       },
     })
+    return wellness
   } else {
-    console.log('update wellness')
-    user = await prisma.wellness.update({
+    // update existing entry
+    wellness = await prisma.wellness.update({
       where: {
         id: id,
       },
@@ -33,19 +33,19 @@ export async function updateOrCreateWellness(
     })
   }
 
-  //   let results = await prisma.user.findUnique({
-  //     where: {
-  //       googleId: googleId,
-  //     },
-  //   })
+  let results = await prisma.wellness.findUnique({
+    where: {
+      id: id,
+    },
+  })
 
-  //   if (!user) {
-  //     throw new Error('failed to create or update user')
-  //   }
+  if (!wellness) {
+    throw new Error('failed to create or update wellness')
+  }
 
-  //   if (results) {
-  //     return results
-  //   } else {
-  //     throw new Error('failed to query new/updated user successfully')
-  //   }
+  if (results) {
+    return results
+  } else {
+    throw new Error('failed to query new/updated wellness successfully')
+  }
 }
