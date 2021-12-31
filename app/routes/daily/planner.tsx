@@ -1,4 +1,12 @@
-import { useLoaderData } from 'remix'
+import {
+  useLoaderData,
+  ActionFunction,
+  LoaderFunction,
+  useActionData,
+} from 'remix'
+import { authenticator } from '~/services/auth.server'
+
+// componenents
 import Container from '~/components/container'
 import { HeaderOne } from '~/components/headlines'
 import Wellness from '~/components/daily/wellness'
@@ -6,13 +14,20 @@ import Exercise from '~/components/daily/exercise'
 import Tasks from '~/components/daily/tasks'
 import Notes from '~/components/daily/notes'
 import Productivity from '~/components/daily/productivity'
+
+// libs for handling queries
 import { findWellnessEntries } from '~/queries/findWellness'
 import { findExerciseEntries } from '~/queries/findExercise'
 import { findTasksEntries } from '~/queries/findTasks'
 import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
-import type { ActionFunction, LoaderFunction } from 'remix'
-import { authenticator } from '~/services/auth.server'
+
+// validators for form submissions
+import { validateWellnessForm } from '~/libs/wellnessActions'
+import { validateExerciseForm } from '~/libs/exerciseActions'
+import { validateTaskForm } from '~/libs/taskActions'
+import { validateNotesForm } from '~/libs/noteActions'
+import { validateProductivityForm } from '~/libs/productivityActons'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -26,8 +41,6 @@ export let loader: LoaderFunction = async ({ request }) => {
   let data = {}
   await Promise.all([wellness, exercise, dailyTasks, notes, productivity]).then(
     results => {
-      console.log('test', results[0])
-
       data.wellness = results[0]
       data.exercise = results[1]
       data.tasks = results[2]
@@ -43,12 +56,35 @@ export const action: ActionFunction = async ({ request }) => {
   console.log('action triggered')
 
   const formData = await request.formData()
-  console.log('form data', formData)
+
+  if (formData.get('formType') === 'wellness') {
+    let results = validateWellnessForm(formData)
+    return results
+  }
+
+  if (formData.get('formType') === 'exercise') {
+    let results = validateExerciseForm(formData)
+    return results
+  }
+  if (formData.get('formType') === 'task') {
+    let results = validateTaskForm(formData)
+    return results
+  }
+  if (formData.get('formType') === 'note') {
+    let results = validateNotesForm(formData)
+    return results
+  }
+  if (formData.get('formType') === 'productivity') {
+    let results = validateProductivityForm(formData)
+    return results
+  }
+
   return 'action testing'
 }
 
 export default function DailyPlanner() {
   let data = useLoaderData()
+  const errors = useActionData()
 
   return (
     <>
@@ -56,15 +92,30 @@ export default function DailyPlanner() {
         <div className="mt-8">
           <HeaderOne>Daily Planner</HeaderOne>
 
-          <Wellness entries={data.wellness} />
+          <Wellness
+            entries={data.wellness}
+            errors={errors?.formType === 'wellness' ? errors : null}
+          />
 
-          <Exercise entries={data.exercise} />
+          <Exercise
+            entries={data.exercise}
+            errors={errors?.formType === 'exercise' ? errors : null}
+          />
 
-          <Tasks entries={data.tasks} />
+          <Tasks
+            entries={data.tasks}
+            errors={errors?.formType === 'task' ? errors : null}
+          />
 
-          <Notes entries={data.notes} />
+          <Notes
+            entries={data.notes}
+            errors={errors?.formType === 'note' ? errors : null}
+          />
 
-          <Productivity entries={data.productivity} />
+          <Productivity
+            entries={data.productivity}
+            errors={errors?.formType === 'productivity' ? errors : null}
+          />
         </div>
       </Container>
     </>

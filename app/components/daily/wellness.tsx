@@ -10,9 +10,10 @@ interface Wellness {
     rating: number
     dateId: string
   }
+  errors: any
 }
 
-export default function Wellness({ entries }: Wellness) {
+export default function Wellness({ entries, errors }: Wellness) {
   let items = [...Array(10)]
   let radioInputs
 
@@ -24,6 +25,7 @@ export default function Wellness({ entries }: Wellness) {
           <Radio
             value={index}
             name={index}
+            type="wellness"
             checked={index + 1 <= entries.rating ? true : false}
           />
         </div>
@@ -34,7 +36,7 @@ export default function Wellness({ entries }: Wellness) {
     radioInputs = items.map((item, index) => {
       return (
         <div key={index}>
-          <Radio value={index} name="newwellness" checked={false} />
+          <Radio value={index} name="new" type="wellness" checked={false} />
         </div>
       )
     })
@@ -47,7 +49,7 @@ export default function Wellness({ entries }: Wellness) {
       <Form method="post" action="/daily/planner">
         <input type="hidden" value="wellness" name="formType" />
         <div className="flex-shrink flex">
-          <div className="grid grid-cols-12 mb-6">
+          <div className="grid grid-cols-12 mb-1">
             {radioInputs}
             <div className="row-start-1 row-end-3 col-start-11 col-end-13">
               <Button type="submit" title="Save" />
@@ -63,6 +65,9 @@ export default function Wellness({ entries }: Wellness) {
             <div>9</div>
             <div>10</div>
           </div>
+        </div>
+        <div className="text-sm text-error mb-6 h-5">
+          {errors ? errors.error : ''}
         </div>
       </Form>
     </>

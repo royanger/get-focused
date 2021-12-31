@@ -7,9 +7,10 @@ interface Exercise {
   entries: {
     completed?: boolean
   }
+  errors: any
 }
 
-export default function Exercise({ entries }: Exercise) {
+export default function Exercise({ entries, errors }: Exercise) {
   return (
     <div className="mb-4">
       <HeaderTwo>Did you exercise today?</HeaderTwo>
@@ -31,6 +32,9 @@ export default function Exercise({ entries }: Exercise) {
               label="No"
             />
           </div>
+        </div>
+        <div className="text-sm text-error mb-6 h-5">
+          {errors ? errors.error : ''}
         </div>
       </Form>
     </div>

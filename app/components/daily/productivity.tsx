@@ -1,6 +1,5 @@
 import { HeaderTwo } from '../headlines'
 import Radio from '../forms/radio'
-import { findNotesEntries } from '~/queries/findNotes'
 import { Form } from 'remix'
 import Button from '../button'
 
@@ -11,30 +10,33 @@ interface Productivity {
     dateId: string
     score: number
   }
+  errors: any
 }
 
-export default function Productivity({ entries }: Productivity) {
+export default function Productivity({ entries, errors }: Productivity) {
   let items = [...Array(10)]
-
   let radioInputs
 
   if (entries?.id) {
+    // use existing score to build an array
     radioInputs = items.map((item, index) => {
       return (
         <div key={index}>
           <Radio
             value={index}
             name={index + 1}
+            type="productivity"
             checked={index + 1 <= entries.score ? true : false}
           />
         </div>
       )
     })
   } else {
+    // build and empty array for a new entry
     radioInputs = items.map((item, index) => {
       return (
         <div key={index}>
-          <Radio value={index} name="newproductivity" checked={false} />
+          <Radio value={index} name="new" type="productivity" checked={false} />
         </div>
       )
     })
@@ -63,6 +65,9 @@ export default function Productivity({ entries }: Productivity) {
             <div>9</div>
             <div>10</div>
           </div>
+        </div>
+        <div className="text-sm text-error mb-6 h-5">
+          {errors ? errors.msg : ''}
         </div>
       </Form>
     </>

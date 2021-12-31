@@ -8,9 +8,10 @@ interface Notes {
     dateId: string
     note: string
   }[]
+  errors: any
 }
 
-export default function Notes({ entries }: Notes) {
+export default function Notes({ entries, errors }: Notes) {
   return (
     <>
       <HeaderTwo>Notes</HeaderTwo>
@@ -18,6 +19,9 @@ export default function Notes({ entries }: Notes) {
         Jot down any notes. These will be shown on the Weekly Review and can be
         accessed through your dashboard.
       </p>
+      <div className="text-sm text-error mb-6 h-5">
+        {errors ? errors.msg : ''}
+      </div>
 
       {entries.map(data => {
         return (
