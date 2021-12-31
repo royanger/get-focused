@@ -27,6 +27,7 @@ import { validateWellnessForm } from '~/libs/wellnessActions'
 import { validateExerciseForm } from '~/libs/exerciseActions'
 import { validateTaskForm } from '~/libs/taskActions'
 import { validateNotesForm } from '~/libs/noteActions'
+import { validateProductivityForm } from '~/libs/productivityActons'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -71,7 +72,10 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (formData.get('formType') === 'note') {
     let results = validateNotesForm(formData)
-    console.log('notes - task validation', results)
+    return results
+  }
+  if (formData.get('formType') === 'productivity') {
+    let results = validateProductivityForm(formData)
     return results
   }
 
@@ -108,7 +112,10 @@ export default function DailyPlanner() {
             errors={errors?.formType === 'note' ? errors : null}
           />
 
-          <Productivity entries={data.productivity} />
+          <Productivity
+            entries={data.productivity}
+            errors={errors?.formType === 'productivity' ? errors : null}
+          />
         </div>
       </Container>
     </>

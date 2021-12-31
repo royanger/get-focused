@@ -25,6 +25,7 @@ export default function Wellness({ entries, errors }: Wellness) {
           <Radio
             value={index}
             name={index}
+            type="wellness"
             checked={index + 1 <= entries.rating ? true : false}
           />
         </div>
@@ -35,7 +36,7 @@ export default function Wellness({ entries, errors }: Wellness) {
     radioInputs = items.map((item, index) => {
       return (
         <div key={index}>
-          <Radio value={index} name="new" checked={false} />
+          <Radio value={index} name="new" type="wellness" checked={false} />
         </div>
       )
     })
