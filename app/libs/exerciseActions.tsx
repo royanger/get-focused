@@ -3,8 +3,6 @@ import { updateOrCreateExercise } from '~/queries/updateorCreateExercise'
 export function validateExerciseForm(formData, user) {
   const errors = {}
 
-  console.log('exercse', formData)
-
   // make sure that one of the boxes is selected and error if none are
   if (formData.get('yes') !== 'on' && formData.get('no') !== 'on') {
     errors.formType = 'exercise'

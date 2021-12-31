@@ -33,7 +33,7 @@ export default function Notes({ entries, errors }: Notes) {
           />
         )
       })}
-      <NoteEl key="newnote" id="newnote" note="" />
+      <NoteEl key="newnote" id="note-new" note="" />
     </>
   )
 }
