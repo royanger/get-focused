@@ -4,6 +4,9 @@ import {
   LoaderFunction,
   useActionData,
 } from 'remix'
+import { authenticator } from '~/services/auth.server'
+
+// componenents
 import Container from '~/components/container'
 import { HeaderOne } from '~/components/headlines'
 import Wellness from '~/components/daily/wellness'
@@ -11,15 +14,19 @@ import Exercise from '~/components/daily/exercise'
 import Tasks from '~/components/daily/tasks'
 import Notes from '~/components/daily/notes'
 import Productivity from '~/components/daily/productivity'
+
+// libs for handling queries
 import { findWellnessEntries } from '~/queries/findWellness'
 import { findExerciseEntries } from '~/queries/findExercise'
 import { findTasksEntries } from '~/queries/findTasks'
 import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
-import { authenticator } from '~/services/auth.server'
+
+// validators for form submissions
 import { validateWellnessForm } from '~/libs/wellnessActions'
 import { validateExerciseForm } from '~/libs/exerciseActions'
 import { validateTaskForm } from '~/libs/taskActions'
+import { validateNotesForm } from '~/libs/noteActions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -51,18 +58,20 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (formData.get('formType') === 'wellness') {
     let results = validateWellnessForm(formData)
-    console.log('results', results)
     return results
   }
 
   if (formData.get('formType') === 'exercise') {
     let results = validateExerciseForm(formData)
-    console.log('results', results)
     return results
   }
   if (formData.get('formType') === 'task') {
     let results = validateTaskForm(formData)
-    console.log('results - task validation', results)
+    return results
+  }
+  if (formData.get('formType') === 'note') {
+    let results = validateNotesForm(formData)
+    console.log('notes - task validation', results)
     return results
   }
 
@@ -94,7 +103,10 @@ export default function DailyPlanner() {
             errors={errors?.formType === 'task' ? errors : null}
           />
 
-          <Notes entries={data.notes} />
+          <Notes
+            entries={data.notes}
+            errors={errors?.formType === 'note' ? errors : null}
+          />
 
           <Productivity entries={data.productivity} />
         </div>

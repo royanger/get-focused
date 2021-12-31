@@ -23,6 +23,6 @@ export function validateTaskForm(formData) {
     return errors
   }
 
-  // handle updating/creating via upset for entries.
+  // handle updating/creating via upsert for entries.
   return null
 }
