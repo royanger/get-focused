@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { Form } from 'remix'
 import Button from '../button'
 import Radio from '../forms/radio'
@@ -14,19 +15,27 @@ interface Wellness {
 }
 
 export default function Wellness({ entries, errors }: Wellness) {
+  const [rating, setRating] = React.useState(
+    entries?.rating ? entries.rating : 0
+  )
   let items = [...Array(10)]
   let radioInputs
+
+  function handleChange(e) {
+    setRating(e.target.value)
+  }
 
   if (entries?.id) {
     // use existing rating to build elements
     radioInputs = items.map((item, index) => {
       return (
-        <div key={index}>
+        <div key={index + 1}>
           <Radio
-            value={index}
-            name={index}
+            value={index + 1}
+            name={index + 1}
             type="wellness"
-            checked={index + 1 <= entries.rating ? true : false}
+            checked={index + 1 <= rating ? true : false}
+            handleChange={handleChange}
           />
         </div>
       )
@@ -35,8 +44,14 @@ export default function Wellness({ entries, errors }: Wellness) {
     // build empty elements for page
     radioInputs = items.map((item, index) => {
       return (
-        <div key={index}>
-          <Radio value={index} name="new" type="wellness" checked={false} />
+        <div key={index + 1}>
+          <Radio
+            value={index + 1}
+            name="new"
+            type="wellness"
+            checked={index + 1 <= rating ? true : false}
+            handleChange={handleChange}
+          />
         </div>
       )
     })
@@ -48,6 +63,12 @@ export default function Wellness({ entries, errors }: Wellness) {
       <p className="mb-2">Rate how you are feeling out of 10.</p>
       <Form method="post" action="/daily/planner">
         <input type="hidden" value="wellness" name="formType" />
+        <input
+          type="hidden"
+          value={entries?.id ? entries.id : 'new'}
+          name="id"
+        />
+        <input type="hidden" value={rating} name="rating" />
         <div className="flex-shrink flex">
           <div className="grid grid-cols-12 mb-1">
             {radioInputs}

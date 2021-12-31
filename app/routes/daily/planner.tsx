@@ -53,29 +53,28 @@ export let loader: LoaderFunction = async ({ request }) => {
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  console.log('action triggered')
-
   const formData = await request.formData()
+  let user = await authenticator.isAuthenticated(request)
 
   if (formData.get('formType') === 'wellness') {
-    let results = validateWellnessForm(formData)
+    let results = validateWellnessForm(formData, user)
     return results
   }
 
   if (formData.get('formType') === 'exercise') {
-    let results = validateExerciseForm(formData)
+    let results = validateExerciseForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'task') {
-    let results = validateTaskForm(formData)
+    let results = validateTaskForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'note') {
-    let results = validateNotesForm(formData)
+    let results = validateNotesForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'productivity') {
-    let results = validateProductivityForm(formData)
+    let results = validateProductivityForm(formData, user)
     return results
   }
 

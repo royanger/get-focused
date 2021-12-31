@@ -1,9 +1,17 @@
-export function validateWellnessForm(formData) {
+import { updateOrCreateWellness } from '~/queries/updateOrCreateWellness'
+
+export async function validateWellnessForm(formData, user) {
   console.log('formData', formData)
 
   if (formData.get(`wellness-new`)) {
     // this is new wellness entry and no an edit/update
     // create entry in database
+    const results = await updateOrCreateWellness(
+      formData.get('id'),
+      formData.get('rating'),
+      user.id
+    )
+
     return null
   }
 
@@ -24,6 +32,14 @@ export function validateWellnessForm(formData) {
     return errors
   }
 
+  const results = await updateOrCreateWellness(
+    formData.get('id'),
+    formData.get('rating'),
+    user.id
+  )
+
+  console.log('query results in action', results)
+
   // latter we need to update the database
-  return null
+  return results
 }

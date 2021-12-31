@@ -15,7 +15,7 @@ import {
 } from 'remix'
 import type { LinksFunction } from 'remix'
 import { authenticator } from '~/services/auth.server'
-import Stars from './components/icons/stars'
+import Logo from './components/icons/logo'
 import Container from './components/container'
 
 import tailwindUrl from './styles/tailwind.css'
@@ -128,13 +128,13 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
   return (
     <>
       <Container bgColor="bg-purple">
-        <header className="text-white flex">
+        <header className="text-white flex my-4">
           <div className="flex flex-row flex-grow">
             <Link to="/" className="flex flex-row items-center text-2xl">
-              <span className="w-6 my-6 mr-4 h-auto">
-                <Stars />
+              <span className="w-6 mr-4 h-auto relative bottom-[-2px]">
+                <Logo />
               </span>
-              Productivity App
+              Get Focused
             </Link>
           </div>
           <div className="flex flex-row items-center">
