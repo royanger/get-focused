@@ -12,7 +12,7 @@ export async function validateWellnessForm(formData, user) {
       user.id
     )
 
-    return null
+    return results
   }
 
   let wellnessScore = []

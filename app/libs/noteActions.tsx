@@ -27,5 +27,5 @@ export async function validateNotesForm(formData, user) {
     formData.get('message'),
     user.id
   )
-  return null
+  return results
 }
