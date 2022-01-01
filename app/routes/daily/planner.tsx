@@ -6,7 +6,7 @@ import {
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
 
-// componenents
+// components
 import Container from '~/components/container'
 import { HeaderOne } from '~/components/headlines'
 import Wellness from '~/components/daily/wellness'
