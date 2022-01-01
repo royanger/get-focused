@@ -50,6 +50,7 @@ function tasksByPriority({
           goalTime={task.goalTime}
           actualTime={task.actualTime}
           timeTracker={task.timeTracker}
+          type={type}
         />
         {errors && errors.id === task.id ? (
           <div className="text-sm text-error mb-6 h-5">
@@ -71,6 +72,7 @@ function tasksByPriority({
         goalTime="0"
         actualTime="0"
         timeTracker={0}
+        type={type}
       />
       {errors && errors.id === `newtask-${type}` ? (
         <div className="text-sm text-error mb-6 h-5">

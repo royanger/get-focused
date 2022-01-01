@@ -8,15 +8,11 @@ export async function updateOrCreateProductivity(
 ) {
   let dateResults = await findOrCreateDate('today')
 
-  console.log('query', id, score, userId)
-
   await prisma.$connect()
 
   let productivity
   // if there was no wellness entry, create one
   if (id === 'new') {
-    console.log('trying to create productivity')
-
     let productivity = await prisma.productivity.create({
       data: {
         score: parseInt(score),
@@ -26,8 +22,6 @@ export async function updateOrCreateProductivity(
     })
     return productivity
   } else {
-    console.log('updating productivity')
-
     // update existing entry
     productivity = await prisma.productivity.update({
       where: {

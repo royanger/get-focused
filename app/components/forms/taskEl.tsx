@@ -15,6 +15,7 @@ interface Tasks {
   actualTime: string
   goalTime: string
   timeTracker: number
+  type: string
 }
 
 export default function TaskElement({
@@ -23,6 +24,7 @@ export default function TaskElement({
   goalTime,
   actualTime,
   timeTracker,
+  type,
 }: Tasks) {
   // this controls changes for all elements. Pass this as a prop as needed
   let [formState, setFormState] = React.useState('default')
@@ -57,6 +59,7 @@ export default function TaskElement({
       <Form method="post" action="/daily/planner">
         <input type="hidden" name="formType" value="task" />
         <input type="hidden" name="id" value={id} />
+        <input type="hidden" name="type" value={type} />
         <div className="p-2 grid grid-cols-10">
           <div className="flex flex-row items-center col-span-7  pr-4">
             <Input

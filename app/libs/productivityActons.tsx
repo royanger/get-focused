@@ -1,8 +1,6 @@
 import { updateOrCreateProductivity } from '~/queries/updateOrCreateProductivity'
 
 export async function validateProductivityForm(formData, user) {
-  console.log('formData for productivity', formData)
-
   if (formData.get(`productivity-new`)) {
     // this is new wellness entry and no an edit/update
     // create entry in database
@@ -22,8 +20,6 @@ export async function validateProductivityForm(formData, user) {
     }
   })
 
-  console.log('productivityScore', productivityScore)
-
   const errors = {}
   if (productivityScore.length < 1) {
     errors.formType = 'productivity'
@@ -38,7 +34,7 @@ export async function validateProductivityForm(formData, user) {
 
   const results = await updateOrCreateProductivity(
     formData.get('id'),
-    parseInt(formData.get('rating')),
+    formData.get('rating'),
     user.id
   )
   return null

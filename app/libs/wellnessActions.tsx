@@ -1,8 +1,6 @@
 import { updateOrCreateWellness } from '~/queries/updateOrCreateWellness'
 
 export async function validateWellnessForm(formData, user) {
-  console.log('formData', formData)
-
   if (formData.get(`wellness-new`)) {
     // this is new wellness entry and no an edit/update
     // create entry in database

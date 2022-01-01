@@ -2,8 +2,6 @@ import DOMPurify from 'isomorphic-dompurify'
 import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
 
 export async function validateNotesForm(formData, user) {
-  console.log('task form', formData)
-
   let msg = formData.get('message')
     ? DOMPurify.sanitize(formData.get('message'))
     : null
