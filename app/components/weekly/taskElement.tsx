@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { Form } from 'remix'
 import Button from '../button'
+import Checkbox from '../forms/checkbox'
 import Input from '../forms/input'
 import TaskCancel from '../forms/taskCancel'
 import TaskSave from '../forms/taskSave'
 
-export default function Task() {
+export default function TaskElement({ id, task, completed }) {
   const [formState, setFormState] = React.useState('default')
 
   let defaultDiv = 'border-0 rounded '
@@ -36,21 +37,18 @@ export default function Task() {
   return (
     <li className={`p-4 ${currentStateDiv}`}>
       <Form method="post" action="/weekly/planner">
+        <input type="hidden" name="id" value={id} />
+
         <div className="flex flex-row items-center">
           <Input
-            value="temp"
+            value={task}
             formState={formState}
             name="taskname"
-            placeholder="Enter your task here..."
+            placeholder={task}
             setFormState={setFormState}
             width="flex-grow"
           />
-
-          <input
-            className="mx-4 border-2 border-purple rounded text-xl w-6 h-6 "
-            type="checkbox"
-            aria-label="Completed"
-          />
+          <Checkbox status={completed} label="Completed" />
         </div>
 
         <div className={`${currentStateButtons} col-span-7`}>
