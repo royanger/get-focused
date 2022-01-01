@@ -1,6 +1,7 @@
 import Container from '~/components/container'
-import Button from '~/components/button'
+
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
+import Task from '~/components/weekly/taskElement'
 
 export default function WeeklyPlanner() {
   return (
@@ -17,26 +18,7 @@ export default function WeeklyPlanner() {
           </p>
 
           <ol className="list-decimal">
-            <li className="p-4">
-              <div className="flex flex-row items-center">
-                <input
-                  className="border-2 border-purple p-2 text-black rounded flex-grow"
-                  type="text"
-                  placeholder="Enter primary task..."
-                  aria-label="Primary Task"
-                />
-
-                <input
-                  className="mx-4 border-2 border-purple rounded text-xl w-6 h-6 "
-                  type="checkbox"
-                  aria-label="Completed"
-                />
-              </div>
-
-              <Button title="Save" />
-
-              <Button title="Cancel" variant="cancel" />
-            </li>
+            <Task />
           </ol>
           <HeaderTwo>Secondary Tasks</HeaderTwo>
           <p>

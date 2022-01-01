@@ -1,5 +1,5 @@
 import TasksTitle from './tasksTitle'
-import TaskElement from '../forms/taskEl'
+import TaskElement from '../forms/taskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
 import React from 'react'
 
