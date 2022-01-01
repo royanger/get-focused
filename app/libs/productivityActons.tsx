@@ -1,9 +1,15 @@
-export function validateProductivityForm(formData) {
-  console.log('formData for productivity', formData)
+import { updateOrCreateProductivity } from '~/queries/updateOrCreateProductivity'
 
+export async function validateProductivityForm(formData, user) {
   if (formData.get(`productivity-new`)) {
     // this is new wellness entry and no an edit/update
     // create entry in database
+    const results = await updateOrCreateProductivity(
+      formData.get('id'),
+      formData.get('rating'),
+      user.id
+    )
+
     return null
   }
 
@@ -13,8 +19,6 @@ export function validateProductivityForm(formData) {
       productivityScore.push(index)
     }
   })
-
-  console.log('productivityScore', productivityScore)
 
   const errors = {}
   if (productivityScore.length < 1) {
@@ -27,5 +31,11 @@ export function validateProductivityForm(formData) {
   }
 
   // latter we need to update the database
+
+  const results = await updateOrCreateProductivity(
+    formData.get('id'),
+    formData.get('rating'),
+    user.id
+  )
   return null
 }

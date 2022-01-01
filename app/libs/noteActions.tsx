@@ -1,8 +1,7 @@
 import DOMPurify from 'isomorphic-dompurify'
+import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
 
-export function validateNotesForm(formData) {
-  console.log('task form', formData)
-
+export async function validateNotesForm(formData, user) {
   let msg = formData.get('message')
     ? DOMPurify.sanitize(formData.get('message'))
     : null
@@ -21,5 +20,10 @@ export function validateNotesForm(formData) {
   }
 
   // handle updating/creating via upsert for entries.
-  return null
+  let results = await updateOrCreateNote(
+    formData.get('id'),
+    formData.get('message'),
+    user.id
+  )
+  return results
 }

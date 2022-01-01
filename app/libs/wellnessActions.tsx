@@ -1,8 +1,6 @@
 import { updateOrCreateWellness } from '~/queries/updateOrCreateWellness'
 
 export async function validateWellnessForm(formData, user) {
-  console.log('formData', formData)
-
   if (formData.get(`wellness-new`)) {
     // this is new wellness entry and no an edit/update
     // create entry in database
@@ -12,7 +10,7 @@ export async function validateWellnessForm(formData, user) {
       user.id
     )
 
-    return null
+    return results
   }
 
   let wellnessScore = []
@@ -38,8 +36,5 @@ export async function validateWellnessForm(formData, user) {
     user.id
   )
 
-  console.log('query results in action', results)
-
-  // latter we need to update the database
   return results
 }
