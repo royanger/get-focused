@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { Form } from 'remix'
+
+// components
 import Button from '../button'
 import Checkbox from '../forms/checkbox'
 import Input from '../forms/input'
