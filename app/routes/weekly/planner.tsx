@@ -49,7 +49,7 @@ function tasksByPriority({
 }: TasksByPriority) {
   let taskList = tasks.map(task => {
     return (
-      <>
+      <React.Fragment key={task.id}>
         <TaskElement
           key={task.id}
           id={task.id}
@@ -61,25 +61,27 @@ function tasksByPriority({
             {errors ? errors.msg : ''}
           </div>
         ) : null}
-      </>
+      </React.Fragment>
     )
   })
 
   return (
     <React.Fragment key={Math.random()}>
       <TasksTitle title={title} info={info} key={type} />
-      {taskList}
-      <TaskElement
-        key={`newtask-${type}`}
-        id={`newtask-${type}`}
-        task="Create a new task"
-        completed={false}
-      />
-      {errors && errors.id === `newtask-${type}` ? (
-        <div className="text-sm text-error mb-6 h-5">
-          {errors ? errors.msg : ''}
-        </div>
-      ) : null}
+      <ol key={`list-${type}`}>
+        {taskList}
+        <TaskElement
+          key={`newtask-${type}`}
+          id={`newtask-${type}`}
+          task="Create a new task"
+          completed={false}
+        />
+        {errors && errors.id === `newtask-${type}` ? (
+          <div className="text-sm text-error mb-6 h-5">
+            {errors ? errors.msg : ''}
+          </div>
+        ) : null}
+      </ol>
     </React.Fragment>
   )
 }
