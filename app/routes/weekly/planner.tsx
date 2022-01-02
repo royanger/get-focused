@@ -6,12 +6,17 @@ import {
   useLoaderData,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
+
+// components
 import Container from '~/components/container'
-import { HeaderOne, HeaderTwo } from '~/components/headlines'
+import { HeaderOne } from '~/components/headlines'
 import TaskElement from '~/components/weekly/taskElement'
-import { findWeeklyTasks } from '~/queries/findWeeklyTasks'
 import TasksTitle from '~/components/daily/tasksTitle'
+
+// libs for queries and actions
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '~/libs/priorityIds'
+import { findWeeklyTasks } from '~/queries/findWeeklyTasks'
+import { validateTaskForm } from '~/libs/weekly/taskActions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -21,8 +26,14 @@ export let loader: LoaderFunction = async ({ request }) => {
   return results
 }
 
-export const action: ActionFunction = ({ request }) => {
-  return null
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData()
+  let user = await authenticator.isAuthenticated(request)
+
+  let results = validateTaskForm(formData, user)
+  return results
+
+  //   return null
 }
 
 interface TasksByPriority {

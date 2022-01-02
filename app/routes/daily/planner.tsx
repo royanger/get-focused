@@ -23,11 +23,11 @@ import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
 
 // validators for form submissions
-import { validateWellnessForm } from '~/libs/wellnessActions'
-import { validateExerciseForm } from '~/libs/exerciseActions'
-import { validateTaskForm } from '~/libs/taskActions'
-import { validateNotesForm } from '~/libs/noteActions'
-import { validateProductivityForm } from '~/libs/productivityActons'
+import { validateWellnessForm } from '~/libs/daily/wellnessActions'
+import { validateExerciseForm } from '~/libs/daily/exerciseActions'
+import { validateTaskForm } from '~/libs/daily/taskActions'
+import { validateNotesForm } from '~/libs/daily/noteActions'
+import { validateProductivityForm } from '~/libs/daily/productivityActions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -78,7 +78,8 @@ export const action: ActionFunction = async ({ request }) => {
     return results
   }
 
-  return 'action testing'
+  // might want to throw an error here
+  return 'Type does not meet valid action'
 }
 
 export default function DailyPlanner() {
