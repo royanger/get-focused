@@ -6,9 +6,9 @@ interface Checkbox {
 export default function Checkbox({ status, label }: Checkbox) {
   return (
     <>
-      <label htmlFor={label}>
+      <label htmlFor={label.toLowerCase()}>
         <input
-          name={label}
+          name={label.toLowerCase()}
           type="checkbox"
           defaultChecked={status}
           className="outline-none focus:ring-0 border-[1px] border-pruple text-purple"

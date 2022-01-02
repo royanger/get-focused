@@ -13,10 +13,11 @@ export default function NoteEl({ id, dateId, note }: Note) {
     <>
       <Form method="post" action="/daily/planner">
         <input type="hidden" name="formType" value="note" />
+        <input type="hidden" name="id" value={id} />
         <input
           type="textarea"
           defaultValue={note}
-          name={id}
+          name="message"
           className="w-full h-36 border-2 border-purple rounded"
         />
         <NoteSave />

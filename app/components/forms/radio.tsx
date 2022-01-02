@@ -3,17 +3,25 @@
 interface Radio {
   value?: number
   checked?: boolean
-  name: string
+  name: number
+  type: string
 }
 
-export default function Radio({ value, checked, name }: Radio) {
+export default function Radio({
+  value,
+  checked,
+  name,
+  type,
+  handleChange,
+}: Radio) {
   return (
     <input
       value={value}
       type="radio"
-      name={`wellness-${name}`}
+      name={`${type}-${name}`}
       defaultChecked={checked}
-      className="outline-none focus:ring-0 border-[1px] border-pruple text-purple"
+      className="outline-none focus:ring-0 border-[1px] border-purple text-purple"
+      onClick={e => handleChange(e)}
     />
   )
 }

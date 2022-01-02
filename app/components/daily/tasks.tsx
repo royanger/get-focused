@@ -1,6 +1,7 @@
 import TasksTitle from './tasksTitle'
-import TaskElement from '../forms/taskEl'
+import TaskElement from '../forms/taskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
+import React from 'react'
 
 interface Tasks {
   entries: {
@@ -13,6 +14,7 @@ interface Tasks {
     goalTime: string
     timeTracker: number
   }[]
+  errors: any
 }
 interface TasksByPriority {
   tasks: {
@@ -27,39 +29,61 @@ interface TasksByPriority {
   }[]
   title: string
   info: string
+  type: string
+  errors: any
 }
 
-function tasksByPriority({ tasks, title, info }: TasksByPriority) {
+function tasksByPriority({
+  tasks,
+  title,
+  info,
+  errors,
+  type,
+}: TasksByPriority) {
   let taskList = tasks.map(task => {
     return (
-      <TaskElement
-        key={task.id}
-        id={task.id}
-        name={task.name}
-        goalTime={task.goalTime}
-        actualTime={task.actualTime}
-        timeTracker={task.timeTracker}
-      />
+      <React.Fragment key={task.id}>
+        <TaskElement
+          key={task.id}
+          id={task.id}
+          name={task.name}
+          goalTime={task.goalTime}
+          actualTime={task.actualTime}
+          timeTracker={task.timeTracker}
+          type={type}
+        />
+        {errors && errors.id === task.id ? (
+          <div className="text-sm text-error mb-6 h-5">
+            {errors ? errors.msg : ''}
+          </div>
+        ) : null}
+      </React.Fragment>
     )
   })
 
   return (
-    <>
-      <TasksTitle title={title} info={info} />
+    <React.Fragment key={Math.random()}>
+      <TasksTitle title={title} info={info} key={type} />
       {taskList}
       <TaskElement
-        key="newtask"
-        id="newtask"
+        key={`newtask-${type}`}
+        id={`newtask-${type}`}
         name="Create a new task"
         goalTime="0"
         actualTime="0"
         timeTracker={0}
+        type={type}
       />
-    </>
+      {errors && errors.id === `newtask-${type}` ? (
+        <div className="text-sm text-error mb-6 h-5">
+          {errors ? errors.msg : ''}
+        </div>
+      ) : null}
+    </React.Fragment>
   )
 }
 
-export default function Tasks({ entries }: Tasks) {
+export default function Tasks({ entries, errors }: Tasks) {
   let priorityOneTasks = entries.filter(task => task.statusId === PRIORITY_1)
 
   let generatedP1Tasks
@@ -70,6 +94,8 @@ export default function Tasks({ entries }: Tasks) {
     tasks: priorityOneTasks,
     title: p1Title,
     info: p1Info,
+    errors: errors,
+    type: 'p1',
   })
 
   let priorityTwoTasks = entries.filter(task => task.statusId === PRIORITY_2)
@@ -82,6 +108,8 @@ export default function Tasks({ entries }: Tasks) {
       tasks: priorityTwoTasks,
       title: p2Title,
       info: p2Info,
+      errors: errors,
+      type: 'p2',
     })
   }
 
@@ -95,6 +123,8 @@ export default function Tasks({ entries }: Tasks) {
       tasks: priorityThreeTasks,
       title: p3Title,
       info: p3Info,
+      errors: errors,
+      type: 'p3',
     })
   }
 
