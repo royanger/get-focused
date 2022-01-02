@@ -14,13 +14,11 @@ async function exerciseQuery(date: string, userId: string) {
 }
 
 export let findExerciseEntries = async (
-  targetDate: string,
+  date: string,
   userId: string | undefined
 ) => {
-  let dateResults = await findOrCreateDate(targetDate)
-
-  if (dateResults && userId) {
-    let exerciseResults = await exerciseQuery(dateResults.id, userId)
+  if (date && userId) {
+    let exerciseResults = await exerciseQuery(date, userId)
       .catch(e => {
         throw e
       })
