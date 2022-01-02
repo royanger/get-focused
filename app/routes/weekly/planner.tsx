@@ -66,6 +66,7 @@ function tasksByPriority({
           id={task.id}
           task={task.task}
           completed={task.completed}
+          type={type}
         />
         {errors && errors.id === task.id ? (
           <div className="text-sm text-error mb-6 h-5">
@@ -86,6 +87,7 @@ function tasksByPriority({
           id={`newtask-${type}`}
           task="Create a new task"
           completed={false}
+          type={type}
         />
         {errors && errors.id === `newtask-${type}` ? (
           <div className="text-sm text-error mb-6 h-5">
