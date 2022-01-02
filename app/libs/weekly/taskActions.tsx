@@ -4,15 +4,11 @@ import DOMPurify from 'isomorphic-dompurify'
 export function validateTaskForm(formData, user) {
   const errors = {}
 
-  console.log('formData', formData)
-
   const taskName = formData.get('taskname')
     ? DOMPurify.sanitize(formData.get('taskname'))
     : null
 
   const completed = formData.get('completed') === 'on' ? true : false
-
-  console.log('completed', completed)
 
   if (taskName === null) {
     errors.formType = 'task'
@@ -28,6 +24,12 @@ export function validateTaskForm(formData, user) {
   // latter we need to update the database
   // there is no check yet to see if the entry exists, so do .upsert
 
-  //   const results = updateOrCreateWeeklyTask(formData.get('id'), completed, user.id)
+  const results = updateOrCreateWeeklyTask(
+    formData.get('id'),
+    taskName,
+    completed,
+    formData.get('status'),
+    user.id
+  )
   return null
 }

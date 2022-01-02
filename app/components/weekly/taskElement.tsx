@@ -8,7 +8,7 @@ import Input from '../forms/input'
 import TaskCancel from '../forms/taskCancel'
 import TaskSave from '../forms/taskSave'
 
-export default function TaskElement({ id, task, completed }) {
+export default function TaskElement({ id, task, completed, type }) {
   const [formState, setFormState] = React.useState('default')
 
   let defaultDiv = 'border-0 rounded '
@@ -40,6 +40,7 @@ export default function TaskElement({ id, task, completed }) {
     <li className={`p-4 ${currentStateDiv}`}>
       <Form method="post" action="/weekly/planner">
         <input type="hidden" name="id" value={id} />
+        <input type="hidden" name="status" value={`status-${type}`} />
 
         <div className="flex flex-row items-center">
           <Input
