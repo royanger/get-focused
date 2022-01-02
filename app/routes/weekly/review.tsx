@@ -1,10 +1,33 @@
+import {
+  LoaderFunction,
+  ActionFunction,
+  useLoaderData,
+  useActionData,
+} from 'remix'
+import { authenticator } from '~/services/auth.server'
+import { findWeeklyReview } from '~/queries/findWeeklyReview'
+
+// components
 import Container from '~/components/container'
-import Button from '~/components/button'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
 import ReviewElement from '~/components/weekly/reviewElement'
 import Improvements from '~/components/weekly/improvements'
 
+export let loader: LoaderFunction = async ({ request }) => {
+  let user = await authenticator.isAuthenticated(request)
+
+  console.log('working?')
+
+  const results = await findWeeklyReview('today', user.id)
+
+  console.log('results', results)
+
+  return 'test'
+}
+
 export default function WeeklyReview() {
+  const data = useLoaderData()
+
   const items = [
     {
       id: 'ididididididid',
