@@ -42,7 +42,7 @@ function tasksByPriority({
 }: TasksByPriority) {
   let taskList = tasks.map(task => {
     return (
-      <>
+      <React.Fragment key={task.id}>
         <TaskElement
           key={task.id}
           id={task.id}
@@ -57,7 +57,7 @@ function tasksByPriority({
             {errors ? errors.msg : ''}
           </div>
         ) : null}
-      </>
+      </React.Fragment>
     )
   })
 
