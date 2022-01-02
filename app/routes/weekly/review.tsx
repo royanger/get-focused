@@ -1,8 +1,19 @@
 import Container from '~/components/container'
 import Button from '~/components/button'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
+import ReviewElement from '~/components/weekly/reviewElement'
+import Improvements from '~/components/weekly/improvements'
 
 export default function WeeklyReview() {
+  const items = [
+    {
+      id: 'ididididididid',
+      name: 'Something to improve',
+      userId: 'useriduserid',
+      dateId: 'dateidasdfadsf',
+    },
+  ]
+
   return (
     <>
       <Container>
@@ -13,32 +24,29 @@ export default function WeeklyReview() {
 
           <p>What was great about your week? What was a solid win for you?</p>
 
-          <div className="flex flex-row items-center">
-            <input
-              className="border-2 border-purple p-2 text-black rounded flex-grow"
-              type="text"
-              placeholder="Enter a win from the week"
-              aria-label="Win from the week"
-            />
-          </div>
+          <ReviewElement id="asdfsdf" win="Enter a win from the week" />
 
-          <Button type="submit" title="Save" />
+          <Improvements
+            items={items}
+            errors={null}
+            title="Tasks and Areas to Improve"
+            info="What tasks were not completed? What areas can you improve next week?"
+          />
 
-          <Button type="submit" title="Cancel" variant="cancel" />
-
-          <HeaderTwo>Tasks and Areas to Improve</HeaderTwo>
-          <p>
-            What tasks were not completed? What areas can you improve next week?
-          </p>
-
-          <HeaderTwo>Learning Points</HeaderTwo>
-          <p>
-            List the things that you learned from or the ways you improved this
-            week.
-          </p>
+          <Improvements
+            items={items}
+            errors={null}
+            title="Learning Points"
+            info="List the things that you learned from or the ways you improved this week."
+          />
 
           <HeaderTwo>Refocus for Next Week</HeaderTwo>
           <p>What can you do to focus for next week?</p>
+
+          <ReviewElement
+            id="asdfsdf"
+            win="What is the most important thing to refocus on for next week?"
+          />
         </div>
       </Container>
     </>
