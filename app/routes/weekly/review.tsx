@@ -13,14 +13,16 @@ export default function WeeklyReview() {
 
           <p>What was great about your week? What was a solid win for you?</p>
 
-          <div className="flex flex-row items-center">
-            <input
-              className="border-2 border-purple p-2 text-black rounded flex-grow"
-              type="text"
-              placeholder="Enter a win from the week"
-              aria-label="Win from the week"
-            />
-          </div>
+          <ReviewElement
+            id={data?.win ? data.win.id : 'win-new'}
+            item={data.win ? data?.win.item : 'Enter your win for the week...'}
+            formType="win"
+          />
+          {errors && errors.id === data?.win?.id ? (
+            <div className="text-sm text-error mb-6 h-5">
+              {errors ? errors.msg : ''}
+            </div>
+          ) : null}
 
           <Button type="submit" title="Save" />
 
@@ -39,6 +41,21 @@ export default function WeeklyReview() {
 
           <HeaderTwo>Refocus for Next Week</HeaderTwo>
           <p>What can you do to focus for next week?</p>
+
+          <ReviewElement
+            id={data?.refocus ? data.refocus.id : 'refocus-new'}
+            item={
+              data.refocus
+                ? data?.refocus.item
+                : 'What will you refocus on next week?'
+            }
+            formType="refocus"
+          />
+          {errors && errors.id === data?.refocus?.id ? (
+            <div className="text-sm text-error mb-6 h-5">
+              {errors ? errors.msg : ''}
+            </div>
+          ) : null}
         </div>
       </Container>
     </>
