@@ -49,12 +49,12 @@ export default function ListSection({
       <TasksTitle title={title} info={info} />
       {items && itemsList}
       <ReviewElement
-        key={`new-win`}
-        id="new-win"
+        key={`new-${formType}`}
+        id={`new-${formType}`}
         item="Create a new task"
         formType={formType}
       />
-      {errors && errors.id === `new-$win` ? (
+      {errors && errors.id === `new-${formType}` ? (
         <div className="text-sm text-error mb-6 h-5">
           {errors ? errors.msg : ''}
         </div>
