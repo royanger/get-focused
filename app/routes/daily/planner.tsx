@@ -28,26 +28,26 @@ import { validateExerciseForm } from '~/libs/daily/exerciseActions'
 import { validateTaskForm } from '~/libs/daily/taskActions'
 import { validateNotesForm } from '~/libs/daily/noteActions'
 import { validateProductivityForm } from '~/libs/daily/productivityActions'
-import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
-  const dateResults = await findOrCreateDate('today')
+
+  let wellness = findWellnessEntries('today', user.id)
+  let exercise = findExerciseEntries('today', user.id)
+  let dailyTasks = findTasksEntries('today', user.id)
+  let notes = findNotesEntries('today', user.id)
+  let productivity = findProductivityEntries('today', user.id)
 
   let data = {}
-  await Promise.all([
-    findWellnessEntries(dateResults.id, user.id),
-    findExerciseEntries(dateResults.id, user.id),
-    findTasksEntries(dateResults.id, user.id),
-    findNotesEntries(dateResults.id, user.id),
-    findProductivityEntries(dateResults.id, user.id),
-  ]).then(results => {
-    data.wellness = results[0]
-    data.exercise = results[1]
-    data.tasks = results[2]
-    data.notes = results[3]
-    data.productivity = results[4]
-  })
+  await Promise.all([wellness, exercise, dailyTasks, notes, productivity]).then(
+    results => {
+      data.wellness = results[0]
+      data.exercise = results[1]
+      data.tasks = results[2]
+      data.notes = results[3]
+      data.productivity = results[4]
+    }
+  )
 
   return data
 }

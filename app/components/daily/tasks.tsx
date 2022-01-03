@@ -27,148 +27,112 @@ interface TasksByPriority {
     goalTime: string
     timeTracker: number
   }[]
+  title: string
+  info: string
   type: string
   errors: any
 }
 
-function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
-  let taskList
-  if (tasks) {
-    taskList = tasks.map(task => {
-      return (
-        <React.Fragment key={task.id}>
-          <TaskElement
-            key={task.id}
-            id={task.id}
-            name={task.name}
-            goalTime={task.goalTime}
-            actualTime={task.actualTime}
-            timeTracker={task.timeTracker}
-            type={type}
-          />
-          {errors && errors.id === task.id ? (
-            <div className="text-sm text-error mb-6 h-5">
-              {errors ? errors.msg : ''}
-            </div>
-          ) : null}
-        </React.Fragment>
-      )
-    })
-  } else {
-    taskList = null
-  }
+function tasksByPriority({
+  tasks,
+  title,
+  info,
+  errors,
+  type,
+}: TasksByPriority) {
+  let taskList = tasks.map(task => {
+    return (
+      <React.Fragment key={task.id}>
+        <TaskElement
+          key={task.id}
+          id={task.id}
+          name={task.name}
+          goalTime={task.goalTime}
+          actualTime={task.actualTime}
+          timeTracker={task.timeTracker}
+          type={type}
+        />
+        {errors && errors.id === task.id ? (
+          <div className="text-sm text-error mb-6 h-5">
+            {errors ? errors.msg : ''}
+          </div>
+        ) : null}
+      </React.Fragment>
+    )
+  })
 
-  return taskList
+  return (
+    <React.Fragment key={Math.random()}>
+      <TasksTitle title={title} info={info} key={type} />
+      {taskList}
+      <TaskElement
+        key={`newtask-${type}`}
+        id={`newtask-${type}`}
+        name="Create a new task"
+        goalTime="0"
+        actualTime="0"
+        timeTracker={0}
+        type={type}
+      />
+      {errors && errors.id === `newtask-${type}` ? (
+        <div className="text-sm text-error mb-6 h-5">
+          {errors ? errors.msg : ''}
+        </div>
+      ) : null}
+    </React.Fragment>
+  )
 }
 
 export default function Tasks({ entries, errors }: Tasks) {
-  let priorityOneTasks = entries
-    ? entries.filter(task => task.statusId === PRIORITY_1)
-    : null
+  let priorityOneTasks = entries.filter(task => task.statusId === PRIORITY_1)
 
   let generatedP1Tasks
-  let p1Title = ''
+  let p1Title = 'What is your most important goal(s) today?'
   let p1Info = 'Try to focus on one goal, but you can focus on a few.'
 
   generatedP1Tasks = tasksByPriority({
     tasks: priorityOneTasks,
+    title: p1Title,
+    info: p1Info,
     errors: errors,
     type: 'p1',
   })
 
-  let priorityTwoTasks = entries
-    ? entries.filter(task => task.statusId === PRIORITY_2)
-    : null
+  let priorityTwoTasks = entries.filter(task => task.statusId === PRIORITY_2)
   let generatedP2Tasks
+  let p2Title = 'Important Goals and Tasks'
+  let p2Info =
+    'These tasks and goals are secondary to your most important goal, but are things you really want to finish today.'
+  if (priorityTwoTasks.length > -1) {
+    generatedP2Tasks = tasksByPriority({
+      tasks: priorityTwoTasks,
+      title: p2Title,
+      info: p2Info,
+      errors: errors,
+      type: 'p2',
+    })
+  }
 
-  generatedP2Tasks = tasksByPriority({
-    tasks: priorityTwoTasks,
-    errors: errors,
-    type: 'p2',
-  })
-
-  let priorityThreeTasks = entries
-    ? entries.filter(task => task.statusId === PRIORITY_3)
-    : null
+  let priorityThreeTasks = entries.filter(task => task.statusId === PRIORITY_3)
   let generatedP3Tasks
-
-  generatedP3Tasks = tasksByPriority({
-    tasks: priorityThreeTasks,
-    errors: errors,
-    type: 'p3',
-  })
+  let p3Title = 'Bonus Goals and Tasks'
+  let p3Info =
+    'If you finish all of the above tasks and goals, what are some tasks that would be awesome to finish today?'
+  if (priorityThreeTasks.length > -1) {
+    generatedP3Tasks = tasksByPriority({
+      tasks: priorityThreeTasks,
+      title: p3Title,
+      info: p3Info,
+      errors: errors,
+      type: 'p3',
+    })
+  }
 
   return (
     <>
-      {/* {generatedP1Tasks} */}
-      <React.Fragment key={Math.random()}>
-        <TasksTitle
-          title="What is your most important goal(s) today?"
-          info="Try to focus on one goal, but you can focus on a few."
-          key="p1"
-        />
-        {generatedP1Tasks && generatedP1Tasks}
-        <TaskElement
-          key={`newtask-p1`}
-          id="newtask-p1"
-          name="Create a new task"
-          goalTime="0"
-          actualTime="0"
-          timeTracker={0}
-          type="p1"
-        />
-        {errors && errors.id === 'newtask-p1' ? (
-          <div className="text-sm text-error mb-6 h-5">
-            {errors ? errors.msg : ''}
-          </div>
-        ) : null}
-      </React.Fragment>
-
-      <React.Fragment key={Math.random()}>
-        <TasksTitle
-          title="Important Goals and Tasks"
-          info="These tasks and goals are secondary to your most important goal, but are things you really want to finish today."
-          key="p2"
-        />
-        {generatedP2Tasks && generatedP2Tasks}
-        <TaskElement
-          key={`newtask-p2`}
-          id="newtask-p2"
-          name="Create a new task"
-          goalTime="0"
-          actualTime="0"
-          timeTracker={0}
-          type="p2"
-        />
-        {errors && errors.id === 'newtask-p2' ? (
-          <div className="text-sm text-error mb-6 h-5">
-            {errors ? errors.msg : ''}
-          </div>
-        ) : null}
-      </React.Fragment>
-
-      <React.Fragment key={Math.random()}>
-        <TasksTitle
-          title="Bonus Goals and Tasks"
-          info="If you finish all of the above tasks and goals, what are some tasks that would be awesome to finish today?"
-          key="p3"
-        />
-        {generatedP3Tasks && generatedP3Tasks}
-        <TaskElement
-          key={`newtask-p3`}
-          id="newtask-p3"
-          name="Create a new task"
-          goalTime="0"
-          actualTime="0"
-          timeTracker={0}
-          type="p3"
-        />
-        {errors && errors.id === 'newtask-p3' ? (
-          <div className="text-sm text-error mb-6 h-5">
-            {errors ? errors.msg : ''}
-          </div>
-        ) : null}
-      </React.Fragment>
+      {generatedP1Tasks}
+      {generatedP2Tasks}
+      {generatedP3Tasks}
     </>
   )
 }
