@@ -24,6 +24,9 @@ model User {
    note           Note[]
    weeklyTask     Weeklytask[]
    wins           Wins[]
+   improvements   Improvements[]
+   learning       Learning[]
+   refocus        Refocus[]
 }
 
 model Date {
@@ -34,6 +37,11 @@ model Date {
    tasks          Task[]
    notes          Note[]
    productivity   Productivity[]
+   weeklyTask     Weeklytask[]
+   wins           Wins[]
+   improvements   Improvements[]
+   learning       Learning[]
+   refocus        Refocus[]
 }
 
 model Task {
@@ -93,11 +101,42 @@ model Weeklytask {
    task        String
    statusId    String
    completed   Boolean
+   dateId      String   @db.ObjectId
+   date        Date     @relation(fields: [dateId], references:[id])
 }
 
 model Wins {
    id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
-   win         String
+   item        String
+   dateId      String   @db.ObjectId
+   date        Date     @relation(fields: [dateId], references:[id])
+}
+
+model Improvements {
+   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   userId      String   @db.ObjectId
+   user        User     @relation(fields:[userId], references:[id])
+   item        String
+   dateId      String   @db.ObjectId
+   date        Date     @relation(fields: [dateId], references:[id])
+}
+
+model Learning {
+   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   userId      String   @db.ObjectId
+   user        User     @relation(fields:[userId], references:[id])
+   item        String
+   dateId      String   @db.ObjectId
+   date        Date     @relation(fields: [dateId], references:[id])
+}
+
+model Refocus {
+   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   userId      String   @db.ObjectId
+   user        User     @relation(fields:[userId], references:[id])
+   item        String
+   dateId      String   @db.ObjectId
+   date        Date     @relation(fields: [dateId], references:[id])
 }

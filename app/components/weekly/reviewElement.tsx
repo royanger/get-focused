@@ -2,13 +2,11 @@ import * as React from 'react'
 import { Form } from 'remix'
 
 // components
-import Button from '../button'
-import Checkbox from '../forms/checkbox'
 import Input from '../forms/input'
 import TaskCancel from '../forms/taskCancel'
 import TaskSave from '../forms/taskSave'
 
-export default function ReviewElement({ id, win }) {
+export default function ReviewElement({ id, item, formType }) {
   const [formState, setFormState] = React.useState('default')
 
   let defaultDiv = 'border-0 rounded '
@@ -38,18 +36,19 @@ export default function ReviewElement({ id, win }) {
 
   return (
     <div className={`p-4 ${currentStateDiv}`}>
-      <Form method="post" action="/weekly/planner">
+      <Form method="post" action="/weekly/review">
         <input type="hidden" name="id" value={id} />
+        <input type="hidden" name="formType" value={formType} />
 
         <div className="flex flex-row items-center">
           <Input
-            value={win}
+            value={item}
             formState={formState}
             name="taskname"
-            placeholder={win}
+            placeholder={item}
             setFormState={setFormState}
             width="flex-grow"
-            aria-label={win}
+            aria-label={item}
           />
         </div>
 
