@@ -16,6 +16,10 @@ import Container from '~/components/container'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
 import ReviewElement from '~/components/weekly/reviewElement'
 import ListSection from '~/components/weekly/ListSection'
+import { validateWinsForm } from '~/libs/weekly/winsActions'
+import { validateImprovementsForm } from '~/libs/weekly/improvementsActions'
+import { validateLearningPointsForm } from '~/libs/weekly/learingPointsActions'
+import { validateRefocusForm } from '~/libs/weekly/refocusActions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -40,18 +44,23 @@ export let loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
+  let user = await authenticator.isAuthenticated(request)
 
-  if (formData.get('formType') === 'wins') {
-    console.log('FORMTYPE', 'wins')
+  if (formData.get('formType') === 'win') {
+    let results = validateWinsForm(formData, user)
+    return results
   }
-  if (formData.get('formType') === 'improvement') {
-    console.log('FORMTYPE', 'improvement')
+  if (formData.get('formType') === 'improvements') {
+    let results = validateImprovementsForm(formData, user)
+    return results
   }
   if (formData.get('formType') === 'learningpoints') {
-    console.log('FORMTYPE', 'learningpoints')
+    let results = validateLearningPointsForm(formData, user)
+    return results
   }
   if (formData.get('formType') === 'refocus') {
-    console.log('FORMTYPE', 'refocus')
+    let results = validateRefocusForm(formData, user)
+    return results
   }
   console.log('form data', formData)
 
@@ -60,7 +69,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function WeeklyReview() {
   const data = useLoaderData()
-  console.log('DATA IN COMPONENT', data)
+  const errors = useActionData()
+  //   console.log('DATA IN COMPONENT', data)
 
   return (
     <>
@@ -75,12 +85,17 @@ export default function WeeklyReview() {
           <ReviewElement
             id={data?.win?.id}
             item={data?.win?.item}
-            formType="wins"
+            formType="win"
           />
+          {errors && errors.id === data?.win?.id ? (
+            <div className="text-sm text-error mb-6 h-5">
+              {errors ? errors.msg : ''}
+            </div>
+          ) : null}
 
           <ListSection
             items={data?.improvements}
-            errors={null}
+            errors={errors}
             title="Tasks and Areas to Improve"
             info="What tasks were not completed? What areas can you improve next week?"
             formType="improvements"
@@ -88,7 +103,7 @@ export default function WeeklyReview() {
 
           <ListSection
             items={data?.learningpoints}
-            errors={null}
+            errors={errors}
             title="Learning Points"
             info="List the things that you learned from or the ways you improved this week."
             formType="learningpoints"
@@ -102,6 +117,11 @@ export default function WeeklyReview() {
             item={data?.refocus?.item}
             formType="refocus"
           />
+          {errors && errors.id === data?.refocus?.id ? (
+            <div className="text-sm text-error mb-6 h-5">
+              {errors ? errors.msg : ''}
+            </div>
+          ) : null}
         </div>
       </Container>
     </>

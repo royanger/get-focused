@@ -7,7 +7,7 @@ export default async function findWeeklyImprovements(
   async function queryImprovements(date: string, userId: string) {
     await prisma.$connect()
 
-    const results = await prisma.wins.findMany({
+    const results = await prisma.improvements.findMany({
       where: {
         userId: userId,
       },

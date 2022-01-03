@@ -44,7 +44,7 @@ export default function ReviewElement({ id, item, formType }) {
           <Input
             value={item}
             formState={formState}
-            name="taskname"
+            name="item"
             placeholder={item}
             setFormState={setFormState}
             width="flex-grow"
