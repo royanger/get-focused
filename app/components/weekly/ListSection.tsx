@@ -7,7 +7,7 @@ interface Wins {
     id: string
     userId: string
     dateId: string
-    win: string
+    item: string
   }[]
   title: string
   info: string
@@ -22,6 +22,7 @@ export default function ListSection({
   errors,
   formType,
 }: Wins) {
+  console.log('list section', items)
   let itemsList
   if (items) {
     itemsList = items.map(item => {
@@ -30,7 +31,7 @@ export default function ListSection({
           <ReviewElement
             key={item.id}
             id={item.id}
-            win={item.win}
+            item={item.item}
             formType={formType}
           />
           {errors && errors.id === item.id ? (
@@ -50,7 +51,7 @@ export default function ListSection({
       <ReviewElement
         key={`new-win`}
         id="new-win"
-        win="Create a new task"
+        item="Create a new task"
         formType={formType}
       />
       {errors && errors.id === `new-$win` ? (

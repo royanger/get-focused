@@ -5,41 +5,52 @@ import {
   useActionData,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
+import { findOrCreateDate } from '~/queries/findOrCreateDate'
 import findWeeklyWin from '~/queries/findWeeklyWin'
+import findWeeklyImprovements from '~/queries/findWeeklyImprovements'
+import findWeeklyLearningPoints from '~/queries/findWeeklyLearningPoints'
+import findWeeklyRefocus from '~/queries/findWeeklyRefocus'
 
 // components
 import Container from '~/components/container'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
 import ReviewElement from '~/components/weekly/reviewElement'
 import ListSection from '~/components/weekly/ListSection'
-import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
 
   const dateResults = await findOrCreateDate('today')
   const win = findWeeklyWin(dateResults.id, user.id)
+  const improvements = findWeeklyImprovements(dateResults.id, user.id)
+  const learningpoints = findWeeklyLearningPoints(dateResults.id, user.id)
+  const refocus = findWeeklyRefocus(dateResults.id, user.id)
 
   const data = {}
-  await Promise.all([win]).then(results => {
-    data.win = results[0]
-  })
+  await Promise.all([win, improvements, learningpoints, refocus]).then(
+    results => {
+      data.win = results[0]
+      data.improvements = results[1]
+      data.learningpoints = results[2]
+      data.refocus = results[3]
+    }
+  )
   return data
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
 
-  if (formData.get('type') === 'wins') {
+  if (formData.get('formType') === 'wins') {
     console.log('FORMTYPE', 'wins')
   }
-  if (formData.get('type') === 'improvement') {
+  if (formData.get('formType') === 'improvement') {
     console.log('FORMTYPE', 'improvement')
   }
-  if (formData.get('type') === 'learningpoints') {
+  if (formData.get('formType') === 'learningpoints') {
     console.log('FORMTYPE', 'learningpoints')
   }
-  if (formData.get('type') === 'refocus') {
+  if (formData.get('formType') === 'refocus') {
     console.log('FORMTYPE', 'refocus')
   }
   console.log('form data', formData)
@@ -49,16 +60,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function WeeklyReview() {
   const data = useLoaderData()
-  console.log('DATA IN COMPONENT', data.win.id)
-
-  const items = [
-    {
-      id: 'ididididididid',
-      name: 'Something to improve',
-      userId: 'useriduserid',
-      dateId: 'dateidasdfadsf',
-    },
-  ]
+  console.log('DATA IN COMPONENT', data)
 
   return (
     <>
@@ -72,7 +74,7 @@ export default function WeeklyReview() {
 
           <ReviewElement
             id={data?.win?.id}
-            win={data?.win?.item}
+            item={data?.win?.item}
             formType="wins"
           />
 
@@ -85,7 +87,7 @@ export default function WeeklyReview() {
           />
 
           <ListSection
-            items={items}
+            items={data?.learningpoints}
             errors={null}
             title="Learning Points"
             info="List the things that you learned from or the ways you improved this week."
@@ -96,8 +98,8 @@ export default function WeeklyReview() {
           <p>What can you do to focus for next week?</p>
 
           <ReviewElement
-            id="asdfsdf"
-            win="What is the most important thing to refocus on for next week?"
+            id={data?.refocus?.id}
+            item={data?.refocus?.item}
             formType="refocus"
           />
         </div>

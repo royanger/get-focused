@@ -6,7 +6,7 @@ import Input from '../forms/input'
 import TaskCancel from '../forms/taskCancel'
 import TaskSave from '../forms/taskSave'
 
-export default function ReviewElement({ id, win, formType }) {
+export default function ReviewElement({ id, item, formType }) {
   const [formState, setFormState] = React.useState('default')
 
   let defaultDiv = 'border-0 rounded '
@@ -42,13 +42,13 @@ export default function ReviewElement({ id, win, formType }) {
 
         <div className="flex flex-row items-center">
           <Input
-            value={win}
+            value={item}
             formState={formState}
             name="taskname"
-            placeholder={win}
+            placeholder={item}
             setFormState={setFormState}
             width="flex-grow"
-            aria-label={win}
+            aria-label={item}
           />
         </div>
 
