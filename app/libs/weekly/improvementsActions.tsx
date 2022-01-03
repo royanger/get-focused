@@ -1,5 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
+import { updateOrCreateImprovement } from '~/queries/updateOrCreateImprovement'
 
 export async function validateImprovementsForm(formData, user) {
   let item = formData.get('item')
@@ -20,11 +20,10 @@ export async function validateImprovementsForm(formData, user) {
   }
 
   // handle updating/creating via upsert for entries.
-  //   let results = await updateOrCreateNote(
-  //     formData.get('id'),
-  //     formData.get('message'),
-  //     user.id
-  //   )
-  //   return results
-  return 'complete'
+  let results = await updateOrCreateImprovement(
+    formData.get('id'),
+    item,
+    user.id
+  )
+  return results
 }

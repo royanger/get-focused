@@ -1,5 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
+import { updateOrCreateWin } from '~/queries/updateOrCreateWin'
 
 export async function validateWinsForm(formData, user) {
   let item = formData.get('item')
@@ -18,12 +18,7 @@ export async function validateWinsForm(formData, user) {
     return errors
   }
 
-  // handle updating/creating via upsert for entries.
-  //   let results = await updateOrCreateNote(
-  //     formData.get('id'),
-  //     formData.get('message'),
-  //     user.id
-  //   )
-  //   return results
-  return 'complete'
+  //   handle updating/creating via upsert for entries.
+  let results = await updateOrCreateWin(formData.get('id'), item, user.id)
+  return results
 }

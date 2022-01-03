@@ -83,8 +83,8 @@ export default function WeeklyReview() {
           <p>What was great about your week? What was a solid win for you?</p>
 
           <ReviewElement
-            id={data?.win?.id}
-            item={data?.win?.item}
+            id={data?.win ? data.win.id : 'win-new'}
+            item={data.win ? data?.win.item : 'Enter your win for the week...'}
             formType="win"
           />
           {errors && errors.id === data?.win?.id ? (
@@ -113,8 +113,12 @@ export default function WeeklyReview() {
           <p>What can you do to focus for next week?</p>
 
           <ReviewElement
-            id={data?.refocus?.id}
-            item={data?.refocus?.item}
+            id={data?.refocus ? data.refocus.id : 'refocus-new'}
+            item={
+              data.refocus
+                ? data?.refocus.item
+                : 'What will you refocus on next week?'
+            }
             formType="refocus"
           />
           {errors && errors.id === data?.refocus?.id ? (
