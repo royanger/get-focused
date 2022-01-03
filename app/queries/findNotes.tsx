@@ -14,13 +14,13 @@ async function noteQuery(date: string, userId: string) {
 }
 
 export let findNotesEntries = async (
-  targetDate: string,
+  date: string,
   userId: string | undefined
 ) => {
-  let dateResults = await findOrCreateDate(targetDate)
+  //   let dateResults = await findOrCreateDate(targetDate)
 
-  if (dateResults && userId) {
-    let noteResults = await noteQuery(dateResults.id, userId)
+  if (date && userId) {
+    let noteResults = await noteQuery(date, userId)
       .catch(e => {
         throw e
       })
