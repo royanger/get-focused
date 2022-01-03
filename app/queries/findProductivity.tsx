@@ -14,11 +14,13 @@ async function productivityQuery(date: string, userId: string) {
 }
 
 export let findProductivityEntries = async (
-  date: string,
+  targetDate: string,
   userId: string | undefined
 ) => {
-  if (date && userId) {
-    let productivityResults = await productivityQuery(date, userId)
+  let dateResults = await findOrCreateDate(targetDate)
+
+  if (dateResults && userId) {
+    let productivityResults = await productivityQuery(dateResults.id, userId)
       .catch(e => {
         throw e
       })

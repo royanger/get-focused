@@ -13,11 +13,13 @@ async function wellnessQuery(date: string, userId: string) {
 }
 
 export let findWellnessEntries = async (
-  date: string,
+  targetDate: string,
   userId: string | undefined
 ) => {
-  if (date && userId) {
-    let wellnessResults = await wellnessQuery(date, userId)
+  let dateResults = await findOrCreateDate(targetDate)
+
+  if (dateResults && userId) {
+    let wellnessResults = await wellnessQuery(dateResults.id, userId)
       .catch(e => {
         throw e
       })

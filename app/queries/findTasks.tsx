@@ -14,11 +14,13 @@ async function tasksQuery(date: string, userId: string) {
 }
 
 export let findTasksEntries = async (
-  date: string,
+  targetDate: string,
   userId: string | undefined
 ) => {
-  if (date && userId) {
-    let tasksResults = await tasksQuery(date, userId)
+  let dateResults = await findOrCreateDate(targetDate)
+
+  if (dateResults && userId) {
+    let tasksResults = await tasksQuery(dateResults.id, userId)
       .catch(e => {
         throw e
       })
