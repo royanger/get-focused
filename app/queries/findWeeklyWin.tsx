@@ -1,5 +1,4 @@
 import { prisma } from '../../prisma/db'
-import { findOrCreateDate } from './findOrCreateDate'
 
 export default async function findWeeklyWin(week: string, userId: string) {
   async function queryWins(week: string, userId: string) {

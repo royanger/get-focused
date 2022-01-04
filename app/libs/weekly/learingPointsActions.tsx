@@ -2,7 +2,11 @@ import DOMPurify from 'isomorphic-dompurify'
 import { updateOrCreateLearningPoint } from '~/queries/findOrCreateLearningPoint'
 import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
 
-export async function validateLearningPointsForm(formData, user) {
+export async function validateLearningPointsForm(
+  formData,
+  user: string,
+  targetDate: string
+) {
   let item = formData.get('item')
     ? DOMPurify.sanitize(formData.get('item'))
     : null
@@ -15,7 +19,7 @@ export async function validateLearningPointsForm(formData, user) {
     errors.msg = 'Please make sure you fill out the form'
   }
 
-  console.log('improv errors', errors)
+  console.log('learning point errors', errors)
   if (Object.keys(errors).length) {
     return errors
   }
@@ -24,7 +28,8 @@ export async function validateLearningPointsForm(formData, user) {
   let results = await updateOrCreateLearningPoint(
     formData.get('id'),
     item,
-    user.id
+    user.id,
+    targetDate
   )
   return results
 }

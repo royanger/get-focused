@@ -4,13 +4,10 @@ export let findOrCreateDate = async (targetDate: string) => {
   // if string is equal to 'today' then get today's date
   // if string is not 'today' then convert passed info and create date
 
-  console.log('creating date')
-
   let regex = /\d\d\d\d-[01]\d-[0123]\d/
   if (targetDate != 'today') {
     if (!targetDate.match(regex)) {
-      console.log('Target date provided was incorrect format')
-      return null
+      throw new Error('Target date provided was incorrect format')
     }
   }
 

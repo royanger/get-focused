@@ -1,12 +1,13 @@
 import { prisma } from '../../prisma/db'
-import { findOrCreateDate } from './findOrCreateDate'
+import { findOrCreateWeek } from './findOrCreateWeek'
 
 export async function updateOrCreateWin(
   id: string,
   item: string | null,
-  userId: string
+  userId: string,
+  targetDate: string
 ) {
-  let dateResults = await findOrCreateDate('today')
+  let weekResults = await findOrCreateWeek(targetDate)
 
   await prisma.$connect()
 
@@ -17,22 +18,21 @@ export async function updateOrCreateWin(
       data: {
         item: item,
         userId: userId,
-        dateId: dateResults.id,
+        weekId: weekResults.id,
       },
     })
     return results
   } else {
     // update existing entry
+    // week won't change, don't update
     win = await prisma.wins.update({
       where: {
         id: id,
       },
       data: {
         item: item,
-        dateId: dateResults.id,
       },
     })
-    console.log('results from update', win)
   }
 
   let results = await prisma.wins.findUnique({
