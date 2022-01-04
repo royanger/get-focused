@@ -1,14 +1,13 @@
 import { prisma } from '../../prisma/db'
-import { findOrCreateDate } from './findOrCreateDate'
+import { findOrCreateWeek } from './findOrCreateWeek'
 
 export async function updateOrCreateLearningPoint(
   id: string,
   item: string | null,
-  userId: string
+  userId: string,
+  targetDate: string
 ) {
-  let dateResults = await findOrCreateDate('today')
-
-  console.log('id', id, 'item', item, 'userid', userId)
+  let weekResults = await findOrCreateWeek(targetDate)
 
   await prisma.$connect()
 
@@ -19,22 +18,21 @@ export async function updateOrCreateLearningPoint(
       data: {
         item: item,
         userId: userId,
-        dateId: dateResults.id,
+        weekId: weekResults.id,
       },
     })
     return results
   } else {
     // update existing entry
+    // weekId won't change, don't update
     learningpoint = await prisma.learning.update({
       where: {
         id: id,
       },
       data: {
         item: item,
-        dateId: dateResults.id,
       },
     })
-    console.log('results from update', learningpoint)
   }
 
   let results = await prisma.learning.findUnique({

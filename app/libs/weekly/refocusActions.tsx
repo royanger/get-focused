@@ -1,8 +1,11 @@
 import DOMPurify from 'isomorphic-dompurify'
 import { updateOrCreateRefocus } from '~/queries/findOrCreateRefocus'
-import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
 
-export async function validateRefocusForm(formData, user) {
+export async function validateRefocusForm(
+  formData,
+  user: string,
+  targetDate: string
+) {
   let item = formData.get('item')
     ? DOMPurify.sanitize(formData.get('item'))
     : null
@@ -15,12 +18,17 @@ export async function validateRefocusForm(formData, user) {
     errors.msg = 'Please make sure you fill out the form'
   }
 
-  console.log('improv errors', errors)
+  console.log('refocuserrors', errors)
   if (Object.keys(errors).length) {
     return errors
   }
 
   // handle updating/creating via upsert for entries.
-  let results = await updateOrCreateRefocus(formData.get('id'), item, user.id)
+  let results = await updateOrCreateRefocus(
+    formData.get('id'),
+    item,
+    user.id,
+    targetDate
+  )
   return results
 }

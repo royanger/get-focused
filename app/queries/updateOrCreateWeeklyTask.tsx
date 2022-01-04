@@ -1,15 +1,15 @@
 import { prisma } from '../../prisma/db'
-import { findOrCreateDate } from './findOrCreateDate'
+import { findOrCreateWeek } from './findOrCreateWeek'
 
 export async function updateOrCreateWeeklyTask(
   id: string,
-  taskName: string,
+  taskName: string | null,
   completed: boolean,
   status: string,
-  userId: string
+  userId: string,
+  targetDate: string
 ) {
-  // TODO add data field later
-  let dateResults = await findOrCreateDate('today')
+  const weekResults = await findOrCreateWeek(targetDate)
 
   await prisma.$connect()
 
@@ -23,11 +23,13 @@ export async function updateOrCreateWeeklyTask(
         userId: userId,
         completed: completed,
         statusId: status,
+        weekId: weekResults.id,
       },
     })
     return task
   } else {
     // update existing weekly task
+    // weekId won't change
     task = await prisma.weeklytask.update({
       where: {
         id: id,

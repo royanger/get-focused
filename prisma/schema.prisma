@@ -37,6 +37,11 @@ model Date {
    tasks          Task[]
    notes          Note[]
    productivity   Productivity[]
+}
+
+model Week {
+   id             String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   week           Int
    weeklyTask     Weeklytask[]
    wins           Wins[]
    improvements   Improvements[]
@@ -101,8 +106,8 @@ model Weeklytask {
    task        String
    statusId    String
    completed   Boolean
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
+   weekId      String   @db.ObjectId
+   week        Week     @relation(fields: [weekId], references: [id])
 }
 
 model Wins {
@@ -110,8 +115,8 @@ model Wins {
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
+   weekId      String   @db.ObjectId
+   week        Week     @relation(fields: [weekId], references: [id])
 }
 
 model Improvements {
@@ -119,8 +124,8 @@ model Improvements {
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
+   weekId      String   @db.ObjectId
+   week        Week     @relation(fields: [weekId], references: [id])
 }
 
 model Learning {
@@ -128,8 +133,8 @@ model Learning {
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
+   weekId      String   @db.ObjectId
+   week        Week     @relation(fields: [weekId], references: [id])
 }
 
 model Refocus {
@@ -137,6 +142,6 @@ model Refocus {
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
+   weekId      String   @db.ObjectId
+   week        Week     @relation(fields: [weekId], references: [id])
 }

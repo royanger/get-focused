@@ -30,7 +30,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   let user = await authenticator.isAuthenticated(request)
 
-  let results = validateTaskForm(formData, user)
+  let results = validateTaskForm(formData, user, 'today')
   return results
 
   //   return null

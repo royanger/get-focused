@@ -1,22 +1,23 @@
 import { prisma } from '../../prisma/db'
 
 export default async function findWeeklyLearningPoints(
-  date: string,
+  week: string,
   userId: string
 ) {
-  async function queryLearningPoints(date: string, userId: string) {
+  async function queryLearningPoints(week: string, userId: string) {
     await prisma.$connect()
 
     const results = await prisma.learning.findMany({
       where: {
         userId: userId,
+        weekId: week,
       },
     })
     return results
   }
 
-  if (date && userId) {
-    const weeklyWins = await queryLearningPoints(date, userId)
+  if (week && userId) {
+    const weeklyWins = await queryLearningPoints(week, userId)
       .catch(e => {
         throw e
       })
