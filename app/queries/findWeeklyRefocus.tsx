@@ -1,7 +1,7 @@
 import { prisma } from '../../prisma/db'
 
-export default async function findWeeklyRefocus(date: string, userId: string) {
-  async function queryRefocus(date: string, userId: string) {
+export default async function findWeeklyRefocus(week: string, userId: string) {
+  async function queryRefocus(week: string, userId: string) {
     await prisma.$connect()
 
     const results = await prisma.refocus.findFirst({
@@ -12,8 +12,8 @@ export default async function findWeeklyRefocus(date: string, userId: string) {
     return results
   }
 
-  if (date && userId) {
-    const weeklyWins = await queryRefocus(date, userId)
+  if (week && userId) {
+    const weeklyWins = await queryRefocus(week, userId)
       .catch(e => {
         throw e
       })

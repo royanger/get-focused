@@ -6,6 +6,7 @@ import {
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
+import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 import findWeeklyWin from '~/queries/findWeeklyWin'
 import findWeeklyImprovements from '~/queries/findWeeklyImprovements'
 import findWeeklyLearningPoints from '~/queries/findWeeklyLearningPoints'
@@ -24,11 +25,12 @@ import { validateRefocusForm } from '~/libs/weekly/refocusActions'
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
 
-  const dateResults = await findOrCreateDate('today')
-  const win = findWeeklyWin(dateResults.id, user.id)
-  const improvements = findWeeklyImprovements(dateResults.id, user.id)
-  const learningpoints = findWeeklyLearningPoints(dateResults.id, user.id)
-  const refocus = findWeeklyRefocus(dateResults.id, user.id)
+  //   const dateResults = await findOrCreateDate()
+  const weekResults = await findOrCreateWeek('today')
+  const win = findWeeklyWin(weekResults.id, user.id)
+  const improvements = findWeeklyImprovements(weekResults.id, user.id)
+  const learningpoints = findWeeklyLearningPoints(weekResults.id, user.id)
+  const refocus = findWeeklyRefocus(weekResults.id, user.id)
 
   const data = {}
   await Promise.all([win, improvements, learningpoints, refocus]).then(
@@ -70,7 +72,6 @@ export const action: ActionFunction = async ({ request }) => {
 export default function WeeklyReview() {
   const data = useLoaderData()
   const errors = useActionData()
-  //   console.log('DATA IN COMPONENT', data)
 
   return (
     <>

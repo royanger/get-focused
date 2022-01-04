@@ -22,7 +22,6 @@ export default function ListSection({
   errors,
   formType,
 }: Wins) {
-  console.log('list section', items)
   let itemsList
   if (items) {
     itemsList = items.map(item => {

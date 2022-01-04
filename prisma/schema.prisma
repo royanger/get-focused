@@ -37,10 +37,6 @@ model Date {
    tasks          Task[]
    notes          Note[]
    productivity   Productivity[]
-   wins           Wins[]
-   improvements   Improvements[]
-   learning       Learning[]
-   refocus        Refocus[]
 }
 
 model Week {
@@ -119,8 +115,6 @@ model Wins {
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
    weekId      String   @db.ObjectId
    week        Week     @relation(fields: [weekId], references: [id])
 }
@@ -130,8 +124,6 @@ model Improvements {
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
    weekId      String   @db.ObjectId
    week        Week     @relation(fields: [weekId], references: [id])
 }
@@ -141,8 +133,6 @@ model Learning {
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
    weekId      String   @db.ObjectId
    week        Week     @relation(fields: [weekId], references: [id])
 }
@@ -152,8 +142,6 @@ model Refocus {
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
    weekId      String   @db.ObjectId
    week        Week     @relation(fields: [weekId], references: [id])
 }
