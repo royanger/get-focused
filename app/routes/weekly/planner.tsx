@@ -6,6 +6,7 @@ import {
   useLoaderData,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
+import { determineWeek } from '~/libs/determineWeek'
 
 // components
 import Container from '~/components/container'

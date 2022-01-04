@@ -6,7 +6,7 @@ export let findOrCreateDate = async (targetDate: string) => {
 
   console.log('creating date')
 
-  let regex = /\d\d\d\d-[01][012]-[0123]\d/
+  let regex = /\d\d\d\d-[01]\d-[0123]\d/
   if (targetDate != 'today') {
     if (!targetDate.match(regex)) {
       console.log('Target date provided was incorrect format')
