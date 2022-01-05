@@ -1,30 +1,61 @@
 import {
+  calculateNextWeek,
+  calculatePreviousWeek,
+  determineWeek,
+  determineYear,
+  dateFromDay,
+  formatDate,
+} from '~/libs/dateFunctions'
+
+import {
   LoaderFunction,
   ActionFunction,
   useLoaderData,
   useActionData,
+  useSearchParams,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
 import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
+
+// loaders
 import findWeeklyWin from '~/queries/findWeeklyWin'
 import findWeeklyImprovements from '~/queries/findWeeklyImprovements'
 import findWeeklyLearningPoints from '~/queries/findWeeklyLearningPoints'
 import findWeeklyRefocus from '~/queries/findWeeklyRefocus'
+import WeeklyNav from '~/components/weekly/weeklyNav'
+
+// actions
+import { validateWinsForm } from '~/libs/weekly/winsActions'
+import { validateImprovementsForm } from '~/libs/weekly/improvementsActions'
+import { validateLearningPointsForm } from '~/libs/weekly/learingPointsActions'
+import { validateRefocusForm } from '~/libs/weekly/refocusActions'
 
 // components
 import Container from '~/components/container'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
 import ReviewElement from '~/components/weekly/reviewElement'
 import ListSection from '~/components/weekly/ListSection'
-import { validateWinsForm } from '~/libs/weekly/winsActions'
-import { validateImprovementsForm } from '~/libs/weekly/improvementsActions'
-import { validateLearningPointsForm } from '~/libs/weekly/learingPointsActions'
-import { validateRefocusForm } from '~/libs/weekly/refocusActions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
 
-  const weekResults = await findOrCreateWeek('today')
+  const url = new URL(request.url)
+
+  let year
+  let week
+
+  if (
+    url.searchParams.get('week') === null ||
+    url.searchParams.get('year') === null
+  ) {
+    year = determineYear()
+    week = determineWeek('today')
+  } else {
+    week = parseInt(url.searchParams.get('week'))
+    year = parseInt(url.searchParams.get('year'))
+  }
+
+  const weekResults = await findOrCreateWeek(year, week)
   const win = findWeeklyWin(weekResults.id, user.id)
   const improvements = findWeeklyImprovements(weekResults.id, user.id)
   const learningpoints = findWeeklyLearningPoints(weekResults.id, user.id)
@@ -70,12 +101,35 @@ export default function WeeklyReview() {
   const data = useLoaderData()
   const errors = useActionData()
 
+  const [searchParams, setSearchParams] = useSearchParams()
+  const paramYear = searchParams.get('year')
+  const paramWeek = searchParams.get('week')
+
+  // if the year and week are undefined, then determine for current date
+  const year = paramYear ? parseInt(paramYear) : determineYear()
+  const week = paramWeek ? parseInt(paramWeek) : determineWeek('today')
+
+  // get previous week and year, and next week and year
+  const previousWeek = calculatePreviousWeek(year, week)
+  const nextWeek = calculateNextWeek(year, week)
+  const startAndEndDates = dateFromDay(year, week)
+  // format the dates for UI
+  const dates = formatDate(startAndEndDates.start, startAndEndDates.end)
+
   return (
     <>
       <Container>
         <div className="mt-8">
           <HeaderOne>Weekly Review</HeaderOne>
-
+          <WeeklyNav
+            navigation={{
+              back: { year: previousWeek.year, week: previousWeek.week },
+              forward: { year: nextWeek.year, week: nextWeek.week },
+            }}
+            dates={dates}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
           <HeaderTwo>Primary Wins</HeaderTwo>
 
           <p>What was great about your week? What was a solid win for you?</p>
