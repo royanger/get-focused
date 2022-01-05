@@ -12,11 +12,13 @@ interface WeeklyNav {
       week: number
     }
   }
+  dates: string
   setSearchParams
 }
 
 export default function WeeklyNav({
   navigation,
+  dates,
   searchParams,
   setSearchParams,
 }: WeeklyNav) {
@@ -38,7 +40,7 @@ export default function WeeklyNav({
           </button>
         </div>
         <div className=" flex grow border-2 mx-8 border-purple text-lg font-bold h-10 items-center justify-center">
-          January 2nd - 8th
+          {dates}
         </div>
 
         <div className="mb-4 flex h-10">

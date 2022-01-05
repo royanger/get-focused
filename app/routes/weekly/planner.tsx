@@ -22,15 +22,16 @@ import { validateTaskForm } from '~/libs/weekly/taskActions'
 import {
   calculateNextWeek,
   calculatePreviousWeek,
-  calculateWeeksInYear,
   determineWeek,
   determineYear,
+  dateFromDay,
+  formatDate,
 } from '~/libs/dateFunctions'
 
-export let loader: LoaderFunction = async ({ request }) => {
-  let user = await authenticator.isAuthenticated(request)
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await authenticator.isAuthenticated(request)
 
-  let url = new URL(request.url)
+  const url = new URL(request.url)
 
   let year
   let week
@@ -46,16 +47,16 @@ export let loader: LoaderFunction = async ({ request }) => {
     year = parseInt(url.searchParams.get('year'))
   }
 
-  let results = await findWeeklyTasks(year, week, user.id)
+  const results = await findWeeklyTasks(year, week, user.id)
 
   return results
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  let user = await authenticator.isAuthenticated(request)
+  const user = await authenticator.isAuthenticated(request)
 
-  let results = validateTaskForm(formData, user, 'today')
+  const results = validateTaskForm(formData, user, 'today')
   return results
 
   //   return null
@@ -83,7 +84,7 @@ function tasksByPriority({
   errors,
   type,
 }: TasksByPriority) {
-  let taskList = tasks.map(task => {
+  const taskList = tasks.map(task => {
     return (
       <React.Fragment key={task.id}>
         <TaskElement
@@ -133,21 +134,21 @@ export default function WeeklyPlanner() {
   const paramWeek = searchParams.get('week')
 
   // if the year and week are undefined, then determine for current date
-  console.log('paramYear', paramYear, paramWeek)
   const year = paramYear ? parseInt(paramYear) : determineYear()
   const week = paramWeek ? parseInt(paramWeek) : determineWeek('today')
 
-  // get previous week (and maybe year, depending on week)
-  // get next week ( and maybe years, depending on )
-
+  // get previous week and year, and next week and year
   const previousWeek = calculatePreviousWeek(year, week)
   const nextWeek = calculateNextWeek(year, week)
+  const startAndEndDates = dateFromDay(year, week)
+  // format the dates for UI
+  const dates = formatDate(startAndEndDates.start, startAndEndDates.end)
 
-  let priorityOneTasks = data.filter(task => task.statusId === PRIORITY_1)
+  const priorityOneTasks = data.filter(task => task.statusId === PRIORITY_1)
 
   let generatedP1Tasks
-  let p1Title = 'Primary Tasks'
-  let p1Info =
+  const p1Title = 'Primary Tasks'
+  const p1Info =
     'These are the most important tasks for your week, the tasks that need to be completed'
 
   generatedP1Tasks = tasksByPriority({
@@ -158,11 +159,11 @@ export default function WeeklyPlanner() {
     type: 'p1',
   })
 
-  let priorityTwoTasks = data.filter(task => task.statusId === PRIORITY_2)
+  const priorityTwoTasks = data.filter(task => task.statusId === PRIORITY_2)
 
   let generatedP2Tasks
-  let p2Title = 'Secondary Tasks'
-  let p2Info =
+  const p2Title = 'Secondary Tasks'
+  const p2Info =
     'The tasks here should be completed, but only after you complete the primary tasks.'
 
   generatedP2Tasks = tasksByPriority({
@@ -173,11 +174,11 @@ export default function WeeklyPlanner() {
     type: 'p2',
   })
 
-  let priorityThreeTasks = data.filter(task => task.statusId === PRIORITY_3)
+  const priorityThreeTasks = data.filter(task => task.statusId === PRIORITY_3)
 
   let generatedP3Tasks
-  let p3Title = 'Non-Essential Tasks'
-  let p3Info =
+  const p3Title = 'Non-Essential Tasks'
+  const p3Info =
     'Extra tasks that would be a pure bonus if you could complete them.'
 
   generatedP3Tasks = tasksByPriority({
@@ -199,6 +200,7 @@ export default function WeeklyPlanner() {
               back: { year: previousWeek.year, week: previousWeek.week },
               forward: { year: nextWeek.year, week: nextWeek.week },
             }}
+            dates={dates}
             searchParams={searchParams}
             setSearchParams={setSearchParams}
           />
