@@ -1,15 +1,6 @@
 import { HeaderTwo } from '../headlines'
 import NoteEl from '../forms/noteEl'
-
-interface Notes {
-  entries: {
-    id: string
-    userId: string
-    dateId: string
-    note: string
-  }[]
-  errors: any
-}
+import { Notes } from '~/interfaces'
 
 export default function Notes({ entries, errors }: Notes) {
   return (

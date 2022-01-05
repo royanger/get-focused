@@ -1,9 +1,5 @@
 import { HeaderTwo } from '../headlines'
-
-interface TaskTitle {
-  title: string
-  info: string
-}
+import { TaskTitle } from '~/interfaces'
 
 export default function TasksTitle({ title, info }: TaskTitle) {
   return (

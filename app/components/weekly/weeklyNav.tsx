@@ -1,20 +1,6 @@
 import ForwardIcon from '../icons/forward'
 import BackIcon from '../icons/back'
-
-interface WeeklyNav {
-  navigation: {
-    back: {
-      year: number
-      week: number
-    }
-    forward: {
-      year: number
-      week: number
-    }
-  }
-  dates: string
-  setSearchParams
-}
+import { WeeklyNav } from '~/interfaces'
 
 export default function WeeklyNav({
   navigation,

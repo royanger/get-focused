@@ -1,19 +1,7 @@
 import TasksTitle from '../daily/tasksTitle'
 import React from 'react'
 import ReviewElement from './reviewElement'
-
-interface Wins {
-  items: {
-    id: string
-    userId: string
-    dateId: string
-    item: string
-  }[]
-  title: string
-  info: string
-  errors: any
-  formType: string
-}
+import { Wins } from '~/interfaces'
 
 export default function ListSection({
   items,

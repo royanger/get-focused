@@ -1,12 +1,5 @@
 import * as React from 'react'
-interface Input {
-  value: string
-  name: string
-  placeholder: string
-  width: string
-  formState?: React.ReactChild
-  setFormState: React.Dispatch<React.SetStateAction<string>>
-}
+import { Input } from '~/interfaces'
 
 export default function Input({
   value,

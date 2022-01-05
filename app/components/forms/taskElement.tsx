@@ -6,17 +6,7 @@ import TaskSave from './taskSave'
 import TaskCancel from './taskCancel'
 import Edit from '../icons/edit'
 import { Form } from 'remix'
-
-interface Tasks {
-  id: string
-  completed?: boolean
-  statusId?: string
-  name: string
-  actualTime: string
-  goalTime: string
-  timeTracker: number
-  type: string
-}
+import { TaskElement } from '~/interfaces'
 
 export default function TaskElement({
   id,
@@ -25,7 +15,7 @@ export default function TaskElement({
   actualTime,
   timeTracker,
   type,
-}: Tasks) {
+}: TaskElement) {
   // this controls changes for all elements. Pass this as a prop as needed
   let [formState, setFormState] = React.useState('default')
 

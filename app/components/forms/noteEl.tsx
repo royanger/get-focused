@@ -1,12 +1,7 @@
 import NoteSave from './noteSave'
 import NoteCancel from './noteCancel'
 import { Form } from 'remix'
-
-interface Note {
-  id: string
-  dateId?: string
-  note: string
-}
+import { Note } from '~/interfaces'
 
 export default function NoteEl({ id, dateId, note }: Note) {
   return (

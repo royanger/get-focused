@@ -1,11 +1,4 @@
-interface Button {
-  title: string
-  variant?: string
-  size?: string
-  children?: string
-  type?: string
-  onClick?: (values: string) => void
-}
+import { Button } from '~/interfaces'
 
 const Button = ({ title, variant, size, children, type, onClick }: Button) => {
   let baseStyles = 'rounded shadow-lg uppercase'

@@ -2,14 +2,7 @@ import { Form } from 'remix'
 import Button from '../button'
 import Checkbox from '../forms/checkbox'
 import { HeaderTwo } from '../headlines'
-
-interface Exercise {
-  entries: {
-    completed?: boolean
-    id: string
-  }
-  errors: any
-}
+import { Entries, Exercise } from '~/interfaces'
 
 export default function Exercise({ entries, errors }: Exercise) {
   return (

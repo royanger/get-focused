@@ -1,8 +1,5 @@
 import Button from '../button'
-
-interface Cancel {
-  setFormState: React.Dispatch<React.SetStateAction<string>>
-}
+import { Cancel } from '~/interfaces'
 
 // TODO will need to clear form/reset to default values
 

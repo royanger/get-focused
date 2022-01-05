@@ -1,11 +1,4 @@
-//<input className="mx-2" type="radio" />
-
-interface Radio {
-  value?: number
-  checked?: boolean
-  name: number
-  type: string
-}
+import { Radio } from '~/interfaces'
 
 export default function Radio({
   value,
