@@ -17,8 +17,6 @@ export let findNotesEntries = async (
   date: string,
   userId: string | undefined
 ) => {
-  //   let dateResults = await findOrCreateDate(targetDate)
-
   if (date && userId) {
     let noteResults = await noteQuery(date, userId)
       .catch(e => {
