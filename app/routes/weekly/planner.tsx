@@ -4,6 +4,7 @@ import {
   LoaderFunction,
   useActionData,
   useLoaderData,
+  useSearchParams,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
 
@@ -12,16 +13,40 @@ import Container from '~/components/container'
 import { HeaderOne } from '~/components/headlines'
 import TaskElement from '~/components/weekly/taskElement'
 import TasksTitle from '~/components/daily/tasksTitle'
+import WeeklyNav from '~/components/weekly/weeklyNav'
 
 // libs for queries and actions
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '~/libs/priorityIds'
 import { findWeeklyTasks } from '~/queries/findWeeklyTasks'
 import { validateTaskForm } from '~/libs/weekly/taskActions'
+import {
+  calculateNextWeek,
+  calculatePreviousWeek,
+  calculateWeeksInYear,
+  determineWeek,
+  determineYear,
+} from '~/libs/dateFunctions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
 
-  let results = await findWeeklyTasks('today', user.id)
+  let url = new URL(request.url)
+
+  let year
+  let week
+
+  if (
+    url.searchParams.get('week') === null ||
+    url.searchParams.get('year') === null
+  ) {
+    year = determineYear()
+    week = determineWeek('today')
+  } else {
+    week = parseInt(url.searchParams.get('week'))
+    year = parseInt(url.searchParams.get('year'))
+  }
+
+  let results = await findWeeklyTasks(year, week, user.id)
 
   return results
 }
@@ -100,8 +125,23 @@ function tasksByPriority({
 }
 
 export default function WeeklyPlanner() {
-  let data = useLoaderData()
-  let errors = useActionData()
+  const data = useLoaderData()
+  const errors = useActionData()
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const paramYear = searchParams.get('year')
+  const paramWeek = searchParams.get('week')
+
+  // if the year and week are undefined, then determine for current date
+  console.log('paramYear', paramYear, paramWeek)
+  const year = paramYear ? parseInt(paramYear) : determineYear()
+  const week = paramWeek ? parseInt(paramWeek) : determineWeek('today')
+
+  // get previous week (and maybe year, depending on week)
+  // get next week ( and maybe years, depending on )
+
+  const previousWeek = calculatePreviousWeek(year, week)
+  const nextWeek = calculateNextWeek(year, week)
 
   let priorityOneTasks = data.filter(task => task.statusId === PRIORITY_1)
 
@@ -154,6 +194,14 @@ export default function WeeklyPlanner() {
         <div className="mt-8">
           <HeaderOne>Weekly Planner</HeaderOne>
 
+          <WeeklyNav
+            navigation={{
+              back: { year: previousWeek.year, week: previousWeek.week },
+              forward: { year: nextWeek.year, week: nextWeek.week },
+            }}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
           {generatedP1Tasks}
           {generatedP2Tasks}
           {generatedP3Tasks}

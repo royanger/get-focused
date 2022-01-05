@@ -42,6 +42,7 @@ model Date {
 model Week {
    id             String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
    week           Int
+   year           Int
    weeklyTask     Weeklytask[]
    wins           Wins[]
    improvements   Improvements[]
