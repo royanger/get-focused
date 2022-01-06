@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 export interface Entries {
   completed?: boolean
@@ -74,6 +74,21 @@ export interface TasksByPriority {
   errors: any
 }
 
+export interface WeeklyTasksByPriority {
+  tasks: {
+    id: string
+    userId: string
+    dateId: string
+    statusId: string
+    task: string
+    completed: boolean
+  }[]
+  title: string
+  info: string
+  type: string
+  errors: any
+}
+
 export interface TaskTitle {
   title: string
   info: string
@@ -97,8 +112,9 @@ export interface Checkbox {
 export interface Radio {
   value?: number
   checked?: boolean
-  name: number
+  name: number | string
   type: string
+  handleChange: (values: any) => void
 }
 
 export interface Input {
@@ -150,5 +166,6 @@ export interface WeeklyNav {
     forward: WeeklyNavOptions
   }
   dates: string
-  setSearchParams
+  searchParams: URLSearchParams
+  setSearchParams: React.Dispatch<React.SetStateAction<string>>
 }

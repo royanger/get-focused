@@ -10,6 +10,7 @@ export default function TaskCancel({ setFormState }: Cancel) {
         title="Cancel"
         variant="cancel"
         size="sm"
+        type="reset"
         onClick={() => setFormState('default')}
       />
     </>

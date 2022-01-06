@@ -14,7 +14,7 @@ export default function Radio({
       name={`${type}-${name}`}
       defaultChecked={checked}
       className="outline-none focus:ring-0 border-[1px] border-purple text-purple"
-      onClick={e => handleChange(e)}
+      onClick={(e: React.MouseEvent<HTMLInputElement>) => handleChange(e)}
     />
   )
 }
