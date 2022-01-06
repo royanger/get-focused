@@ -1,13 +1,13 @@
-interface Button {
-  title: string
-  variant?: string
-  size?: string
-  children?: string
-  type?: string
-  onClick?: (values: string) => void
-}
+import { Button } from '~/interfaces'
 
-const Button = ({ title, variant, size, children, type, onClick }: Button) => {
+const Button = ({
+  title,
+  variant,
+  size,
+  children,
+  type = 'button',
+  onClick,
+}: Button) => {
   let baseStyles = 'rounded shadow-lg uppercase'
 
   let stylesMap: any = {
@@ -31,15 +31,6 @@ const Button = ({ title, variant, size, children, type, onClick }: Button) => {
     lg: 'text-lg px-5 pb-3 m-3 pt-2',
   }
 
-  let buttonType
-  if (type && type === 'submit') {
-    buttonType = 'submit'
-  } else if (type && type === 'reset') {
-    buttonType = 'reset'
-  } else {
-    buttonType = 'button'
-  }
-
   if (
     variant === 'warning' ||
     variant === 'cancel' ||
@@ -50,7 +41,7 @@ const Button = ({ title, variant, size, children, type, onClick }: Button) => {
       <button
         className={`${baseStyles} ${stylesMap[variant]} ${sizeMap[buttonSize]}`}
         onClick={() => onClick('default')}
-        type={buttonType}
+        type={type}
       >
         {title}
       </button>

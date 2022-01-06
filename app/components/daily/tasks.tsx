@@ -1,35 +1,8 @@
+import * as React from 'react'
 import TasksTitle from './tasksTitle'
 import TaskElement from '../forms/taskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
-import React from 'react'
-
-interface Tasks {
-  entries: {
-    id: string
-    userId: string
-    dateId: string
-    statusId: string
-    name: string
-    actualTime: string
-    goalTime: string
-    timeTracker: number
-  }[]
-  errors: any
-}
-interface TasksByPriority {
-  tasks: {
-    id: string
-    userId: string
-    dateId: string
-    statusId: string
-    name: string
-    actualTime: string
-    goalTime: string
-    timeTracker: number
-  }[]
-  type: string
-  errors: any
-}
+import { TasksByPriority, Tasks } from '~/interfaces'
 
 function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   let taskList

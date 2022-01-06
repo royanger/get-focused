@@ -7,6 +7,7 @@ import {
   useSearchParams,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
+import { WeeklyTasksByPriority } from '~/interfaces'
 
 // components
 import Container from '~/components/container'
@@ -62,28 +63,13 @@ export const action: ActionFunction = async ({ request }) => {
   //   return null
 }
 
-interface TasksByPriority {
-  tasks: {
-    id: string
-    userId: string
-    dateId: string
-    statusId: string
-    task: string
-    completed: boolean
-  }[]
-  title: string
-  info: string
-  type: string
-  errors: any
-}
-
 function tasksByPriority({
   tasks,
   title,
   info,
   errors,
   type,
-}: TasksByPriority) {
+}: WeeklyTasksByPriority) {
   const taskList = tasks.map(task => {
     return (
       <React.Fragment key={task.id}>

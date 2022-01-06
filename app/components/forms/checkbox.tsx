@@ -1,7 +1,4 @@
-interface Checkbox {
-  status?: boolean
-  label: string
-}
+import { Checkbox } from '~/interfaces'
 
 export default function Checkbox({ status, label }: Checkbox) {
   return (

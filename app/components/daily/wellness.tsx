@@ -3,16 +3,7 @@ import { Form } from 'remix'
 import Button from '../button'
 import Radio from '../forms/radio'
 import { HeaderTwo } from '../headlines'
-
-interface Wellness {
-  entries: {
-    id: string
-    userId: string
-    rating: number
-    dateId: string
-  }
-  errors: any
-}
+import { Wellness } from '~/interfaces'
 
 export default function Wellness({ entries, errors }: Wellness) {
   const [rating, setRating] = React.useState(
