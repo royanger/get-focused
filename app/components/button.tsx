@@ -56,7 +56,7 @@ const Button = ({
          ${stylesMap['default']}
          ${sizeMap[buttonSize]}
          `}
-        type={buttonType}
+        type={type}
       >
         {title}
       </button>

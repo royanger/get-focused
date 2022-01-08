@@ -78,19 +78,19 @@ export const action: ActionFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
 
   if (formData.get('formType') === 'win') {
-    let results = validateWinsForm(formData, user, 'today')
+    let results = validateWinsForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'improvements') {
-    let results = validateImprovementsForm(formData, user, 'today')
+    let results = validateImprovementsForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'learningpoints') {
-    let results = validateLearningPointsForm(formData, user, 'today')
+    let results = validateLearningPointsForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'refocus') {
-    let results = validateRefocusForm(formData, user, 'today')
+    let results = validateRefocusForm(formData, user)
     return results
   }
 

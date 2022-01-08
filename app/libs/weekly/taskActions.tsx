@@ -1,7 +1,7 @@
 import { updateOrCreateWeeklyTask } from '~/queries/updateOrCreateWeeklyTask'
 import DOMPurify from 'isomorphic-dompurify'
 
-export function validateTaskForm(formData, user: string, targetDate: string) {
+export function validateTaskForm(formData, user: string) {
   const errors = {}
 
   const taskName = formData.get('taskname')
@@ -29,8 +29,7 @@ export function validateTaskForm(formData, user: string, targetDate: string) {
     taskName,
     completed,
     formData.get('status'),
-    user.id,
-    targetDate
+    user.id
   )
   return null
 }

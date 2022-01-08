@@ -1,11 +1,7 @@
 import DOMPurify from 'isomorphic-dompurify'
 import { updateOrCreateImprovement } from '~/queries/updateOrCreateImprovement'
 
-export async function validateImprovementsForm(
-  formData,
-  user: string,
-  targetDate: string
-) {
+export async function validateImprovementsForm(formData, user: string) {
   let item = formData.get('item')
     ? DOMPurify.sanitize(formData.get('item'))
     : null
@@ -27,8 +23,7 @@ export async function validateImprovementsForm(
   let results = await updateOrCreateImprovement(
     formData.get('id'),
     item,
-    user.id,
-    targetDate
+    user.id
   )
   return results
 }

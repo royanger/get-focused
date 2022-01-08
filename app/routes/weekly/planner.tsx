@@ -57,7 +57,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const user = await authenticator.isAuthenticated(request)
 
-  const results = validateTaskForm(formData, user, 'today')
+  const results = validateTaskForm(formData, user)
   return results
 
   //   return null

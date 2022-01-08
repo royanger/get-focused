@@ -2,11 +2,7 @@ import DOMPurify from 'isomorphic-dompurify'
 import { updateOrCreateLearningPoint } from '~/queries/findOrCreateLearningPoint'
 import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
 
-export async function validateLearningPointsForm(
-  formData,
-  user: string,
-  targetDate: string
-) {
+export async function validateLearningPointsForm(formData, user: string) {
   let item = formData.get('item')
     ? DOMPurify.sanitize(formData.get('item'))
     : null
@@ -28,8 +24,7 @@ export async function validateLearningPointsForm(
   let results = await updateOrCreateLearningPoint(
     formData.get('id'),
     item,
-    user.id,
-    targetDate
+    user.id
   )
   return results
 }
