@@ -154,7 +154,6 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
               <>
                 <Form action="/logout" method="post">
                   <button>Logout</button>
-                  {data?.user?.id}
                 </Form>
               </>
             ) : (
