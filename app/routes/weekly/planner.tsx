@@ -57,10 +57,9 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const user = await authenticator.isAuthenticated(request)
 
-  const results = validateTaskForm(formData, user)
-  return results
+  const results = await validateTaskForm(formData, user)
 
-  //   return null
+  return results
 }
 
 function tasksByPriority({
@@ -113,7 +112,16 @@ function tasksByPriority({
 
 export default function WeeklyPlanner() {
   const data = useLoaderData()
-  const errors = useActionData()
+  const actionData = useActionData()
+
+  const [weeklyTasks, setWeeklyTasks] = React.useState(data)
+
+  console.log('loader data', data)
+  console.log('action data data', actionData)
+
+  //   if ( actionData ) {
+  //      setWeeklyTasks
+  //   }
 
   const [searchParams, setSearchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
@@ -130,7 +138,9 @@ export default function WeeklyPlanner() {
   // format the dates for UI
   const dates = formatDate(startAndEndDates.start, startAndEndDates.end)
 
-  const priorityOneTasks = data.filter(task => task.statusId === PRIORITY_1)
+  const priorityOneTasks = weeklyTasks.filter(
+    task => task.statusId === PRIORITY_1
+  )
 
   let generatedP1Tasks
   const p1Title = 'Primary Tasks'
@@ -141,11 +151,13 @@ export default function WeeklyPlanner() {
     tasks: priorityOneTasks,
     title: p1Title,
     info: p1Info,
-    errors: errors,
+    errors: actionData,
     type: 'p1',
   })
 
-  const priorityTwoTasks = data.filter(task => task.statusId === PRIORITY_2)
+  const priorityTwoTasks = weeklyTasks.filter(
+    task => task.statusId === PRIORITY_2
+  )
 
   let generatedP2Tasks
   const p2Title = 'Secondary Tasks'
@@ -156,11 +168,13 @@ export default function WeeklyPlanner() {
     tasks: priorityTwoTasks,
     title: p2Title,
     info: p2Info,
-    errors: errors,
+    errors: actionData,
     type: 'p2',
   })
 
-  const priorityThreeTasks = data.filter(task => task.statusId === PRIORITY_3)
+  const priorityThreeTasks = weeklyTasks.filter(
+    task => task.statusId === PRIORITY_3
+  )
 
   let generatedP3Tasks
   const p3Title = 'Non-Essential Tasks'
@@ -171,7 +185,7 @@ export default function WeeklyPlanner() {
     tasks: priorityThreeTasks,
     title: p3Title,
     info: p3Info,
-    errors: errors,
+    errors: actionData,
     type: 'p3',
   })
 

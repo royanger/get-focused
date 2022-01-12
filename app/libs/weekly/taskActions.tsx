@@ -1,7 +1,7 @@
 import { updateOrCreateWeeklyTask } from '~/queries/updateOrCreateWeeklyTask'
 import DOMPurify from 'isomorphic-dompurify'
 
-export function validateTaskForm(formData, user: string) {
+export async function validateTaskForm(formData, user: string) {
   const errors = {}
 
   const taskName = formData.get('taskname')
@@ -24,12 +24,15 @@ export function validateTaskForm(formData, user: string) {
   // latter we need to update the database
   // there is no check yet to see if the entry exists, so do .upsert
 
-  const results = updateOrCreateWeeklyTask(
+  let results = {
+    success: true,
+  }
+  results.data = await updateOrCreateWeeklyTask(
     formData.get('id'),
     taskName,
     completed,
     formData.get('status'),
     user.id
   )
-  return null
+  return results
 }

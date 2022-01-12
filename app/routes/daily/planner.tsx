@@ -57,24 +57,24 @@ export const action: ActionFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
 
   if (formData.get('formType') === 'wellness') {
-    let results = validateWellnessForm(formData, user)
+    let results = await validateWellnessForm(formData, user)
     return results
   }
 
   if (formData.get('formType') === 'exercise') {
-    let results = validateExerciseForm(formData, user)
+    let results = await validateExerciseForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'task') {
-    let results = validateTaskForm(formData, user)
+    let results = await validateTaskForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'note') {
-    let results = validateNotesForm(formData, user)
+    let results = await validateNotesForm(formData, user)
     return results
   }
   if (formData.get('formType') === 'productivity') {
-    let results = validateProductivityForm(formData, user)
+    let results = await validateProductivityForm(formData, user)
     return results
   }
 
@@ -85,6 +85,8 @@ export const action: ActionFunction = async ({ request }) => {
 export default function DailyPlanner() {
   let data = useLoaderData()
   const errors = useActionData()
+
+  console.log('loader data', data)
 
   return (
     <>
