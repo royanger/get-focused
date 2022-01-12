@@ -1,7 +1,7 @@
 import DOMPurify from 'isomorphic-dompurify'
 import { updateOrCreateTask } from '~/queries/updateOrCreateTask'
 
-export function validateTaskForm(formData, user) {
+export async function validateTaskForm(formData, user) {
   let taskName = formData.get('taskname')
     ? DOMPurify.sanitize(formData.get('taskname'))
     : null
@@ -23,7 +23,7 @@ export function validateTaskForm(formData, user) {
   }
 
   // handle updating/creating via upsert for entries.
-  let results = updateOrCreateTask(
+  let results = await updateOrCreateTask(
     formData.get('id'),
     formData.get('taskname'),
     formData.get('goaltime'),
@@ -31,5 +31,5 @@ export function validateTaskForm(formData, user) {
     formData.get('type'),
     user.id
   )
-  return null
+  return results
 }

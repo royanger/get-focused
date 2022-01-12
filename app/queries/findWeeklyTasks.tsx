@@ -6,6 +6,7 @@ export async function findWeeklyTasks(
   week: number,
   userId: string
 ) {
+  console.log('loader started')
   const weekResults = await findOrCreateWeek(year, week)
 
   async function tasksQuery(date: string, userId: string) {
