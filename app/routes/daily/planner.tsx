@@ -90,8 +90,6 @@ export default function DailyPlanner() {
   let data = useLoaderData()
   const errors = useActionData()
 
-  console.log('loader data', data)
-
   return (
     <>
       <Container>

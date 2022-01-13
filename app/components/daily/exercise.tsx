@@ -1,6 +1,6 @@
 import { Form } from 'remix'
 import Button from '../button'
-import Checkbox from '../forms/checkbox'
+import Radio from '../forms/radio'
 import { HeaderTwo } from '../headlines'
 import { Exercise } from '~/interfaces'
 
@@ -17,19 +17,24 @@ export default function Exercise({ entries, errors }: Exercise) {
             value={entries?.id ? entries.id : 'new'}
           />
           <div>
-            <Checkbox
-              status={entries?.completed ? entries.completed : false}
-              label="Yes"
-            />
+            <div key="yes">
+              <Radio
+                value="yes"
+                name="exercise"
+                checked={entries?.completed ? !entries.completed : false}
+              />
+            </div>
+            <div key="no">
+              <Radio
+                value="no"
+                name="exercise"
+                checked={entries?.completed ? !entries.completed : false}
+              />
+            </div>
           </div>
+
           <div className="col-start-2 col-end-2 row-start-1 row-end-3">
             <Button type="submit" title="save" />
-          </div>
-          <div>
-            <Checkbox
-              status={entries?.completed ? !entries.completed : false}
-              label="No"
-            />
           </div>
         </div>
         <div className="text-sm text-error mb-6 h-5">

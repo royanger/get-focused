@@ -3,14 +3,10 @@ import { updateOrCreateExercise } from '~/queries/updateorCreateExercise'
 export function validateExerciseForm(formData, user) {
   const errors = {}
 
-  // make sure that one of the boxes is selected and error if none are
-  if (formData.get('yes') !== 'on' && formData.get('no') !== 'on') {
+  // make sure that one of the Radios is selected and error if none are
+  if (formData.get('exercise') === null) {
     errors.formType = 'exercise'
     errors.error = 'Please indicate whether you exercised or not.'
-  }
-  if (formData.get('yes') === 'on' && formData.get('no') === 'on') {
-    errors.formType = 'exercise'
-    errors.error = 'Please select only Yes or No, and not both'
   }
 
   if (Object.keys(errors).length) {
