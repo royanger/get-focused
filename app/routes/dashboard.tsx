@@ -7,6 +7,8 @@ export const loader = async ({ request }) => {
   if (!user) {
     return redirect('/')
   }
+
+  return null
 }
 
 export default function Dashboard() {

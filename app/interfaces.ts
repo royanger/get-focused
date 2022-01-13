@@ -107,14 +107,13 @@ export interface Wellness {
 export interface Checkbox {
   status?: boolean
   label: string
+  handleClick: (values: any) => void
 }
 
 export interface Radio {
-  value?: number
+  value?: number | string
   checked?: boolean
   name: number | string
-  type: string
-  handleChange: (values: any) => void
 }
 
 export interface Input {
