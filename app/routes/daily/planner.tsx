@@ -3,6 +3,7 @@ import {
   ActionFunction,
   LoaderFunction,
   useActionData,
+  redirect,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
 
@@ -32,6 +33,9 @@ import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
+  if (!user) {
+    return redirect('/')
+  }
   const dateResults = await findOrCreateDate('today')
 
   let data = {}

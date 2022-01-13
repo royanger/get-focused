@@ -13,6 +13,7 @@ import {
   useLoaderData,
   useActionData,
   useSearchParams,
+  redirect,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
 import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
@@ -38,6 +39,9 @@ import ListSection from '~/components/weekly/ListSection'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
+  if (!user) {
+    return redirect('/')
+  }
 
   const url = new URL(request.url)
 
