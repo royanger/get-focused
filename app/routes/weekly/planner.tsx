@@ -2,6 +2,7 @@ import * as React from 'react'
 import {
   ActionFunction,
   LoaderFunction,
+  redirect,
   useActionData,
   useLoaderData,
   useSearchParams,
@@ -31,6 +32,10 @@ import {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
+
+  if (!user) {
+    return redirect('/')
+  }
 
   const url = new URL(request.url)
 

@@ -1,7 +1,18 @@
+import { redirect } from 'remix'
+import { authenticator } from '~/services/auth.server'
+
+export const loader = async ({ request }) => {
+  let user = await authenticator.isAuthenticated(request)
+
+  if (!user) {
+    return redirect('/')
+  }
+}
+
 export default function Dashboard() {
   return (
     <>
-      <h1 className='text-blue'> Productivity App</h1>
+      <h1 className="text-blue"> Productivity App</h1>
       <p>This is some text</p>
       {/* <div className="App">
          <header className="App-header">
@@ -21,5 +32,5 @@ export default function Dashboard() {
          </Container>
        </div> */}
     </>
-  );
+  )
 }
