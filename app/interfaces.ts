@@ -55,6 +55,7 @@ export interface Tasks {
     actualTime: string
     goalTime: string
     timeTracker: number
+    completed?: boolean
   }[]
   errors: any
 }
@@ -69,6 +70,7 @@ export interface TasksByPriority {
     actualTime: string
     goalTime: string
     timeTracker: number
+    completed?: boolean
   }[]
   type: string
   errors: any
@@ -123,6 +125,7 @@ export interface Input {
   width: string
   formState?: React.ReactChild
   setFormState: React.Dispatch<React.SetStateAction<string>>
+  completed?: string
 }
 
 export interface Cancel {

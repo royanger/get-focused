@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Input from './input'
-import TaskCheckbox from './taskCheckbox'
+import Checkbox from './checkbox'
 import TaskRadio from './taskRadio'
 import TaskSave from './taskSave'
 import TaskCancel from './taskCancel'
@@ -15,6 +15,7 @@ export default function TaskElement({
   actualTime,
   timeTracker,
   type,
+  completed,
 }: TaskElement) {
   // this controls changes for all elements. Pass this as a prop as needed
   let [formState, setFormState] = React.useState('default')
@@ -44,6 +45,9 @@ export default function TaskElement({
     setFormState('edit')
   }
 
+  const completedCSS = 'line-through text-grey-700'
+  console.log('completed', completed)
+
   return (
     <div className={`mb-3 ${currentStateDiv}`}>
       <Form method="post" action="/daily/planner">
@@ -52,6 +56,7 @@ export default function TaskElement({
         <input type="hidden" name="type" value={type} />
         <div className="p-2 grid grid-cols-10">
           <div className="flex flex-row items-center col-span-7  pr-4">
+            <Checkbox status={completed} label="completed" />
             <Input
               value={name}
               formState={formState}
@@ -59,6 +64,7 @@ export default function TaskElement({
               placeholder="Enter your task here..."
               setFormState={setFormState}
               width="flex-grow"
+              completed={completed ? completedCSS : ''}
             />
           </div>
           <div className="row-start-1 row-end-3 col-start-8 col-end-11">

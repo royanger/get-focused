@@ -8,6 +8,7 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   let taskList
   if (tasks) {
     taskList = tasks.map(task => {
+      console.log('task', task)
       return (
         <React.Fragment key={task.id}>
           <TaskElement
@@ -18,6 +19,7 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
             actualTime={task.actualTime}
             timeTracker={task.timeTracker}
             type={type}
+            completed={task.completed}
           />
           {errors && errors.id === task.id ? (
             <div className="text-sm text-error mb-6 h-5">

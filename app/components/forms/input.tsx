@@ -8,6 +8,7 @@ export default function Input({
   formState,
   width,
   setFormState,
+  completed,
 }: Input) {
   // set some styles for the form for 'default' and 'edit' states
   // TODO probably add 'error' state later after form validation
@@ -25,7 +26,7 @@ export default function Input({
   return (
     <div className={`${width} flex`}>
       <input
-        className={`${width} ${currentState}`}
+        className={`${width} ${currentState} ${completed}`}
         type="text"
         name={name}
         placeholder={placeholder}

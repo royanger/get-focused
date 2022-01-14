@@ -13,7 +13,8 @@ export function validateExerciseForm(formData, user) {
     return errors
   }
 
-  const completed = formData.get('yes') === 'on' ? true : false
+  // TODO test that this works after other changes
+  const completed = formData.get('exercise') === 'yes' ? true : false
 
   // latter we need to update the database
   // there is no check yet to see if the entry exists, so do .upsert
