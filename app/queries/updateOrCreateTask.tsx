@@ -7,7 +7,8 @@ export async function updateOrCreateTask(
   goalTime: string,
   actualTime: string,
   type: string,
-  userId: string
+  userId: string,
+  completed: boolean
 ) {
   let dateResults = await findOrCreateDate('today')
 
@@ -42,7 +43,7 @@ export async function updateOrCreateTask(
         actualTime: actualTime,
         timeTracker: 3,
         statusId: `status-${type}`,
-        completed: false,
+        completed: completed,
       },
     })
   }

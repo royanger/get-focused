@@ -1,12 +1,6 @@
 import { Radio } from '~/interfaces'
 
-export default function Radio({
-  value,
-  checked,
-  name,
-  type,
-  handleChange,
-}: Radio) {
+export default function Radio({ value, checked, name }: Radio) {
   return (
     <>
       <input
