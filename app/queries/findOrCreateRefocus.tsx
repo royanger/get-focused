@@ -36,7 +36,6 @@ export async function updateOrCreateRefocus(
         item: item,
       },
     })
-    console.log('results from update', refocus)
   }
 
   let results = await prisma.refocus.findUnique({

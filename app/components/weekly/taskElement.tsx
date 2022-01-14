@@ -32,7 +32,6 @@ export default function TaskElement({ id, task, completed, type }) {
   }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
 
   function clickHandler() {
-    console.log('child input clicked')
     setFormState('edit')
   }
 

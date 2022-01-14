@@ -120,14 +120,6 @@ export default function WeeklyPlanner() {
   const actionData = useActionData()
 
   const [weeklyTasks, setWeeklyTasks] = React.useState(data)
-
-  console.log('loader data', data)
-  console.log('action data data', actionData)
-
-  //   if ( actionData ) {
-  //      setWeeklyTasks
-  //   }
-
   const [searchParams, setSearchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
   const paramWeek = searchParams.get('week')
