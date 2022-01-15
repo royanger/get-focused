@@ -30,7 +30,6 @@ export default function ReviewElement({ id, item, formType }) {
   }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
 
   function clickHandler() {
-    console.log('child input clicked')
     setFormState('edit')
   }
 

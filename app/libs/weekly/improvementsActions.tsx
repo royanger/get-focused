@@ -14,7 +14,6 @@ export async function validateImprovementsForm(formData, user: string) {
     errors.msg = 'Please make sure you fill out the form'
   }
 
-  console.log('improv errors', errors)
   if (Object.keys(errors).length) {
     return errors
   }

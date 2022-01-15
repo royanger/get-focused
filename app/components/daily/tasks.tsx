@@ -8,7 +8,6 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   let taskList
   if (tasks) {
     taskList = tasks.map(task => {
-      console.log('task', task)
       return (
         <React.Fragment key={task.id}>
           <TaskElement

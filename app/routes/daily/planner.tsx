@@ -97,7 +97,7 @@ export default function DailyPlanner() {
           <HeaderOne>Daily Planner</HeaderOne>
 
           <Wellness
-            entries={data.wellness}
+            wellness={data.wellness}
             errors={errors?.formType === 'wellness' ? errors : null}
           />
 

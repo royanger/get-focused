@@ -9,7 +9,6 @@ export async function updateOrCreateWeeklyTask(
   status: string,
   userId: string
 ) {
-  console.log('this works right?')
   const year = determineYear()
   const week = determineWeek('today')
 
@@ -30,7 +29,6 @@ export async function updateOrCreateWeeklyTask(
         weekId: weekResults.id,
       },
     })
-    console.log('action?')
     return task
   } else {
     // update existing weekly task

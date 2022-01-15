@@ -41,12 +41,10 @@ export default function TaskElement({
   }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
 
   function clickHandler() {
-    console.log('child input clicked')
     setFormState('edit')
   }
 
   const completedCSS = 'line-through text-grey-700'
-  console.log('completed', completed)
 
   return (
     <div className={`mb-3 ${currentStateDiv}`}>

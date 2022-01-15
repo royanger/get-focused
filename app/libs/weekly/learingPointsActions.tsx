@@ -15,7 +15,6 @@ export async function validateLearningPointsForm(formData, user: string) {
     errors.msg = 'Please make sure you fill out the form'
   }
 
-  console.log('learning point errors', errors)
   if (Object.keys(errors).length) {
     return errors
   }
