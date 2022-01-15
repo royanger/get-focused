@@ -11,7 +11,6 @@ import { authenticator } from '~/services/auth.server'
 import Container from '~/components/container'
 import { HeaderOne } from '~/components/headlines'
 import Wellness from '~/components/daily/wellness'
-import Wellness2 from '~/components/daily/wellness2'
 import Exercise from '~/components/daily/exercise'
 import Tasks from '~/components/daily/tasks'
 import Notes from '~/components/daily/notes'
@@ -98,11 +97,6 @@ export default function DailyPlanner() {
           <HeaderOne>Daily Planner</HeaderOne>
 
           <Wellness
-            entries={data.wellness}
-            errors={errors?.formType === 'wellness' ? errors : null}
-          />
-
-          <Wellness2
             wellness={data.wellness}
             errors={errors?.formType === 'wellness' ? errors : null}
           />
