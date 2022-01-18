@@ -8,22 +8,18 @@ interface Results {
 
 export async function generateProductivityData(user: string) {
   const data = await findAllProductivityEntries(user)
-  console.log('db query', data)
 
   if (data === null || data.length < 1) return null
 
   let results: Results[] = []
   for (let i = 0; i < data.length; i++) {
     if (results.find(({ score }) => score === data[i].score)) {
-      console.log('updating')
       for (let j = 0; j < results.length; j++) {
         if (results[j].score === data[i].score) {
           results[j] = { ...results[j], count: results[j].count + 1 }
         }
       }
     } else {
-      console.log('adding')
-
       results.push({ score: data[i].score, count: 1 })
     }
   }

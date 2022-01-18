@@ -10,6 +10,7 @@ import Container from '~/components/container'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
 import { generateWellnessData } from '~/libs/dashboard/wellness'
 import { generateProductivityData } from '~/libs/dashboard/productivity'
+import { generateExerciseData } from '~/libs/dashboard/exercise'
 
 export const loader = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -22,6 +23,7 @@ export const loader = async ({ request }) => {
   await Promise.all([
     generateWellnessData(user.id),
     generateProductivityData(user.id),
+    generateExerciseData(user.id),
     //  findExerciseEntries(dateResults.id, user.id),
     //  findTasksEntries(dateResults.id, user.id),
     //  findNotesEntries(dateResults.id, user.id),
@@ -29,7 +31,7 @@ export const loader = async ({ request }) => {
   ]).then(results => {
     data.wellness = results[0]
     data.productivity = results[1]
-    //  data.exercise = results[1]
+    data.exercise = results[2]
     //  data.tasks = results[2]
     //  data.notes = results[3]
     //  data.productivity = results[4]
@@ -40,45 +42,6 @@ export const loader = async ({ request }) => {
 
 export default function Dashboard() {
   const data = useLoaderData()
-  console.log('DATA', data)
-  const exerciseData = {
-    labels: ['Week 1', 'Week 1', 'Week 3'],
-    datasets: [
-      {
-        label: 'Yes',
-        data: [4, 19, 7],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'No',
-        data: [2, 9, 7],
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-  }
-
-  const wellnessData = {
-    labels: ['2', '4', '5', '6', '8', '9', '3', '4', '4', '2'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [2, 4, 7, 13, 5, 3, 10, 3, 19, 2],
-        backgroundColor: [
-          'rgb(63, 81, 181)',
-          'rgb(255, 87, 34)',
-          'rgb(0, 150, 136)',
-          'rgb(103, 58, 183',
-          'rgb(33, 150, 243)',
-          'rgb(244, 67, 54)',
-          'rgb(96, 125, 139)',
-          'rgb(255, 193, 7)',
-          'rgb(156, 39, 176)',
-          'rgb(0, 188, 212)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  }
 
   return (
     <>
@@ -102,7 +65,7 @@ export default function Dashboard() {
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
                     <HeaderTwo>Exercise</HeaderTwo>
-                    <BarChart data={exerciseData} title="Exercise Activity" />
+                    <BarChart data={data?.exercise} title="Exercise Activity" />
                   </div>
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
