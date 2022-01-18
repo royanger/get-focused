@@ -17,6 +17,7 @@
     "prisma": "npx prisma generate"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.3",
     "@prisma/client": "^3.6.0",
     "@remix-run/react": "^1.1.0",
     "@remix-run/serve": "^1.1.0",

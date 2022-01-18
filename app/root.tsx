@@ -19,6 +19,7 @@ import Logo from './components/icons/logo'
 import Container from './components/container'
 
 import tailwindUrl from './styles/tailwind.css'
+import chartColorsUrl from './styles/chartcolors.css'
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -73,6 +74,7 @@ export let links: LinksFunction = () => {
     },
 
     { rel: 'stylesheet', href: tailwindUrl },
+    { rel: 'stylesheet', href: chartColorsUrl },
   ]
 }
 

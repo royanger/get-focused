@@ -1,9 +1,14 @@
 import * as React from 'react'
-import { redirect } from 'remix'
+import { redirect, useLoaderData } from 'remix'
 import { authenticator } from '~/services/auth.server'
-import Chart from '~/components/dashboard/chart'
+import Chart from '~/components/dashboard/pieChart'
 import BarChart from '~/components/dashboard/barChart'
 import DoughnutChart from '~/components/dashboard/doughnutChart'
+import { Tab as HeadlessTab } from '@headlessui/react'
+import Tab from '~/components/dashboard/tab'
+import Container from '~/components/container'
+import { HeaderOne, HeaderTwo } from '~/components/headlines'
+import { generateWellnessData } from '~/libs/dashboard/wellness'
 
 export const loader = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -12,40 +17,29 @@ export const loader = async ({ request }) => {
     return redirect('/')
   }
 
-  return null
+  let data = {}
+  await Promise.all([
+    generateWellnessData(user.id),
+    //  findExerciseEntries(dateResults.id, user.id),
+    //  findTasksEntries(dateResults.id, user.id),
+    //  findNotesEntries(dateResults.id, user.id),
+    //  findProductivityEntries(dateResults.id, user.id),
+  ]).then(results => {
+    data.wellness = results[0]
+    //  data.exercise = results[1]
+    //  data.tasks = results[2]
+    //  data.notes = results[3]
+    //  data.productivity = results[4]
+  })
+
+  return data
 }
 
 export default function Dashboard() {
-  const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  }
-
-  const wellnessLabels = ['5', '7', '8']
+  const data = useLoaderData()
+  console.log('DATA', data)
   const exerciseData = {
-    labels: ['Current Month', 'Previous Month', 'Year to Date'],
+    labels: ['Week 1', 'Week 1', 'Week 3'],
     datasets: [
       {
         label: 'Yes',
@@ -89,13 +83,41 @@ export default function Dashboard() {
 
   return (
     <>
-      <h1 className="text-blue"> Productivity App</h1>
-      <p>This is some text</p>
-      <div>
-        <Chart data={data} />
-        <BarChart data={exerciseData} title="Exercise Activity" />
-        <DoughnutChart data={wellnessData} />
-      </div>
+      <Container>
+        <div className="mt-8">
+          <HeaderOne>Dashboard</HeaderOne>
+
+          <HeadlessTab.Group>
+            <div className="w-full">
+              <HeadlessTab.List>
+                <Tab title="Current Month" />
+                <Tab title="Previous Month" />
+                <Tab title="Year to Date" />
+              </HeadlessTab.List>
+              <HeadlessTab.Panels>
+                <HeadlessTab.Panel className="grid grid-cols-3 ">
+                  <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px] ">
+                    <HeaderTwo>Productivity</HeaderTwo>
+                    <DoughnutChart data={wellnessData} />
+                  </div>
+
+                  <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
+                    <HeaderTwo>Exercise</HeaderTwo>
+                    <BarChart data={exerciseData} title="Exercise Activity" />
+                  </div>
+
+                  <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
+                    <HeaderTwo>Wellness</HeaderTwo>
+                    <DoughnutChart data={wellnessData} />
+                  </div>
+                </HeadlessTab.Panel>
+                <HeadlessTab.Panel>Content 2</HeadlessTab.Panel>
+                <HeadlessTab.Panel>Content 3</HeadlessTab.Panel>
+              </HeadlessTab.Panels>
+            </div>
+          </HeadlessTab.Group>
+        </div>
+      </Container>
     </>
   )
 }

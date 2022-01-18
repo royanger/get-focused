@@ -35,7 +35,7 @@ export default function BarChart({ data, title }) {
   }
 
   return (
-    <div className="border-purple border-2 w-96 h-auto">
+    <div className="w-full h-auto">
       <Bar options={options} data={data} />
     </div>
   )

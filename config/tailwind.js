@@ -26,6 +26,7 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       purple: {
+        100: 'rgb(130,65,121)',
         300: 'rgb(102, 0, 88)',
         DEFAULT: 'rgb(66, 0, 57)',
         700: 'rgb(41, 0, 35)',
@@ -46,6 +47,9 @@ module.exports = {
       },
       white: {
         DEFAULT: 'rgb(251, 245, 243)',
+      },
+      purewhite: {
+        DEFAULT: 'rgb(255,255,255)',
       },
       red: {
         DEFAULT: 'rgb(206, 45, 79)',

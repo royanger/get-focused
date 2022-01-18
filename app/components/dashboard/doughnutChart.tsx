@@ -5,7 +5,7 @@ export default function DoughnutChart({ data }) {
   ChartJS.register(ArcElement, Tooltip, Legend)
 
   return (
-    <div className="border-purple border-2 w-96 h-96">
+    <div className="w-full h-auto">
       <Doughnut data={data} />
     </div>
   )
