@@ -9,6 +9,7 @@ import Tab from '~/components/dashboard/tab'
 import Container from '~/components/container'
 import { HeaderOne, HeaderTwo } from '~/components/headlines'
 import { generateWellnessData } from '~/libs/dashboard/wellness'
+import { generateProductivityData } from '~/libs/dashboard/productivity'
 
 export const loader = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -20,12 +21,14 @@ export const loader = async ({ request }) => {
   let data = {}
   await Promise.all([
     generateWellnessData(user.id),
+    generateProductivityData(user.id),
     //  findExerciseEntries(dateResults.id, user.id),
     //  findTasksEntries(dateResults.id, user.id),
     //  findNotesEntries(dateResults.id, user.id),
     //  findProductivityEntries(dateResults.id, user.id),
   ]).then(results => {
     data.wellness = results[0]
+    data.productivity = results[1]
     //  data.exercise = results[1]
     //  data.tasks = results[2]
     //  data.notes = results[3]
@@ -55,27 +58,23 @@ export default function Dashboard() {
   }
 
   const wellnessData = {
-    labels: ['2', '4', '5', '6', '8', '9'],
+    labels: ['2', '4', '5', '6', '8', '9', '3', '4', '4', '2'],
     datasets: [
       {
         label: '# of Votes',
-        data: [2, 4, 7, 13, 5, 3],
+        data: [2, 4, 7, 13, 5, 3, 10, 3, 19, 2],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+          'rgb(63, 81, 181)',
+          'rgb(255, 87, 34)',
+          'rgb(0, 150, 136)',
+          'rgb(103, 58, 183',
+          'rgb(33, 150, 243)',
+          'rgb(244, 67, 54)',
+          'rgb(96, 125, 139)',
+          'rgb(255, 193, 7)',
+          'rgb(156, 39, 176)',
+          'rgb(0, 188, 212)',
         ],
-        //   borderColor: [
-        //     'rgba(255, 99, 132, 1)',
-        //     'rgba(54, 162, 235, 1)',
-        //     'rgba(255, 206, 86, 1)',
-        //     'rgba(75, 192, 192, 1)',
-        //     'rgba(153, 102, 255, 1)',
-        //     'rgba(255, 159, 64, 1)',
-        //   ],
         borderWidth: 1,
       },
     ],
@@ -98,7 +97,7 @@ export default function Dashboard() {
                 <HeadlessTab.Panel className="grid grid-cols-3 ">
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px] ">
                     <HeaderTwo>Productivity</HeaderTwo>
-                    <DoughnutChart data={wellnessData} />
+                    <DoughnutChart data={data?.productivity} />
                   </div>
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
@@ -108,7 +107,7 @@ export default function Dashboard() {
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
                     <HeaderTwo>Wellness</HeaderTwo>
-                    <DoughnutChart data={wellnessData} />
+                    <DoughnutChart data={data?.wellness} />
                   </div>
                 </HeadlessTab.Panel>
                 <HeadlessTab.Panel>Content 2</HeadlessTab.Panel>

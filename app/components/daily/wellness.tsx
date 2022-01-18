@@ -6,8 +6,8 @@ import { HeaderTwo } from '../headlines'
 // TODO so far everything is assuming that there is a score in the DB
 // need to support adding a new score and not just loading an existing
 export default function Wellness2({ wellness, errors }) {
-  const clickableElemTypes = ['a', 'button', 'input']
-  console.log(wellness)
+  //   const clickableElemTypes = ['a', 'button', 'input']
+  //   console.log(wellness)
 
   const [score, setScore] = React.useState(wellness?.rating)
 

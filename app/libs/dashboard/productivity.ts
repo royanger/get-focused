@@ -1,31 +1,35 @@
-import { findAllWellnessEntries } from '~/queries/dashboard/wellness'
+import { findAllProductivityEntries } from '~/queries/dashboard/productivity'
 
 interface Results {
-  rating: number
+  score: number
   count: number
 }
 ;[]
 
-export async function generateWellnessData(user: string) {
-  const data = await findAllWellnessEntries(user)
+export async function generateProductivityData(user: string) {
+  const data = await findAllProductivityEntries(user)
+  console.log('db query', data)
 
   if (data === null || data.length < 1) return null
 
   let results: Results[] = []
   for (let i = 0; i < data.length; i++) {
-    if (results.find(({ rating }) => rating === data[i].rating)) {
+    if (results.find(({ score }) => score === data[i].score)) {
+      console.log('updating')
       for (let j = 0; j < results.length; j++) {
-        if (results[j].rating === data[i].rating) {
+        if (results[j].score === data[i].score) {
           results[j] = { ...results[j], count: results[j].count + 1 }
         }
       }
     } else {
-      results.push({ rating: data[i].rating, count: 1 })
+      console.log('adding')
+
+      results.push({ score: data[i].score, count: 1 })
     }
   }
 
   return {
-    labels: results.map(result => result.rating),
+    labels: results.map(result => result.score),
     datasets: [
       {
         label: 'Rating by Count',
