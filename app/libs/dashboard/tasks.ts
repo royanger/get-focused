@@ -3,16 +3,16 @@ import {
   currentWeekNumber,
   determineWeek,
   determineYear,
-  weeksInMonth,
+  startDateAndEndDateFromWeek,
 } from '../dateFunctions'
 
 export async function generateTasksData(user: string) {
   const data = await findAllTasks('2022-01-01', '2022-01-31', user)
   let completed = data?.partial.filter(task => task.completed === true)
 
-  const year = determineYear()
-  //   const test = weeksInMonth(year)
-  console.log('new test', currentWeekNumber('2022-03-20'))
+  const startAndEndDate = startDateAndEndDateFromWeek(
+    currentWeekNumber('2022-01-16')
+  )
 
   return {
     monthly: {

@@ -3,8 +3,9 @@ import {
   calculatePreviousWeek,
   determineWeek,
   determineYear,
-  weekFromDay,
   formatDate,
+  currentWeekNumber,
+  startDateAndEndDateFromWeek,
 } from '~/libs/dateFunctions'
 
 import {
@@ -111,12 +112,14 @@ export default function WeeklyReview() {
 
   // if the year and week are undefined, then determine for current date
   const year = paramYear ? parseInt(paramYear) : determineYear()
-  const week = paramWeek ? parseInt(paramWeek) : determineWeek('today')
+  //   const week = paramWeek ? parseInt(paramWeek) : determineWeek('today')
+  const week = paramWeek ? parseInt(paramWeek) : currentWeekNumber(new Date())
 
   // get previous week and year, and next week and year
   const previousWeek = calculatePreviousWeek(year, week)
   const nextWeek = calculateNextWeek(year, week)
-  const startAndEndDates = weekFromDay(year, week)
+  const startAndEndDates = startDateAndEndDateFromWeek(week)
+
   // format the dates for UI
   const dates = formatDate(startAndEndDates.start, startAndEndDates.end)
 
