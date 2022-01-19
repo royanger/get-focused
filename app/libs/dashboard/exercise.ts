@@ -25,16 +25,16 @@ export async function generateExerciseData(user: string) {
   }
 
   return {
-    labels: results.map(result => result.completed),
+    labels: ['Exercise Totals'],
     datasets: [
       {
         label: 'Yes',
-        data: [results[0].count],
+        data: [results[1].count],
         backgroundColor: 'rgb(156, 39, 176)',
       },
       {
         label: 'No',
-        data: [results[1].count],
+        data: [results[0].count],
         backgroundColor: 'rgb(33, 150, 243)',
       },
     ],

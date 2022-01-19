@@ -11,6 +11,7 @@ import { HeaderOne, HeaderTwo } from '~/components/headlines'
 import { generateWellnessData } from '~/libs/dashboard/wellness'
 import { generateProductivityData } from '~/libs/dashboard/productivity'
 import { generateExerciseData } from '~/libs/dashboard/exercise'
+import { generateTasksData } from '~/libs/dashboard/tasks'
 
 export const loader = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -24,17 +25,15 @@ export const loader = async ({ request }) => {
     generateWellnessData(user.id),
     generateProductivityData(user.id),
     generateExerciseData(user.id),
-    //  findExerciseEntries(dateResults.id, user.id),
-    //  findTasksEntries(dateResults.id, user.id),
+    generateTasksData(user.id),
+
     //  findNotesEntries(dateResults.id, user.id),
-    //  findProductivityEntries(dateResults.id, user.id),
   ]).then(results => {
     data.wellness = results[0]
     data.productivity = results[1]
     data.exercise = results[2]
-    //  data.tasks = results[2]
+    data.tasks = results[3]
     //  data.notes = results[3]
-    //  data.productivity = results[4]
   })
 
   return data
@@ -42,7 +41,8 @@ export const loader = async ({ request }) => {
 
 export default function Dashboard() {
   const data = useLoaderData()
-
+  console.log('LOADER DATA', data)
+  console.table(data.tasks)
   return (
     <>
       <Container>
@@ -71,6 +71,11 @@ export default function Dashboard() {
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
                     <HeaderTwo>Wellness</HeaderTwo>
                     <DoughnutChart data={data?.wellness} />
+                  </div>
+
+                  <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
+                    <HeaderTwo>Tasks</HeaderTwo>
+                    <DoughnutChart data={data?.tasks} />
                   </div>
                 </HeadlessTab.Panel>
                 <HeadlessTab.Panel>Content 2</HeadlessTab.Panel>
