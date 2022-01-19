@@ -75,7 +75,7 @@ export default function Dashboard() {
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
                     <HeaderTwo>Tasks</HeaderTwo>
-                    <DoughnutChart data={data?.tasks} />
+                    <DoughnutChart data={data?.tasks?.monthly} />
                   </div>
                 </HeadlessTab.Panel>
                 <HeadlessTab.Panel>Content 2</HeadlessTab.Panel>

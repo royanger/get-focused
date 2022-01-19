@@ -26,8 +26,8 @@ import {
   calculatePreviousWeek,
   determineWeek,
   determineYear,
-  dateFromDay,
   formatDate,
+  weekFromDay,
 } from '~/libs/dateFunctions'
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -131,7 +131,9 @@ export default function WeeklyPlanner() {
   // get previous week and year, and next week and year
   const previousWeek = calculatePreviousWeek(year, week)
   const nextWeek = calculateNextWeek(year, week)
-  const startAndEndDates = dateFromDay(year, week)
+  const startAndEndDates = weekFromDay(year, week)
+  console.log('startAndEndDates', startAndEndDates)
+
   // format the dates for UI
   const dates = formatDate(startAndEndDates.start, startAndEndDates.end)
 

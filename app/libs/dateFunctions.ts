@@ -68,17 +68,91 @@ export function calculateNextWeek(year, week) {
   return { year: year, week: week + 1 }
 }
 
-export function dateFromDay(year, week) {
+export function weekFromDay(year, week) {
+  console.log('incoming week', week)
+
   const date = new Date(year, 0)
+
   const oneJanuary = new Date(date.getFullYear(), 0, 1)
+
   const lengthOfFirstWeek = 7 - oneJanuary.getDay()
 
   const day = (week - 2) * 7 + lengthOfFirstWeek + 1
 
+  console.log('day', day)
+
+  const start = new Date(date.setDate(day))
+  // reset Date so year is correct
+  date.setFullYear(year)
+  console.log('wtf?', date)
+  date.setDate(50)
+  console.log('wtf!', date)
+
+  const end = new Date(date.setDate(day + 6))
+
   return {
-    start: new Date(date.setDate(day)),
-    end: new Date(date.setDate(day + 6)),
+    start: start,
+    end: end,
   }
+}
+
+export function weeksInMonth(year) {
+  const date = new Date()
+  const month = date.getUTCMonth()
+  const formattedMonth = ('0' + month).slice(-2)
+  const week = determineWeek(`${year}-${formattedMonth}-01`)
+  const firstWeek = weekFromDay(year, week)
+  console.log('testing', determineWeek('2022-02-05'))
+  console.log(weekFromDay(2022, 8))
+
+  //   let weeks = []
+  //   weeks.push(firstWeek)
+  //   let i = 1
+  //   do {
+  //     weeks.push(weekFromDay(year, week + i))
+  //     i++
+  //     console.log('i', i)
+  //   } while (weekFromDay(year, week + i - 1).end.getUTCMonth() === month)
+
+  //   console.log('weeks', weeks)
+
+  return null
+}
+
+export function currentWeekNumber(date: any) {
+  let incomingDate
+
+  if (typeof date === 'string' && date.length) {
+    incomingDate = new Date(date)
+  } else if (date instanceof Date) {
+    incomingDate = date
+  } else {
+    incomingDate = new Date()
+  }
+
+  const targetDate = new Date(incomingDate.valueOf())
+  console.log('target', targetDate.getUTCDay())
+
+  // start week on Sunday
+  const weekStart = (incomingDate.getUTCDay() + 7) % 7
+
+  console.log('week start', weekStart)
+
+  // first full week is the first week with a Thursday
+  targetDate.setDate(targetDate.getDate() - weekStart + 4)
+
+  const firstThursday = targetDate.valueOf()
+
+  // targetDate set to january first
+  targetDate.setMonth(0, 1)
+  // if its not a Thursday, correct to next Thursday
+  if (targetDate.getUTCDay() !== 4) {
+    targetDate.setMonth(0, 1 + ((4 - targetDate.getUTCDay() + 7) % 7))
+  }
+
+  // calculate the week number
+  const weekNumber = 1 + Math.ceil((firstThursday - targetDate) / 604800000)
+  return weekNumber
 }
 
 const months = [

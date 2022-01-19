@@ -3,7 +3,7 @@ import {
   calculatePreviousWeek,
   determineWeek,
   determineYear,
-  dateFromDay,
+  weekFromDay,
   formatDate,
 } from '~/libs/dateFunctions'
 
@@ -116,7 +116,7 @@ export default function WeeklyReview() {
   // get previous week and year, and next week and year
   const previousWeek = calculatePreviousWeek(year, week)
   const nextWeek = calculateNextWeek(year, week)
-  const startAndEndDates = dateFromDay(year, week)
+  const startAndEndDates = weekFromDay(year, week)
   // format the dates for UI
   const dates = formatDate(startAndEndDates.start, startAndEndDates.end)
 
