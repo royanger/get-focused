@@ -68,27 +68,28 @@ export function calculateNextWeek(year, week) {
   return { year: year, week: week + 1 }
 }
 
-export function weeksInMonth(year) {
-  const date = new Date()
-  const month = date.getUTCMonth()
-  const formattedMonth = ('0' + month).slice(-2)
-  const week = determineWeek(`${year}-${formattedMonth}-01`)
-  //   const firstWeek = weekFromDay(year, week)
-  console.log('testing', determineWeek('2022-02-05'))
-  //   console.log(weekFromDay(2022, 8))
+export function weeksInMonth(week: string) {
+  const targetWeek = startDateAndEndDateFromWeek(currentWeekNumber(week))
+  const month = targetWeek.start.getUTCMonth()
 
-  //   let weeks = []
-  //   weeks.push(firstWeek)
-  //   let i = 1
-  //   do {
-  //     weeks.push(weekFromDay(year, week + i))
-  //     i++
-  //     console.log('i', i)
-  //   } while (weekFromDay(year, week + i - 1).end.getUTCMonth() === month)
+  // calculate first full week
+  const dayOne = new Date()
+  dayOne.setUTCMonth(month, 1)
+  const firstWeek = currentWeekNumber(dayOne)
 
-  //   console.log('weeks', weeks)
+  let weekRange = []
+  let weeks = []
 
-  return null
+  for (
+    let i = firstWeek;
+    startDateAndEndDateFromWeek(i).start.getUTCMonth() <= month;
+    i++
+  ) {
+    weekRange.push(startDateAndEndDateFromWeek(i))
+    weeks.push(i)
+  }
+
+  return { weekRange: weekRange, weeks: weeks }
 }
 
 export function currentWeekNumber(date: any) {
@@ -172,7 +173,7 @@ const weekdays = [
   'Saturday',
 ]
 
-export function formatDate(startDate: string, endDate: string) {
+export function formatDate(startDate: Date, endDate: Date) {
   return `${weekdays[startDate.getDay()]}, ${
     months[startDate.getMonth()]
   } ${startDate.getDate()} - ${weekdays[endDate.getDay()]}, ${

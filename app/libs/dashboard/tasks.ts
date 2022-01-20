@@ -4,6 +4,7 @@ import {
   determineWeek,
   determineYear,
   startDateAndEndDateFromWeek,
+  weeksInMonth,
 } from '../dateFunctions'
 
 export async function generateTasksData(user: string) {
@@ -13,6 +14,8 @@ export async function generateTasksData(user: string) {
   const startAndEndDate = startDateAndEndDateFromWeek(
     currentWeekNumber('2022-01-16')
   )
+
+  console.log('tasks', weeksInMonth('2022-06-27'))
 
   return {
     monthly: {
