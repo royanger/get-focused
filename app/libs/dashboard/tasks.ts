@@ -1,8 +1,6 @@
 import { findAllTasks } from '~/queries/dashboard/tasks'
 import {
   currentWeekNumber,
-  determineWeek,
-  determineYear,
   startDateAndEndDateFromWeek,
   weeksInMonth,
 } from '../dateFunctions'
@@ -15,7 +13,34 @@ export async function generateTasksData(user: string) {
     currentWeekNumber('2022-01-16')
   )
 
-  console.log('tasks', weeksInMonth('2022-06-27'))
+  const weeks = weeksInMonth('2022-01-16')
+  console.log('weeks', weeks)
+  weeks.weekRange.map(week => {
+    console.log(
+      'bleep',
+      `${week.start.getFullYear()}-${('0' + week.start.getMonth()).slice(
+        -2
+      )}-${('0' + week.start.getDate()).slice(-2)}`
+    )
+  })
+
+  // TODO Currently the function for weeksInMonth calculates week 1 as 52 and returns nothing
+
+  await Promise.all(
+    weeks.weekRange.map(week =>
+      findAllTasks(
+        `${week.start.getFullYear()}-${('0' + week.start.getMonth()).slice(
+          -2
+        )}-${('0' + week.start.getDate()).slice(-2)}`,
+        `${week.end.getFullYear()}-${('0' + week.end.getMonth()).slice(-2)}-${(
+          '0' + week.end.getDate()
+        ).slice(-2)}`,
+        user
+      )
+    )
+  ).then(results => {
+    console.log('test test', results)
+  })
 
   return {
     monthly: {

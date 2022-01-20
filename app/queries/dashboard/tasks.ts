@@ -1,7 +1,7 @@
 import { prisma } from '~/../prisma/db'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
-async function tasksByMonth(
+async function tasksByRange(
   startDate: string,
   endDate: string,
   userId: string
@@ -40,6 +40,7 @@ export let findAllTasks = async (
   userId: string | undefined
 ) => {
   if (userId) {
+    console.log('findalltasks', startDateParam, endDateParam, userId)
     const regex = /\d\d\d\d-[01]\d-[0123]\d/
 
     if (!startDateParam.match(regex)) {
@@ -53,7 +54,7 @@ export let findAllTasks = async (
     const endDate = `${endDateParam}T00:00:00.000Z`
 
     const currentDate = new Date()
-    let tasksPartial = await tasksByMonth(startDate, currentDate, userId)
+    let tasksPartial = await tasksByRange(startDate, currentDate, userId)
       .catch(e => {
         throw e
       })
@@ -61,7 +62,7 @@ export let findAllTasks = async (
         await prisma.$disconnect()
       })
 
-    let tasksAll = await tasksByMonth(startDate, endDate, userId)
+    let tasksAll = await tasksByRange(startDate, endDate, userId)
       .catch(e => {
         throw e
       })

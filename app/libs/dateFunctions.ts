@@ -69,6 +69,9 @@ export function calculateNextWeek(year, week) {
 }
 
 export function weeksInMonth(week: string) {
+  console.log('step 1', week)
+  console.log('step 2', currentWeekNumber(week))
+  console.log('step 3', startDateAndEndDateFromWeek(currentWeekNumber(week)))
   const targetWeek = startDateAndEndDateFromWeek(currentWeekNumber(week))
   const month = targetWeek.start.getUTCMonth()
 
@@ -76,6 +79,7 @@ export function weeksInMonth(week: string) {
   const dayOne = new Date()
   dayOne.setUTCMonth(month, 1)
   const firstWeek = currentWeekNumber(dayOne)
+  console.log('step 4', firstWeek)
 
   let weekRange = []
   let weeks = []
