@@ -81,7 +81,8 @@ function tasksByPriority({
         <TaskElement
           key={task.id}
           id={task.id}
-          task={task.task}
+          value={task.task}
+          placeholder="Enter task name..."
           completed={task.completed}
           type={type}
         />
@@ -102,7 +103,7 @@ function tasksByPriority({
         <TaskElement
           key={`newtask-${type}`}
           id={`newtask-${type}`}
-          task="Create a new task"
+          placeholder="Create a new task"
           completed={false}
           type={type}
         />

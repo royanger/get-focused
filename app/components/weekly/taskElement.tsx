@@ -8,7 +8,13 @@ import Input from '../forms/input'
 import TaskCancel from '../forms/taskCancel'
 import TaskSave from '../forms/taskSave'
 
-export default function TaskElement({ id, task, completed, type }) {
+export default function TaskElement({
+  id,
+  placeholder,
+  completed,
+  value,
+  type,
+}) {
   const [formState, setFormState] = React.useState('default')
 
   let defaultDiv = 'border-0 rounded '
@@ -43,10 +49,10 @@ export default function TaskElement({ id, task, completed, type }) {
 
         <div className="flex flex-row items-center">
           <Input
-            value={task}
+            value={value}
             formState={formState}
             name="taskname"
-            placeholder={task}
+            placeholder={placeholder}
             setFormState={setFormState}
             width="flex-grow"
           />

@@ -9,11 +9,11 @@ export default function NoteEl({ id, dateId, note }: Note) {
       <Form method="post" action="/daily/planner">
         <input type="hidden" name="formType" value="note" />
         <input type="hidden" name="id" value={id} />
-        <input
-          type="textarea"
+        <textarea
           defaultValue={note}
           name="message"
-          className="w-full h-36 border-2 border-purple rounded"
+          className="w-full h-36 border-2 border-purple rounded p-2"
+          placeholder="Enter your thoughts and notes here..."
         />
         <NoteSave />
 

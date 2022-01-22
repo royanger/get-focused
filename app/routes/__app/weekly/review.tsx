@@ -137,13 +137,14 @@ export default function WeeklyReview() {
             searchParams={searchParams}
             setSearchParams={setSearchParams}
           />
-          <HeaderTwo>Primary Wins</HeaderTwo>
+          <HeaderTwo>Primary Win</HeaderTwo>
 
           <p>What was great about your week? What was a solid win for you?</p>
 
           <ReviewElement
             id={data?.win ? data.win.id : 'win-new'}
-            item={data.win ? data?.win.item : 'Enter your win for the week...'}
+            value={data?.win}
+            placeholder="Enter your win for the week"
             formType="win"
           />
           {errors && errors.id === data?.win?.id ? (
@@ -173,11 +174,13 @@ export default function WeeklyReview() {
 
           <ReviewElement
             id={data?.refocus ? data.refocus.id : 'refocus-new'}
-            item={
-              data.refocus
-                ? data?.refocus.item
-                : 'What will you refocus on next week?'
-            }
+            // value={
+            //   data.refocus
+            //     ? data?.refocus.item
+            //     : 'What will you refocus on next week?'
+            // }
+            value={data?.refocus?.item}
+            placeholder="What will you refocus on next week?"
             formType="refocus"
           />
           {errors && errors.id === data?.refocus?.id ? (

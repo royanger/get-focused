@@ -18,7 +18,8 @@ export default function ListSection({
           <ReviewElement
             key={item.id}
             id={item.id}
-            item={item.item}
+            value={item.item}
+            placeholder="Enter an area to improve"
             formType={formType}
           />
           {errors && errors.id === item.id ? (
@@ -38,7 +39,7 @@ export default function ListSection({
       <ReviewElement
         key={`new-${formType}`}
         id={`new-${formType}`}
-        item="Create a new task"
+        placeholder="Enter an area to improve"
         formType={formType}
       />
       {errors && errors.id === `new-${formType}` ? (
