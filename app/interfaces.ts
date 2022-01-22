@@ -136,7 +136,8 @@ export interface TaskElement {
   id: string
   completed?: boolean
   statusId?: string
-  name: string
+  value?: string | undefined
+  placeholder: string
   actualTime: string
   goalTime: string
   timeTracker: number

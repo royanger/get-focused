@@ -13,7 +13,8 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
           <TaskElement
             key={task.id}
             id={task.id}
-            name={task.name}
+            value={task.name}
+            placeholder="Enter your task here..."
             goalTime={task.goalTime}
             actualTime={task.actualTime}
             timeTracker={task.timeTracker}
@@ -85,7 +86,7 @@ export default function Tasks({ entries, errors }: Tasks) {
         <TaskElement
           key={`newtask-p1`}
           id="newtask-p1"
-          name="Create a new task"
+          placeholder="Create a new task"
           goalTime="0"
           actualTime="0"
           timeTracker={0}
@@ -108,7 +109,7 @@ export default function Tasks({ entries, errors }: Tasks) {
         <TaskElement
           key={`newtask-p2`}
           id="newtask-p2"
-          name="Create a new task"
+          placeholder="Create a new task"
           goalTime="0"
           actualTime="0"
           timeTracker={0}
@@ -131,7 +132,7 @@ export default function Tasks({ entries, errors }: Tasks) {
         <TaskElement
           key={`newtask-p3`}
           id="newtask-p3"
-          name="Create a new task"
+          placeholder="Create a new task"
           goalTime="0"
           actualTime="0"
           timeTracker={0}

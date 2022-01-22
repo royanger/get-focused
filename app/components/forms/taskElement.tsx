@@ -10,7 +10,8 @@ import { TaskElement } from '~/interfaces'
 
 export default function TaskElement({
   id,
-  name,
+  value,
+  placeholder,
   goalTime,
   actualTime,
   timeTracker,
@@ -56,10 +57,10 @@ export default function TaskElement({
           <div className="flex flex-row items-center col-span-7  pr-4">
             <Checkbox status={completed} label="completed" />
             <Input
-              value={name}
+              value={value}
               formState={formState}
               name="taskname"
-              placeholder="Enter your task here..."
+              placeholder={placeholder}
               setFormState={setFormState}
               width="flex-grow"
               completed={completed ? completedCSS : ''}
