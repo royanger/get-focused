@@ -32,7 +32,7 @@ import { validateProductivityForm } from '~/libs/daily/productivityActions'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 export let loader: LoaderFunction = async ({ request }) => {
-  let user = await authenticator.isAuthenticated(request)
+  const user = await authenticator.isAuthenticated(request)
   if (!user) {
     return redirect('/')
   }

@@ -19,6 +19,7 @@ import Logo from './components/icons/logo'
 import Container from './components/container'
 
 import tailwindUrl from './styles/tailwind.css'
+import chartColorsUrl from './styles/chartcolors.css'
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -73,6 +74,7 @@ export let links: LinksFunction = () => {
     },
 
     { rel: 'stylesheet', href: tailwindUrl },
+    { rel: 'stylesheet', href: chartColorsUrl },
   ]
 }
 
@@ -127,7 +129,7 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
   let data = useLoaderData<{ user: User; message: string }>()
   return (
     <>
-      <Container bgColor="bg-purple">
+      {/* <Container bgColor="bg-purple">
         <header className="text-white flex my-4">
           <div className="flex flex-row flex-grow">
             <Link to="/" className="flex flex-row items-center text-2xl">
@@ -166,7 +168,8 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
       </Container>
       <div className="">
         <div className="">{children}</div>
-      </div>
+      </div> */}
+      {children}
       {/* //  <div className=''>
     //    <header className=''>
     //      <div className=''>
@@ -186,11 +189,11 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
     //      <div className=''>{children}</div>
     //    </div>
    //  </div> */}
-      <footer className="">
+      {/* <footer className="">
         <div className="">
           <p>&copy; You!</p>
         </div>
-      </footer>
+      </footer> */}
     </>
   )
 }
