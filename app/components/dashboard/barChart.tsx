@@ -19,8 +19,6 @@ export default function BarChart({ data, title }) {
     Legend
   )
 
-  console.log('DATA', data)
-
   const options = {
     responsive: true,
     plugins: {

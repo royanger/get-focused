@@ -3,7 +3,7 @@ import {
   calculatePreviousWeek,
   determineWeek,
   determineYear,
-  formatDate,
+  formatDateRange,
   currentWeekNumber,
   startDateAndEndDateFromWeek,
 } from '~/libs/dateFunctions'
@@ -121,7 +121,7 @@ export default function WeeklyReview() {
   const startAndEndDates = startDateAndEndDateFromWeek(week)
 
   // format the dates for UI
-  const dates = formatDate(startAndEndDates.start, startAndEndDates.end)
+  const dates = formatDateRange(startAndEndDates.start, startAndEndDates.end)
 
   return (
     <>

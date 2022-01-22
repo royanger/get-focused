@@ -69,24 +69,21 @@ export function calculateNextWeek(year, week) {
 }
 
 export function weeksInMonth(week: string) {
-  console.log('step 1', week)
-  console.log('step 2', currentWeekNumber(week))
-  console.log('step 3', startDateAndEndDateFromWeek(currentWeekNumber(week)))
   const targetWeek = startDateAndEndDateFromWeek(currentWeekNumber(week))
   const month = targetWeek.start.getUTCMonth()
 
   // calculate first full week
   const dayOne = new Date()
   dayOne.setUTCMonth(month, 1)
-  const firstWeek = currentWeekNumber(dayOne)
-  console.log('step 4', firstWeek)
+  let firstWeek = currentWeekNumber(dayOne)
 
   let weekRange = []
   let weeks = []
-
+  // if the week is 52, set it to 0 to start in previous year
+  // run for look until the date is using a month + 1 or next month
   for (
-    let i = firstWeek;
-    startDateAndEndDateFromWeek(i).start.getUTCMonth() <= month;
+    let i = firstWeek === 52 ? 0 : firstWeek;
+    startDateAndEndDateFromWeek(i).start.getUTCMonth() !== month + 1;
     i++
   ) {
     weekRange.push(startDateAndEndDateFromWeek(i))
@@ -177,7 +174,13 @@ const weekdays = [
   'Saturday',
 ]
 
-export function formatDate(startDate: Date, endDate: Date) {
+export function formatDate(date: Date) {
+  return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${(
+    '0' + date.getDate()
+  ).slice(-2)}`
+}
+
+export function formatDateRange(startDate: Date, endDate: Date) {
   return `${weekdays[startDate.getDay()]}, ${
     months[startDate.getMonth()]
   } ${startDate.getDate()} - ${weekdays[endDate.getDay()]}, ${

@@ -27,7 +27,7 @@ import {
   currentWeekNumber,
   determineWeek,
   determineYear,
-  formatDate,
+  formatDateRange,
   startDateAndEndDateFromWeek,
 } from '~/libs/dateFunctions'
 
@@ -137,7 +137,7 @@ export default function WeeklyPlanner() {
   console.log('startAndEndDates', startAndEndDates)
 
   // format the dates for UI
-  const dates = formatDate(startAndEndDates.start, startAndEndDates.end)
+  const dates = formatDateRange(startAndEndDates.start, startAndEndDates.end)
 
   const priorityOneTasks = weeklyTasks.filter(
     task => task.statusId === PRIORITY_1

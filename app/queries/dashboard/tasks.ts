@@ -1,5 +1,4 @@
 import { prisma } from '~/../prisma/db'
-import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 async function tasksByRange(
   startDate: string,
@@ -40,7 +39,6 @@ export let findAllTasks = async (
   userId: string | undefined
 ) => {
   if (userId) {
-    console.log('findalltasks', startDateParam, endDateParam, userId)
     const regex = /\d\d\d\d-[01]\d-[0123]\d/
 
     if (!startDateParam.match(regex)) {
@@ -51,10 +49,10 @@ export let findAllTasks = async (
     if (!endDateParam.match(regex)) {
       throw new Error('Target date provided was incorrect format')
     }
-    const endDate = `${endDateParam}T00:00:00.000Z`
+    const endDate = `${endDateParam}T23:59:59.000Z`
 
     const currentDate = new Date()
-    let tasksPartial = await tasksByRange(startDate, currentDate, userId)
+    let tasksPartial = await tasksByRange(startDate, endDate, userId)
       .catch(e => {
         throw e
       })
@@ -62,7 +60,7 @@ export let findAllTasks = async (
         await prisma.$disconnect()
       })
 
-    let tasksAll = await tasksByRange(startDate, endDate, userId)
+    let tasksAll = await tasksByRange(startDate, currentDate, userId)
       .catch(e => {
         throw e
       })

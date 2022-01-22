@@ -42,7 +42,6 @@ export const loader = async ({ request }) => {
 export default function Dashboard() {
   const data = useLoaderData()
   console.log('LOADER DATA', data)
-  console.table(data.tasks)
   return (
     <>
       <Container>
@@ -74,8 +73,13 @@ export default function Dashboard() {
                   </div>
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
-                    <HeaderTwo>Tasks</HeaderTwo>
+                    <HeaderTwo>Tasks By Week</HeaderTwo>
                     <DoughnutChart data={data?.tasks?.monthly} />
+                  </div>
+
+                  <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
+                    <HeaderTwo>Tasks By Week</HeaderTwo>
+                    <DoughnutChart data={data?.tasks?.tasksByWeek} />
                   </div>
                 </HeadlessTab.Panel>
                 <HeadlessTab.Panel>Content 2</HeadlessTab.Panel>
