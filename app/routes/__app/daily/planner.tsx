@@ -22,6 +22,8 @@ import { findExerciseEntries } from '~/queries/findExercise'
 import { findTasksEntries } from '~/queries/findTasks'
 import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
+import { deleteTask } from '~/libs/daily/deleteTask'
+import { completeTask } from '~/libs/daily/completeTask'
 
 // validators for form submissions
 import { validateWellnessForm } from '~/libs/daily/wellnessActions'
@@ -79,6 +81,16 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (formData.get('formType') === 'productivity') {
     let results = await validateProductivityForm(formData, user)
+    return results
+  }
+
+  if (formData.get('formType') === 'deleteTask') {
+    let results = await deleteTask(formData, user)
+    return results
+  }
+
+  if (formData.get('formType') === 'completeTask') {
+    let results = await completeTask(formData, user)
     return results
   }
 
