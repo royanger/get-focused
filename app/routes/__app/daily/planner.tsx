@@ -22,6 +22,8 @@ import { findExerciseEntries } from '~/queries/findExercise'
 import { findTasksEntries } from '~/queries/findTasks'
 import { findNotesEntries } from '~/queries/findNotes'
 import { findProductivityEntries } from '~/queries/findProductivity'
+import { deleteTask } from '~/libs/daily/deleteTask'
+import { completeTask } from '~/libs/daily/completeTask'
 
 // validators for form submissions
 import { validateWellnessForm } from '~/libs/daily/wellnessActions'
@@ -30,7 +32,6 @@ import { validateTaskForm } from '~/libs/daily/taskActions'
 import { validateNotesForm } from '~/libs/daily/noteActions'
 import { validateProductivityForm } from '~/libs/daily/productivityActions'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
-import { deleteTask } from '~/libs/daily/deleteTask'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -85,6 +86,11 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (formData.get('formType') === 'deleteTask') {
     let results = await deleteTask(formData, user)
+    return results
+  }
+
+  if (formData.get('formType') === 'completeTask') {
+    let results = await completeTask(formData, user)
     return results
   }
 

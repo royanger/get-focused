@@ -12,17 +12,24 @@ async function tasksQuery(id: string, userId: string) {
   return tasksResults
 }
 
-async function taskDelete(id: string) {
+async function taskComplete(id: string, status: boolean) {
   await prisma.$connect()
-  let tasksResults = await prisma.task.delete({
+  let tasksResults = await prisma.task.update({
     where: {
       id: id,
+    },
+    data: {
+      completed: status,
     },
   })
   return tasksResults
 }
 
-export let deleteTaskQuery = async (id: string, userId: string | undefined) => {
+export let completeTaskQuery = async (
+  status: boolean,
+  id: string,
+  userId: string | undefined
+) => {
   if (id && userId) {
     let tasksQueryResults = await tasksQuery(id, userId)
       .catch(e => {
@@ -33,14 +40,14 @@ export let deleteTaskQuery = async (id: string, userId: string | undefined) => {
       })
 
     if (tasksQueryResults.id) {
-      let taskDeleteResults = await taskDelete(tasksQueryResults.id)
+      let taskCreateResults = await taskComplete(tasksQueryResults.id, status)
         .catch(e => {
           throw new Error(e)
         })
         .finally(async () => {
           await prisma.$disconnect()
         })
-      return taskDeleteResults
+      return taskCreateResults
     }
 
     throw new Error('Provided task id does not exist in database')

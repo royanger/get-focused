@@ -144,6 +144,11 @@ export interface TaskElement {
   type: string
 }
 
+export interface CompleteCheckbox {
+  status?: boolean
+  label: string
+  id: string
+}
 export interface Items {
   id: string
   userId: string

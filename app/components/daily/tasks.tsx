@@ -3,7 +3,6 @@ import TasksTitle from './tasksTitle'
 import TaskElement from '../forms/taskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
 import { TasksByPriority, Tasks } from '~/interfaces'
-import CompleteCheckbox from '../forms/CompleteCheckbox'
 import DeleteButton from '../forms/DeleteButton'
 
 function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
@@ -11,9 +10,7 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   if (tasks) {
     taskList = tasks.map(task => {
       return (
-        <div key={task.id} className="border-2 border-x-blue flex flex-row">
-          <CompleteCheckbox label="temp" status={task.completed} />
-
+        <div key={task.id} className="border-2 border-blue flex flex-row">
           <TaskElement
             key={task.id}
             id={task.id}
@@ -80,23 +77,24 @@ export default function Tasks({ entries, errors }: Tasks) {
 
   return (
     <>
-      {/* {generatedP1Tasks} */}
-      <React.Fragment key={Math.random()}>
+      <React.Fragment>
         <TasksTitle
           title="What is your most important goal(s) today?"
           info="Try to focus on one goal, but you can focus on a few."
           key="p1"
         />
         {generatedP1Tasks && generatedP1Tasks}
-        <TaskElement
-          key={`newtask-p1`}
-          id="newtask-p1"
-          placeholder="Create a new task"
-          goalTime="0"
-          actualTime="0"
-          timeTracker={0}
-          type="p1"
-        />
+        <div className="border-2 border-blue flex flex-row">
+          <TaskElement
+            key={`newtask-p1`}
+            id="newtask-p1"
+            placeholder="Create a new task"
+            goalTime="0"
+            actualTime="0"
+            timeTracker={0}
+            type="p1"
+          />
+        </div>
         {errors && errors.id === 'newtask-p1' ? (
           <div className="text-sm text-error mb-6 h-5">
             {errors ? errors.msg : ''}
@@ -104,22 +102,24 @@ export default function Tasks({ entries, errors }: Tasks) {
         ) : null}
       </React.Fragment>
 
-      <React.Fragment key={Math.random()}>
+      <React.Fragment>
         <TasksTitle
           title="Important Goals and Tasks"
           info="These tasks and goals are secondary to your most important goal, but are things you really want to finish today."
           key="p2"
         />
         {generatedP2Tasks && generatedP2Tasks}
-        <TaskElement
-          key={`newtask-p2`}
-          id="newtask-p2"
-          placeholder="Create a new task"
-          goalTime="0"
-          actualTime="0"
-          timeTracker={0}
-          type="p2"
-        />
+        <div className="border-2 border-blue flex flex-row">
+          <TaskElement
+            key={`newtask-p2`}
+            id="newtask-p2"
+            placeholder="Create a new task"
+            goalTime="0"
+            actualTime="0"
+            timeTracker={0}
+            type="p2"
+          />
+        </div>
         {errors && errors.id === 'newtask-p2' ? (
           <div className="text-sm text-error mb-6 h-5">
             {errors ? errors.msg : ''}
@@ -127,22 +127,24 @@ export default function Tasks({ entries, errors }: Tasks) {
         ) : null}
       </React.Fragment>
 
-      <React.Fragment key={Math.random()}>
+      <React.Fragment>
         <TasksTitle
           title="Bonus Goals and Tasks"
           info="If you finish all of the above tasks and goals, what are some tasks that would be awesome to finish today?"
           key="p3"
         />
         {generatedP3Tasks && generatedP3Tasks}
-        <TaskElement
-          key={`newtask-p3`}
-          id="newtask-p3"
-          placeholder="Create a new task"
-          goalTime="0"
-          actualTime="0"
-          timeTracker={0}
-          type="p3"
-        />
+        <div className="border-2 border-blue flex flex-row">
+          <TaskElement
+            key={`newtask-p3`}
+            id="newtask-p3"
+            placeholder="Create a new task"
+            goalTime="0"
+            actualTime="0"
+            timeTracker={0}
+            type="p3"
+          />
+        </div>
         {errors && errors.id === 'newtask-p3' ? (
           <div className="text-sm text-error mb-6 h-5">
             {errors ? errors.msg : ''}
