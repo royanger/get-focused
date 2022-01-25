@@ -33,7 +33,7 @@ export default function Wellness2({ wellness, errors }) {
 
   return (
     <>
-      <HeaderTwo>How do you feel? (2)</HeaderTwo>
+      <HeaderTwo>How do you feel?</HeaderTwo>
       <p className="mb-2">Rate how you are feeling out of 10.</p>
       <Form method="post">
         <input type="hidden" value="wellness" name="formType" />

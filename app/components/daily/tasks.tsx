@@ -3,13 +3,17 @@ import TasksTitle from './tasksTitle'
 import TaskElement from '../forms/taskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
 import { TasksByPriority, Tasks } from '~/interfaces'
+import CompleteCheckbox from '../forms/CompleteCheckbox'
+import DeleteButton from '../forms/DeleteButton'
 
 function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   let taskList
   if (tasks) {
     taskList = tasks.map(task => {
       return (
-        <React.Fragment key={task.id}>
+        <div key={task.id} className="border-2 border-x-blue flex flex-row">
+          <CompleteCheckbox label="temp" status={task.completed} />
+
           <TaskElement
             key={task.id}
             id={task.id}
@@ -21,12 +25,13 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
             type={type}
             completed={task.completed}
           />
+          <DeleteButton id={task.id} />
           {errors && errors.id === task.id ? (
             <div className="text-sm text-error mb-6 h-5">
               {errors ? errors.msg : ''}
             </div>
           ) : null}
-        </React.Fragment>
+        </div>
       )
     })
   } else {

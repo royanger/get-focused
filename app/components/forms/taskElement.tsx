@@ -94,7 +94,7 @@ export default function TaskElement({
               <div className="w-12 first:w-7 text-purple h-auto flex justify-center">
                 <button
                   type="button"
-                  className="border-1 border-orange first:w-6 w-full "
+                  className="first:w-6 w-full "
                   onClick={() => setFormState('edit')}
                 >
                   <Edit />

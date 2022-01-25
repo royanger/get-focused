@@ -174,11 +174,6 @@ export default function WeeklyReview() {
 
           <ReviewElement
             id={data?.refocus ? data.refocus.id : 'refocus-new'}
-            // value={
-            //   data.refocus
-            //     ? data?.refocus.item
-            //     : 'What will you refocus on next week?'
-            // }
             value={data?.refocus?.item}
             placeholder="What will you refocus on next week?"
             formType="refocus"
