@@ -30,6 +30,7 @@ import { validateTaskForm } from '~/libs/daily/taskActions'
 import { validateNotesForm } from '~/libs/daily/noteActions'
 import { validateProductivityForm } from '~/libs/daily/productivityActions'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
+import { deleteTask } from '~/libs/daily/deleteTask'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -79,6 +80,11 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (formData.get('formType') === 'productivity') {
     let results = await validateProductivityForm(formData, user)
+    return results
+  }
+
+  if (formData.get('formType') === 'deleteTask') {
+    let results = await deleteTask(formData, user)
     return results
   }
 
