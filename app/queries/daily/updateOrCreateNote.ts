@@ -1,45 +1,45 @@
-import { prisma } from '../../prisma/db'
-import { findOrCreateDate } from './findOrCreateDate'
+import { prisma } from '~/../prisma/db'
+import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
-export async function updateOrCreateProductivity(
+export async function updateOrCreateNote(
   id: string,
-  score: string,
+  message: string,
   userId: string
 ) {
   let dateResults = await findOrCreateDate('today')
 
   await prisma.$connect()
 
-  let productivity
+  let note
   // if there was no wellness entry, create one
-  if (id === 'new') {
-    let productivity = await prisma.productivity.create({
+  if (id === 'note-new') {
+    let note = await prisma.note.create({
       data: {
-        score: parseInt(score),
+        note: message,
         userId: userId,
         dateId: dateResults.id,
       },
     })
-    return productivity
+    return note
   } else {
     // update existing entry
-    productivity = await prisma.productivity.update({
+    note = await prisma.note.update({
       where: {
         id: id,
       },
       data: {
-        score: parseInt(score),
+        note: message,
       },
     })
   }
 
-  let results = await prisma.productivity.findUnique({
+  let results = await prisma.note.findUnique({
     where: {
       id: id,
     },
   })
 
-  if (!productivity) {
+  if (!note) {
     throw new Error('failed to create or update note')
   }
 

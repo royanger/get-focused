@@ -1,8 +1,8 @@
 import { determineWeek, determineYear } from '~/libs/dateFunctions'
-import { prisma } from '../../prisma/db'
-import { findOrCreateWeek } from './findOrCreateWeek'
+import { prisma } from '~/../prisma/db'
+import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
-export async function updateOrCreateWeeklyTask(
+export async function updateOrCreateTask(
   id: string,
   taskName: string,
   completed: boolean,

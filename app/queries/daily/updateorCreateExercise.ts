@@ -1,5 +1,5 @@
-import { prisma } from '../../prisma/db'
-import { findOrCreateDate } from './findOrCreateDate'
+import { prisma } from '../../../prisma/db'
+import { findOrCreateDate } from '../findOrCreateDate'
 
 export async function updateOrCreateExercise(
   id: string,

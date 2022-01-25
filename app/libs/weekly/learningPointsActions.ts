@@ -1,6 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { updateOrCreateLearningPoint } from '~/queries/findOrCreateLearningPoint'
-import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
+import { updateOrCreateLearningPoint } from '~/queries/weekly/updateOrCreateLearningPoint'
 
 export async function validateLearningPointsForm(formData, user: string) {
   let item = formData.get('item')

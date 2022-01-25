@@ -17,11 +17,11 @@ import Notes from '~/components/daily/notes'
 import Productivity from '~/components/daily/productivity'
 
 // libs for handling queries
-import { findWellnessEntries } from '~/queries/findWellness'
-import { findExerciseEntries } from '~/queries/findExercise'
-import { findTasksEntries } from '~/queries/findTasks'
-import { findNotesEntries } from '~/queries/findNotes'
-import { findProductivityEntries } from '~/queries/findProductivity'
+import { findWellnessEntries } from '~/queries/daily/findWellness'
+import { findExerciseEntries } from '~/queries/daily/findExercise'
+import { findTasksEntries } from '~/queries/daily/findTasks'
+import { findNotesEntries } from '~/queries/daily/findNotes'
+import { findProductivityEntries } from '~/queries/daily/findProductivity'
 import { deleteTask } from '~/libs/daily/deleteTask'
 import { completeTask } from '~/libs/daily/completeTask'
 

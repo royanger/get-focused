@@ -1,4 +1,4 @@
-import { updateOrCreateExercise } from '~/queries/updateorCreateExercise'
+import { updateOrCreateExercise } from '~/queries/daily/updateorCreateExercise'
 
 export function validateExerciseForm(formData, user) {
   const errors = {}

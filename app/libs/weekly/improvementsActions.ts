@@ -1,5 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { updateOrCreateImprovement } from '~/queries/updateOrCreateImprovement'
+import { updateOrCreateImprovement } from '~/queries/weekly/updateOrCreateImprovement'
 
 export async function validateImprovementsForm(formData, user: string) {
   let item = formData.get('item')
