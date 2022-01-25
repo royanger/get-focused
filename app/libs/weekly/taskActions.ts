@@ -1,4 +1,4 @@
-import { updateOrCreateWeeklyTask } from '~/queries/updateOrCreateWeeklyTask'
+import { updateOrCreateTask } from '~/queries/weekly/updateOrCreateTask'
 import DOMPurify from 'isomorphic-dompurify'
 
 export async function validateTaskForm(formData, user: string) {
@@ -27,7 +27,7 @@ export async function validateTaskForm(formData, user: string) {
   let results = {
     success: true,
   }
-  results.data = await updateOrCreateWeeklyTask(
+  results.data = await updateOrCreateTask(
     formData.get('id'),
     taskName,
     completed,

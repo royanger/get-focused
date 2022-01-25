@@ -19,7 +19,7 @@ import WeeklyNav from '~/components/weekly/weeklyNav'
 
 // libs for queries and actions
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '~/libs/priorityIds'
-import { findWeeklyTasks } from '~/queries/findWeeklyTasks'
+import { findTasks } from '~/queries/weekly/findTasks'
 import { validateTaskForm } from '~/libs/weekly/taskActions'
 import {
   calculateNextWeek,
@@ -54,7 +54,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     year = parseInt(url.searchParams.get('year'))
   }
 
-  const results = await findWeeklyTasks(year, week, user.id)
+  const results = await findTasks(year, week, user.id)
 
   return results
 }

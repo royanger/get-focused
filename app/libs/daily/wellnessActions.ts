@@ -1,4 +1,4 @@
-import { updateOrCreateWellness } from '~/queries/updateOrCreateWellness'
+import { updateOrCreateWellness } from '~/queries/daily/updateOrCreateWellness'
 
 export async function validateWellnessForm(formData, user) {
   if (formData.get(`id`) === 'new') {

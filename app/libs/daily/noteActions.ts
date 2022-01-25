@@ -1,5 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { updateOrCreateNote } from '~/queries/updateOrCreateNote'
+import { updateOrCreateNote } from '~/queries/daily/updateOrCreateNote'
 
 export async function validateNotesForm(formData, user) {
   let msg = formData.get('message')

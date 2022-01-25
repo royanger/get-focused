@@ -1,8 +1,8 @@
 import { determineWeek, determineYear } from '~/libs/dateFunctions'
-import { prisma } from '../../prisma/db'
-import { findOrCreateWeek } from './findOrCreateWeek'
+import { prisma } from '~/../prisma/db'
+import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
-export async function updateOrCreateImprovement(
+export async function updateOrCreateWin(
   id: string,
   item: string | null,
   userId: string
@@ -13,10 +13,10 @@ export async function updateOrCreateImprovement(
 
   await prisma.$connect()
 
-  let improvement
+  let win
   // if there was no win entry, create one
-  if (id === 'new-improvements') {
-    let results = await prisma.improvements.create({
+  if (id === 'win-new') {
+    let results = await prisma.wins.create({
       data: {
         item: item,
         userId: userId,
@@ -26,8 +26,8 @@ export async function updateOrCreateImprovement(
     return results
   } else {
     // update existing entry
-    // weekId won't change, don't update
-    improvement = await prisma.improvements.update({
+    // week won't change, don't update
+    win = await prisma.wins.update({
       where: {
         id: id,
       },
@@ -37,19 +37,19 @@ export async function updateOrCreateImprovement(
     })
   }
 
-  let results = await prisma.improvements.findUnique({
+  let results = await prisma.wins.findUnique({
     where: {
       id: id,
     },
   })
 
-  if (!improvement) {
-    throw new Error('failed to create or update improvement')
+  if (!win) {
+    throw new Error('failed to create or update note')
   }
 
   if (results) {
     return results
   } else {
-    throw new Error('failed to query new/updated improvement successfully')
+    throw new Error('failed to query new/updated note successfully')
   }
 }

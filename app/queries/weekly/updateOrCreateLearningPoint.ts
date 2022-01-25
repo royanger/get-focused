@@ -1,9 +1,8 @@
 import { determineWeek, determineYear } from '~/libs/dateFunctions'
-import { prisma } from '../../prisma/db'
+import { prisma } from '~/../prisma/db'
+import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
-import { findOrCreateWeek } from './findOrCreateWeek'
-
-export async function updateOrCreateRefocus(
+export async function updateOrCreateLearningPoint(
   id: string,
   item: string | null,
   userId: string
@@ -14,10 +13,10 @@ export async function updateOrCreateRefocus(
 
   await prisma.$connect()
 
-  let refocus
-  // if there was no refocus entry, create one
-  if (id === 'refocus-new') {
-    let results = await prisma.refocus.create({
+  let learningpoint
+  // if there was no win entry, create one
+  if (id === 'new-learningpoints') {
+    let results = await prisma.learning.create({
       data: {
         item: item,
         userId: userId,
@@ -28,7 +27,7 @@ export async function updateOrCreateRefocus(
   } else {
     // update existing entry
     // weekId won't change, don't update
-    refocus = await prisma.refocus.update({
+    learningpoint = await prisma.learning.update({
       where: {
         id: id,
       },
@@ -38,19 +37,19 @@ export async function updateOrCreateRefocus(
     })
   }
 
-  let results = await prisma.refocus.findUnique({
+  let results = await prisma.learning.findUnique({
     where: {
       id: id,
     },
   })
 
-  if (!refocus) {
-    throw new Error('failed to create or update note')
+  if (!learningpoint) {
+    throw new Error('failed to create or update learning point')
   }
 
   if (results) {
     return results
   } else {
-    throw new Error('failed to query new/updated note successfully')
+    throw new Error('failed to query new/updated learning point successfully')
   }
 }

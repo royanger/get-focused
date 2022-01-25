@@ -1,5 +1,4 @@
-import { prisma } from '../../prisma/db'
-import { findOrCreateDate } from './findOrCreateDate'
+import { prisma } from '../../../prisma/db'
 
 async function tasksQuery(date: string, userId: string) {
   await prisma.$connect()

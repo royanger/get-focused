@@ -20,16 +20,16 @@ import { authenticator } from '~/services/auth.server'
 import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
 // loaders
-import findWeeklyWin from '~/queries/findWeeklyWin'
-import findWeeklyImprovements from '~/queries/findWeeklyImprovements'
-import findWeeklyLearningPoints from '~/queries/findWeeklyLearningPoints'
-import findWeeklyRefocus from '~/queries/findWeeklyRefocus'
+import findWin from '~/queries/weekly/findWin'
+import findImprovements from '~/queries/weekly/findImprovements'
+import findLearningPoints from '~/queries/weekly/findLearningPoints'
+import findRefocus from '~/queries/weekly/findRefocus'
 import WeeklyNav from '~/components/weekly/weeklyNav'
 
 // actions
 import { validateWinsForm } from '~/libs/weekly/winsActions'
 import { validateImprovementsForm } from '~/libs/weekly/improvementsActions'
-import { validateLearningPointsForm } from '~/libs/weekly/learingPointsActions'
+import { validateLearningPointsForm } from '~/libs/weekly/learningPointsActions'
 import { validateRefocusForm } from '~/libs/weekly/refocusActions'
 
 // components
@@ -61,10 +61,10 @@ export let loader: LoaderFunction = async ({ request }) => {
   }
 
   const weekResults = await findOrCreateWeek(year, week)
-  const win = findWeeklyWin(weekResults.id, user.id)
-  const improvements = findWeeklyImprovements(weekResults.id, user.id)
-  const learningpoints = findWeeklyLearningPoints(weekResults.id, user.id)
-  const refocus = findWeeklyRefocus(weekResults.id, user.id)
+  const win = findWin(weekResults.id, user.id)
+  const improvements = findImprovements(weekResults.id, user.id)
+  const learningpoints = findLearningPoints(weekResults.id, user.id)
+  const refocus = findRefocus(weekResults.id, user.id)
 
   const data = {}
   await Promise.all([win, improvements, learningpoints, refocus]).then(

@@ -1,13 +1,10 @@
-import { prisma } from '../../prisma/db'
+import { prisma } from '~/../prisma/db'
 
-export default async function findWeeklyImprovements(
-  week: string,
-  userId: string
-) {
-  async function queryImprovements(week: string, userId: string) {
+export default async function findLearningPoints(week: string, userId: string) {
+  async function queryLearningPoints(week: string, userId: string) {
     await prisma.$connect()
 
-    const results = await prisma.improvements.findMany({
+    const results = await prisma.learning.findMany({
       where: {
         userId: userId,
         weekId: week,
@@ -17,7 +14,7 @@ export default async function findWeeklyImprovements(
   }
 
   if (week && userId) {
-    const weeklyWins = await queryImprovements(week, userId)
+    const weeklyWins = await queryLearningPoints(week, userId)
       .catch(e => {
         throw e
       })
