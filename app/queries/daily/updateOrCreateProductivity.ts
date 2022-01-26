@@ -33,11 +33,18 @@ export async function updateOrCreateProductivity(
     })
   }
 
-  let results = await prisma.productivity.findUnique({
-    where: {
-      id: id,
-    },
-  })
+  let results = await prisma.productivity
+    .findUnique({
+      where: {
+        id: id,
+      },
+    })
+    .catch(e => {
+      throw new Error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
 
   if (!productivity) {
     throw new Error('failed to create or update note')

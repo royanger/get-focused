@@ -48,11 +48,18 @@ export async function updateOrCreateTask(
     })
   }
 
-  let results = await prisma.task.findUnique({
-    where: {
-      id: id,
-    },
-  })
+  let results = await prisma.task
+    .findUnique({
+      where: {
+        id: id,
+      },
+    })
+    .catch(e => {
+      throw new Error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
 
   if (!task) {
     throw new Error('failed to create or update task')

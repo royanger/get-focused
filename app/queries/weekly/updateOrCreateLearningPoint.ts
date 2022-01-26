@@ -37,11 +37,18 @@ export async function updateOrCreateLearningPoint(
     })
   }
 
-  let results = await prisma.learning.findUnique({
-    where: {
-      id: id,
-    },
-  })
+  let results = await prisma.learning
+    .findUnique({
+      where: {
+        id: id,
+      },
+    })
+    .catch(e => {
+      throw new Error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
 
   if (!learningpoint) {
     throw new Error('failed to create or update learning point')

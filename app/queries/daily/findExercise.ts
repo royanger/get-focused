@@ -19,7 +19,7 @@ export let findExerciseEntries = async (
   if (date && userId) {
     let exerciseResults = await exerciseQuery(date, userId)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()

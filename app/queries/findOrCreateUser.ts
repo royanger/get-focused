@@ -24,11 +24,18 @@ export async function findOrCreateUser(
     },
   })
 
-  let results = await prisma.user.findUnique({
-    where: {
-      googleId: googleId,
-    },
-  })
+  let results = await prisma.user
+    .findUnique({
+      where: {
+        googleId: googleId,
+      },
+    })
+    .catch(e => {
+      throw new Error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
 
   if (!user) {
     throw new Error('failed to create or update user')

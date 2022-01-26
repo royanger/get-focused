@@ -14,7 +14,7 @@ export let findAllWellnessEntries = async (userId: string | undefined) => {
   if (userId) {
     let wellnessResults = await wellnessQuery(userId)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()

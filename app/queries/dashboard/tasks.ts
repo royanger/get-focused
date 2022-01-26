@@ -54,7 +54,7 @@ export let findAllTasks = async (
     const currentDate = new Date()
     let tasksPartial = await tasksByRange(startDate, endDate, userId)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()
@@ -62,7 +62,7 @@ export let findAllTasks = async (
 
     let tasksAll = await tasksByRange(startDate, currentDate, userId)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()

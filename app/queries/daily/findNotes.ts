@@ -19,7 +19,7 @@ export let findNotesEntries = async (
   if (date && userId) {
     let noteResults = await noteQuery(date, userId)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()

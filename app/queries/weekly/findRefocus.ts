@@ -15,7 +15,7 @@ export default async function findRefocus(week: string, userId: string) {
   if (week && userId) {
     const weeklyWins = await queryRefocus(week, userId)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()
