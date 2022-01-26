@@ -44,7 +44,7 @@ export let findOrCreateDate = async (targetDate: string) => {
   // check if date exists using above query
   let results = await dateQuery(date)
     .catch(e => {
-      throw e
+      throw new Error(e)
     })
     .finally(async () => {
       await prisma.$disconnect()
@@ -54,7 +54,7 @@ export let findOrCreateDate = async (targetDate: string) => {
   if (!results) {
     let newDateResults = await createDateEntry(date)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()

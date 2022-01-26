@@ -26,7 +26,7 @@ export let findOrCreateWeek = async (year: number, week: number) => {
   // check if Week exists after above query/create
   let results = await weekQuery(year, week)
     .catch(e => {
-      throw e
+      throw new Error(e)
     })
     .finally(async () => {
       await prisma.$disconnect()
@@ -36,7 +36,7 @@ export let findOrCreateWeek = async (year: number, week: number) => {
   if (!results) {
     let newWeekResults = await createWeekEntry(year, week)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()

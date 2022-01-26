@@ -37,11 +37,18 @@ export async function updateOrCreateWin(
     })
   }
 
-  let results = await prisma.wins.findUnique({
-    where: {
-      id: id,
-    },
-  })
+  let results = await prisma.wins
+    .findUnique({
+      where: {
+        id: id,
+      },
+    })
+    .catch(e => {
+      throw new Error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
 
   if (!win) {
     throw new Error('failed to create or update note')

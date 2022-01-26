@@ -19,7 +19,7 @@ export let findTasksEntries = async (
   if (date && userId) {
     let tasksResults = await tasksQuery(date, userId)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()

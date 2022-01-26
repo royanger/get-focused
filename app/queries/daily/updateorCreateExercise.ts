@@ -33,11 +33,18 @@ export async function updateOrCreateExercise(
     })
   }
 
-  let results = await prisma.exercise.findUnique({
-    where: {
-      id: id,
-    },
-  })
+  let results = await prisma.exercise
+    .findUnique({
+      where: {
+        id: id,
+      },
+    })
+    .catch(e => {
+      throw new Error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
 
   if (!results) {
     throw new Error('failed to create or update exercise')

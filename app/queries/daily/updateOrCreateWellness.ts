@@ -33,11 +33,18 @@ export async function updateOrCreateWellness(
     })
   }
 
-  let results = await prisma.wellness.findUnique({
-    where: {
-      id: id,
-    },
-  })
+  let results = await prisma.wellness
+    .findUnique({
+      where: {
+        id: id,
+      },
+    })
+    .catch(e => {
+      throw new Error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
 
   if (!wellness) {
     throw new Error('failed to create or update wellness')

@@ -37,11 +37,18 @@ export async function updateOrCreateImprovement(
     })
   }
 
-  let results = await prisma.improvements.findUnique({
-    where: {
-      id: id,
-    },
-  })
+  let results = await prisma.improvements
+    .findUnique({
+      where: {
+        id: id,
+      },
+    })
+    .catch(e => {
+      throw new Error(e)
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
 
   if (!improvement) {
     throw new Error('failed to create or update improvement')

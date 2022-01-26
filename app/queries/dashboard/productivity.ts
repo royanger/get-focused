@@ -15,7 +15,7 @@ export let findAllProductivityEntries = async (userId: string | undefined) => {
   if (userId) {
     let productivityResults = await productivityQuery(userId)
       .catch(e => {
-        throw e
+        throw new Error(e)
       })
       .finally(async () => {
         await prisma.$disconnect()
