@@ -38,7 +38,7 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
         <header className="text-white flex my-4">
           <div className="flex flex-row flex-grow">
             <Link to="/" className="flex flex-row items-center text-2xl">
-              <span className="w-6 mr-4 h-auto relative bottom-[-2px]">
+              <span className="w-12 mr-4 h-auto relative bottom-[-2px]">
                 <Logo />
               </span>
               Get Focused
