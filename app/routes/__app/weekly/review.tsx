@@ -106,6 +106,8 @@ export default function WeeklyReview() {
   const data = useLoaderData()
   const errors = useActionData()
 
+  console.log('data', data)
+
   const [searchParams, setSearchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
   const paramWeek = searchParams.get('week')
@@ -143,7 +145,7 @@ export default function WeeklyReview() {
 
           <ReviewElement
             id={data?.win ? data.win.id : 'win-new'}
-            value={data?.win}
+            value={data?.win?.item}
             placeholder="Enter your win for the week"
             formType="win"
           />
