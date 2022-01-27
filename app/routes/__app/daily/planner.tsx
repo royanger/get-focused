@@ -4,6 +4,7 @@ import {
   LoaderFunction,
   useActionData,
   redirect,
+  useSearchParams,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
 
@@ -15,6 +16,7 @@ import Exercise from '~/components/daily/exercise'
 import Tasks from '~/components/daily/tasks'
 import Notes from '~/components/daily/notes'
 import Productivity from '~/components/daily/productivity'
+import DailyNav from '~/components/daily/dailyNav'
 
 // libs for handling queries
 import { findWellnessEntries } from '~/queries/daily/findWellness'
@@ -32,13 +34,19 @@ import { validateTaskForm } from '~/libs/daily/taskActions'
 import { validateNotesForm } from '~/libs/daily/noteActions'
 import { validateProductivityForm } from '~/libs/daily/productivityActions'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
+import { allWeekDaysFromWeek, currentWeekNumber } from '~/libs/dateFunctions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
   if (!user) {
     return redirect('/')
   }
-  const dateResults = await findOrCreateDate('today')
+
+  const url = new URL(request.url)
+
+  const dateResults = url.searchParams.get('date')
+    ? await findOrCreateDate(url.searchParams.get('date'))
+    : await findOrCreateDate('today')
 
   let data = {}
   await Promise.all([
@@ -102,11 +110,23 @@ export default function DailyPlanner() {
   let data = useLoaderData()
   const errors = useActionData()
 
+  const [searchParams, setSearchParams] = useSearchParams()
+  const paramDate = searchParams.get('date')
+
+  const week = paramDate
+    ? allWeekDaysFromWeek(currentWeekNumber(paramDate))
+    : allWeekDaysFromWeek(currentWeekNumber(new Date()))
+
   return (
     <>
       <Container>
         <div className="mt-8">
           <HeaderOne>Daily Planner</HeaderOne>
+          <DailyNav
+            week={week}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
 
           <Wellness
             wellness={data.wellness}

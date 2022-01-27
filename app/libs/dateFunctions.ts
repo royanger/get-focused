@@ -129,27 +129,54 @@ export function currentWeekNumber(date: any) {
 export function startDateAndEndDateFromWeek(week) {
   // create new date instance and set to Jan 1
   let targetDate = new Date()
-  targetDate.setUTCMonth(0, 1)
+  targetDate.setMonth(0, 1)
 
   // find first Thursday
-  if (targetDate.getUTCDay() !== 4) {
-    targetDate.setUTCMonth(0, 1 + ((4 - targetDate.getUTCDay() + 7) % 7))
+  if (targetDate.getDay() !== 4) {
+    targetDate.setMonth(0, 1 + ((4 - targetDate.getDay() + 7) % 7))
   }
 
   // find Thursday of the target week
   let weekByThursday = new Date()
-  weekByThursday.setUTCDate(targetDate.getUTCDate() + (week - 1) * 7)
+  weekByThursday.setDate(targetDate.getDate() + (week - 1) * 7)
 
   // generate the starting Sunday and ending Saturday for the target
-  let startSeconds = weekByThursday.setUTCDate(weekByThursday.getUTCDate() - 4)
+  let startSeconds = weekByThursday.setDate(weekByThursday.getDate() - 4)
   const start = new Date(startSeconds)
-  let endSeconds = weekByThursday.setUTCDate(weekByThursday.getUTCDate() + 6)
+  let endSeconds = weekByThursday.setDate(weekByThursday.getDate() + 6)
   const end = new Date(endSeconds)
 
   return { start: start, end: end }
 }
 
-const months = [
+export function allWeekDaysFromWeek(week) {
+  // create new date instance and set to Jan 1
+  let targetDate = new Date()
+  targetDate.setMonth(0, 1)
+
+  // find first Thursday
+  if (targetDate.getDay() !== 4) {
+    targetDate.setMonth(0, 1 + ((4 - targetDate.getDay() + 7) % 7))
+  }
+
+  // find Thursday of the target week
+  let weekByThursday = new Date()
+  weekByThursday.setDate(targetDate.getDate() + (week - 1) * 7)
+
+  // generate the starting Sunday and ending Saturday for the target
+  let startSeconds = weekByThursday.setDate(weekByThursday.getDate() - 4)
+
+  // generate the whole week
+  let weekdays = []
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(startSeconds)
+    weekdays.push(new Date(date.setDate(date.getDate() + i)))
+  }
+
+  return weekdays
+}
+
+const monthNames = [
   'January',
   'February',
   'March',
@@ -164,7 +191,7 @@ const months = [
   'December',
 ]
 
-const weekdays = [
+const weekdayNames = [
   'Sunday',
   'Monday',
   'Tuesday',
@@ -175,15 +202,41 @@ const weekdays = [
 ]
 
 export function formatDate(date: Date) {
-  return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${(
-    '0' + date.getDate()
-  ).slice(-2)}`
+  return `${date.getUTCFullYear()}-${('0' + (date.getUTCMonth() + 1)).slice(
+    -2
+  )}-${('0' + date.getUTCDate()).slice(-2)}`
 }
 
 export function formatDateRange(startDate: Date, endDate: Date) {
-  return `${weekdays[startDate.getDay()]}, ${
-    months[startDate.getMonth()]
-  } ${startDate.getDate()} - ${weekdays[endDate.getDay()]}, ${
-    months[endDate.getMonth()]
+  return `${weekdayNames[startDate.getDay()]}, ${
+    monthNames[startDate.getMonth()]
+  } ${startDate.getDate()} - ${weekdayNames[endDate.getDay()]}, ${
+    monthNames[endDate.getMonth()]
   } ${endDate.getDate()}, ${startDate.getFullYear()}`
+}
+
+const shortWeekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+const shortMonthNames = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
+
+export function formatDateForDailyNav(date: Date) {
+  return {
+    dayName: shortWeekdayNames[date.getDay()],
+    shortDate: `${
+      shortMonthNames[date.getMonth()]
+    } ${date.getDate()}, ${date.getFullYear()}`,
+  }
 }
