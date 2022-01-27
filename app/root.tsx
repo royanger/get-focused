@@ -127,75 +127,7 @@ function Document({
 
 function Layout({ children }: React.PropsWithChildren<{}>) {
   let data = useLoaderData<{ user: User; message: string }>()
-  return (
-    <>
-      {/* <Container bgColor="bg-purple">
-        <header className="text-white flex my-4">
-          <div className="flex flex-row flex-grow">
-            <Link to="/" className="flex flex-row items-center text-2xl">
-              <span className="w-6 mr-4 h-auto relative bottom-[-2px]">
-                <Logo />
-              </span>
-              Get Focused
-            </Link>
-          </div>
-          <div className="flex flex-row items-center">
-            <Link className="mr-8 hover:text-grey-300" to="/dashboard">
-              Dashboard
-            </Link>
-            <Link className="mr-8 hover:text-grey-300" to="/weekly/planner">
-              Weekly Planner
-            </Link>
-            <Link className="mr-8 hover:text-grey-300" to="/weekly/review">
-              Weekly Review
-            </Link>
-            <Link className="mr-8 hover:text-grey-300" to="/daily/planner">
-              Daily Planner
-            </Link>
-            {data?.user ? (
-              <>
-                <Form action="/logout" method="post">
-                  <button>Logout</button>
-                </Form>
-              </>
-            ) : (
-              <form action="/auth/google" method="post">
-                <button>Log In</button>
-              </form>
-            )}
-          </div>
-        </header>
-      </Container>
-      <div className="">
-        <div className="">{children}</div>
-      </div> */}
-      {children}
-      {/* //  <div className=''>
-    //    <header className=''>
-    //      <div className=''>
-    //        <Link to='/' title='Get Focused' className=''>
-    //          <h1>Get Focused</h1>
-    //        </Link>
-    //        <nav aria-label='Main navigation' className=''>
-    //          <ul>
-    //            <li>
-    //              <Link to='/'>Home</Link>
-    //            </li>
-    //          </ul>
-    //        </nav>
-    //      </div>
-    //    </header>
-    //    <div className=''>
-    //      <div className=''>{children}</div>
-    //    </div>
-   //  </div> */}
-      {/* <footer className="">
-        <div className="">
-          <p>&copy; You!</p>
-        </div>
-      </footer> */}
-    </>
-  )
+  return <>{children}</>
 }
 
 export function CatchBoundary() {
