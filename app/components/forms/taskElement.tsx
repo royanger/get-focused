@@ -7,6 +7,7 @@ import Edit from '../icons/edit'
 import { Form } from 'remix'
 import { TaskElement } from '~/interfaces'
 import CompleteCheckbox from './CompleteCheckbox'
+import TimeTracker from './TimeTracker'
 
 export default function TaskElement({
   id,
@@ -20,6 +21,7 @@ export default function TaskElement({
 }: TaskElement) {
   // this controls changes for all elements. Pass this as a prop as needed
   let [formState, setFormState] = React.useState('default')
+  const [tracker, setTracker] = React.useState(timeTracker)
 
   let defaultDiv = 'border-0 rounded '
   let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
@@ -55,6 +57,7 @@ export default function TaskElement({
           <input type="hidden" name="formType" value="task" />
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="type" value={type} />
+          <input type="hidden" name="timetracker" value={tracker} />
           <div className="p-2 grid grid-cols-10">
             <div className="flex flex-row items-center col-span-7  pr-4">
               <Input
@@ -78,11 +81,7 @@ export default function TaskElement({
                   width="w-14"
                 />
                 <div className="w-36 flex flex-row justify-center px-4">
-                  <TaskRadio />
-                  <TaskRadio />
-                  <TaskRadio />
-                  <TaskRadio />
-                  <TaskRadio />
+                  <TimeTracker tracker={tracker} setTracker={setTracker} />
                 </div>
                 <Input
                   value={actualTime}
@@ -108,7 +107,12 @@ export default function TaskElement({
                   Target
                 </div>
                 <div className="text-sm w-36 flex flex-row justify-center ">
-                  Track your time
+                  {tracker < 1
+                    ? 'Track your time'
+                    : `${Math.floor(((tracker * 25) / 60) % 60)}h ${
+                        tracker * 25 -
+                        Math.floor(((tracker * 25) / 60) % 60) * 60
+                      }m `}
                 </div>
                 <div className="text-sm w-14 flex flex-row justify-center ">
                   Actual

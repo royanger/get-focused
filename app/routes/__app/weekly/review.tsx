@@ -106,8 +106,6 @@ export default function WeeklyReview() {
   const data = useLoaderData()
   const errors = useActionData()
 
-  console.log('data', data)
-
   const [searchParams, setSearchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
   const paramWeek = searchParams.get('week')
