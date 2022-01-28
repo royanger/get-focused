@@ -28,6 +28,7 @@ export async function validateTaskForm(formData, user) {
     formData.get('taskname'),
     formData.get('goaltime'),
     formData.get('actualtime'),
+    parseInt(formData.get('timetracker')),
     formData.get('type'),
     user.id,
     formData.get('completed') === 'on' ? true : false
