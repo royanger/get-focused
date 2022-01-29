@@ -107,7 +107,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function DailyPlanner() {
-  let data = useLoaderData()
+  const data = useLoaderData()
   const errors = useActionData()
 
   const [searchParams, setSearchParams] = useSearchParams()
