@@ -2,7 +2,7 @@ import * as React from 'react'
 import { HeaderTwo } from '../headlines'
 import Radio from '../forms/radio'
 import { Form } from 'remix'
-import Button from '../button'
+import Button from '../Button'
 
 interface Productivity {
   entries: {

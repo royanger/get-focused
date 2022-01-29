@@ -128,15 +128,21 @@ export default function DailyPlanner() {
             setSearchParams={setSearchParams}
           />
 
-          <Wellness
-            wellness={data.wellness}
-            errors={errors?.formType === 'wellness' ? errors : null}
-          />
+          <div className="grid grid-cols-2 my-8">
+            <div>
+              <Wellness
+                wellness={data.wellness}
+                errors={errors?.formType === 'wellness' ? errors : null}
+              />
+            </div>
 
-          <Exercise
-            entries={data.exercise}
-            errors={errors?.formType === 'exercise' ? errors : null}
-          />
+            <div>
+              <Exercise
+                entries={data.exercise}
+                errors={errors?.formType === 'exercise' ? errors : null}
+              />
+            </div>
+          </div>
 
           <Tasks
             entries={data.tasks}

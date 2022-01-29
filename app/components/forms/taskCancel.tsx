@@ -1,4 +1,4 @@
-import Button from '../button'
+import Button from '../Button'
 import { Cancel } from '~/interfaces'
 
 // TODO will need to clear form/reset to default values
