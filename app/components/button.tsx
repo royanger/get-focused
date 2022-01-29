@@ -1,14 +1,13 @@
-import { Button } from '~/interfaces'
-
-const Button = ({
+const Button: ButtonType = ({
   title,
   variant,
   size,
-  children,
   type = 'button',
   onClick,
-}: Button) => {
-  let baseStyles = 'rounded shadow-lg uppercase'
+  width,
+}) => {
+  let baseStyles = 'rounded shadow-lg uppercase w-28'
+  console.log('wisdth', width)
 
   let stylesMap: any = {
     default: 'bg-purple text-yellow',
@@ -39,7 +38,9 @@ const Button = ({
   ) {
     return (
       <button
-        className={`${baseStyles} ${stylesMap[variant]} ${sizeMap[buttonSize]}`}
+        className={`${baseStyles} ${stylesMap[variant]} ${
+          sizeMap[buttonSize]
+        } ${width ? width : ''}`}
         onClick={() => onClick('default')}
         type={type}
       >
@@ -55,6 +56,7 @@ const Button = ({
         ${baseStyles}
          ${stylesMap['default']}
          ${sizeMap[buttonSize]}
+         ${width ? width : ''}
          `}
         type={type}
       >

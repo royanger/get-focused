@@ -1,5 +1,5 @@
 import { Form } from 'remix'
-import Button from '../button'
+import Button from '../Button'
 import Radio from '../forms/radio'
 import { HeaderTwo } from '../headlines'
 import { Exercise } from '~/interfaces'

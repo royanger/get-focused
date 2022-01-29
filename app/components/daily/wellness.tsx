@@ -1,15 +1,27 @@
 import * as React from 'react'
-import { Form } from 'remix'
-import Button from '../button'
+import { Form, useTransition } from 'remix'
+import Button from '../Button'
 import { HeaderTwo } from '../headlines'
 
-// TODO so far everything is assuming that there is a score in the DB
-// need to support adding a new score and not just loading an existing
 export default function Wellness({ wellness, errors }) {
-  //   const clickableElemTypes = ['a', 'button', 'input']
-  //   console.log(wellness)
+  const transition = useTransition()
+  const [score, setScore] = React.useState(
+    wellness?.rating ? wellness.rating : 0
+  )
 
-  const [score, setScore] = React.useState(wellness?.rating)
+  const buttonText =
+    transition.state === 'submitting'
+      ? 'Saving'
+      : transition.state === 'loading'
+      ? 'Saved!'
+      : 'Save'
+
+  const buttonVariant =
+    transition.state === 'submitting'
+      ? 'warning'
+      : transition.state === 'loading'
+      ? 'success'
+      : 'default'
 
   const handleClick = e => {
     setScore(e.target.id.split('-').slice(1).join(''))
@@ -36,7 +48,7 @@ export default function Wellness({ wellness, errors }) {
       <HeaderTwo>How do you feel?</HeaderTwo>
       <p className="mb-2">Rate how you are feeling out of 10.</p>
       <Form method="post">
-        <input type="hidden" value="wellness" name="formType" />
+        <input type="hidden" name="formType" value="wellness" />
         <input
           type="hidden"
           value={wellness?.id ? wellness.id : 'new'}
@@ -44,7 +56,12 @@ export default function Wellness({ wellness, errors }) {
         />
         <input type="hidden" name="rating" value={score} />
         <div className="flex flex-direction">{inputs}</div>
-        <Button type="submit" title="Save" />
+        <Button
+          type="submit"
+          title={buttonText}
+          variant={buttonVariant}
+          width="w-28"
+        />
       </Form>
     </>
   )
