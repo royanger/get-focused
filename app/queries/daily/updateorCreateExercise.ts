@@ -10,7 +10,7 @@ export async function updateOrCreateExercise(
 
   await prisma.$connect()
 
-  let exerciseResults
+  //   let exerciseResults
   // if there was no wellness entry, create one
   if (id === 'new') {
     let wellness = await prisma.exercise.create({
@@ -20,10 +20,10 @@ export async function updateOrCreateExercise(
         dateId: dateResults.id,
       },
     })
-    return exerciseResults
+    return wellness
   } else {
     // update existing entry
-    exerciseResults = await prisma.exercise.update({
+    await prisma.exercise.update({
       where: {
         id: id,
       },

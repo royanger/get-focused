@@ -1,10 +1,20 @@
-import { Form } from 'remix'
+import { Form, useTransition } from 'remix'
 import Button from '../Button'
 import Radio from '../forms/radio'
 import { HeaderTwo } from '../headlines'
 import { Exercise } from '~/interfaces'
 
 export default function Exercise({ entries, errors }: Exercise) {
+  const transition = useTransition()
+  const buttonState =
+    transition.state === 'submitting' &&
+    transition?.submission?.formData.get('formType') === 'exercise'
+      ? { text: 'Saving', variant: 'warning' }
+      : transition.state === 'loading' &&
+        transition?.submission?.formData.get('formType') === 'exercise'
+      ? { text: 'Saved!', variant: 'success' }
+      : { text: 'Save', variant: 'default' }
+
   return (
     <div className="mb-4">
       <HeaderTwo>Did you exercise today?</HeaderTwo>
@@ -34,7 +44,11 @@ export default function Exercise({ entries, errors }: Exercise) {
           </div>
 
           <div className="col-start-2 col-end-2 row-start-1 row-end-3">
-            <Button type="submit" title="save" />
+            <Button
+              type="submit"
+              title={buttonState.text}
+              variant={buttonState.variant}
+            />
           </div>
         </div>
         <div className="text-sm text-error mb-6 h-5">
