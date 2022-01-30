@@ -1,6 +1,23 @@
+import { DateTime } from 'luxon'
+
+export default function createDateInstance(date: string) {
+  let regex = /^\d\d\d\d-[01]\d-[0123]\d/
+
+  if (date !== 'today') {
+    if (!regex.test(date)) {
+      throw new Error('Incorrect date format passed')
+    }
+  }
+
+  return DateTime.fromISO(date)
+}
+
+// ---------------------------------
+// OLD FUNCTIONS BELOW
+// ---------------------------------
+
 // this function should return the week of the month from a given date or 'today'
 // it uses Sunday-Saturday as the week
-
 export function determineWeek(date: string) {
   let regex = /^\d\d\d\d-[01]\d-[0123]\d/
 
