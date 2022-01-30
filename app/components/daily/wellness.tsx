@@ -9,19 +9,14 @@ export default function Wellness({ wellness, errors }) {
     wellness?.rating ? wellness.rating : 0
   )
 
-  const buttonText =
-    transition.state === 'submitting'
-      ? 'Saving'
-      : transition.state === 'loading'
-      ? 'Saved!'
-      : 'Save'
-
-  const buttonVariant =
-    transition.state === 'submitting'
-      ? 'warning'
-      : transition.state === 'loading'
-      ? 'success'
-      : 'default'
+  const buttonState =
+    transition.state === 'submitting' &&
+    transition?.submission?.formData.get('formType') === 'wellness'
+      ? { text: 'Saving', variant: 'warning' }
+      : transition.state === 'loading' &&
+        transition?.submission?.formData.get('formType') === 'wellness'
+      ? { text: 'Saved!', variant: 'success' }
+      : { text: 'Save', variant: 'default' }
 
   const handleClick = e => {
     setScore(e.target.id.split('-').slice(1).join(''))
@@ -58,8 +53,8 @@ export default function Wellness({ wellness, errors }) {
         <div className="flex flex-direction">{inputs}</div>
         <Button
           type="submit"
-          title={buttonText}
-          variant={buttonVariant}
+          title={buttonState.text}
+          variant={buttonState.variant}
           width="w-28"
         />
       </Form>

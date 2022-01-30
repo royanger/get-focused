@@ -1,13 +1,12 @@
-const Button: ButtonType = ({
+const Button = ({
   title,
   variant,
   size,
   type = 'button',
   onClick,
   width,
-}) => {
+}: ButtonType) => {
   let baseStyles = 'rounded shadow-lg uppercase w-28'
-  console.log('wisdth', width)
 
   let stylesMap: any = {
     default: 'bg-purple text-yellow',
