@@ -1,7 +1,7 @@
 import {
   calculateNextWeek,
   calculatePreviousWeek,
-  determineWeek,
+  createDateInstance,
   determineYear,
   formatDateRange,
   currentWeekNumber,
@@ -54,7 +54,7 @@ export let loader: LoaderFunction = async ({ request }) => {
     url.searchParams.get('year') === null
   ) {
     year = determineYear()
-    week = determineWeek('today')
+    week = createDateInstance('today').weekNumber
   } else {
     week = parseInt(url.searchParams.get('week'))
     year = parseInt(url.searchParams.get('year'))
@@ -112,7 +112,6 @@ export default function WeeklyReview() {
 
   // if the year and week are undefined, then determine for current date
   const year = paramYear ? parseInt(paramYear) : determineYear()
-  //   const week = paramWeek ? parseInt(paramWeek) : determineWeek('today')
   const week = paramWeek ? parseInt(paramWeek) : currentWeekNumber(new Date())
 
   // get previous week and year, and next week and year

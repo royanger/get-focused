@@ -25,11 +25,13 @@ import {
   calculateNextWeek,
   calculatePreviousWeek,
   currentWeekNumber,
-  determineWeek,
+  createDateInstance,
   determineYear,
   formatDateRange,
   startDateAndEndDateFromWeek,
+  createDateFromWeekAndYear,
 } from '~/libs/dateFunctions'
+import { DateTime } from 'luxon'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -48,7 +50,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     url.searchParams.get('year') === null
   ) {
     year = determineYear()
-    week = determineWeek('today')
+    week = createDateInstance('today').weekNumber
   } else {
     week = parseInt(url.searchParams.get('week'))
     year = parseInt(url.searchParams.get('year'))
@@ -128,11 +130,22 @@ export default function WeeklyPlanner() {
 
   // if the year and week are undefined, then determine for current date
   const year = paramYear ? parseInt(paramYear) : determineYear()
-  const week = paramWeek ? parseInt(paramWeek) : currentWeekNumber(new Date())
+  const week = paramWeek
+    ? parseInt(paramWeek)
+    : createDateInstance('today').weekNumber
 
   // get previous week and year, and next week and year
+
+  // TODO stopping here
   const previousWeek = calculatePreviousWeek(year, week)
+
+  // TODO rough work for prev week
+  const dt = createDateFromWeekAndYear(week, year)
+  console.log('prev', dt.plus({ weeks: -1 }).toString())
   const nextWeek = calculateNextWeek(year, week)
+  // TODO rough work for next week
+  const dt2 = createDateFromWeekAndYear(week, year)
+  console.log('next', dt2.plus({ weeks: 1 }).toString())
   //   const startAndEndDates = weekFromDay(year, week)
   const startAndEndDates = startDateAndEndDateFromWeek(week)
   console.log('startAndEndDates', startAndEndDates)

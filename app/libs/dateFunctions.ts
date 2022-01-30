@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 
-export default function createDateInstance(date: string) {
+export function createDateInstance(date: string) {
   let regex = /^\d\d\d\d-[01]\d-[0123]\d/
 
   if (date !== 'today') {
@@ -8,48 +8,16 @@ export default function createDateInstance(date: string) {
       throw new Error('Incorrect date format passed')
     }
   }
+  return date === 'today' ? DateTime.now() : DateTime.fromISO(date)
+}
 
-  return DateTime.fromISO(date)
+export function createDateFromWeekAndYear(week, year) {
+  return DateTime.fromObject({ weekYear: year, weekNumber: week })
 }
 
 // ---------------------------------
 // OLD FUNCTIONS BELOW
 // ---------------------------------
-
-// this function should return the week of the month from a given date or 'today'
-// it uses Sunday-Saturday as the week
-export function determineWeek(date: string) {
-  let regex = /^\d\d\d\d-[01]\d-[0123]\d/
-
-  if (date !== 'today') {
-    if (!regex.test(date)) {
-      throw new Error('Incorrect date format passed')
-    }
-  }
-
-  let currentDate
-  if (date === 'today') {
-    currentDate = new Date()
-  } else {
-    const dateArray = date.split('-')
-    currentDate = new Date(
-      parseInt(dateArray[0]),
-      parseInt(dateArray[1]),
-      parseInt(dateArray[2]),
-      0,
-      0,
-      0
-    )
-  }
-
-  const oneJanuary = new Date(currentDate.getFullYear(), 0, 1)
-  const lengthOfFirstWeek = 7 - oneJanuary.getDay()
-  const numberOfDays = Math.floor(
-    (currentDate - oneJanuary) / (24 * 60 * 60 * 1000)
-  )
-
-  return Math.ceil((numberOfDays + 1 - lengthOfFirstWeek) / 7) + 1
-}
 
 export function determineYear() {
   const date = new Date()

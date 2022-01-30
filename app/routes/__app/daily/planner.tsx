@@ -34,7 +34,11 @@ import { validateTaskForm } from '~/libs/daily/taskActions'
 import { validateNotesForm } from '~/libs/daily/noteActions'
 import { validateProductivityForm } from '~/libs/daily/productivityActions'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
-import { allWeekDaysFromWeek, currentWeekNumber } from '~/libs/dateFunctions'
+import {
+  createDateInstance,
+  allWeekDaysFromWeek,
+  currentWeekNumber,
+} from '~/libs/dateFunctions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -116,6 +120,12 @@ export default function DailyPlanner() {
   const week = paramDate
     ? allWeekDaysFromWeek(currentWeekNumber(paramDate))
     : allWeekDaysFromWeek(currentWeekNumber(new Date()))
+
+  console.log('dates')
+  const dt = createDateInstance('today')
+  console.log(dt.plus({ weeks: -1 }).toString())
+
+  console.log('dates')
 
   return (
     <>

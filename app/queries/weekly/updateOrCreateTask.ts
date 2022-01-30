@@ -1,4 +1,4 @@
-import { determineWeek, determineYear } from '~/libs/dateFunctions'
+import { createDateInstance, determineYear } from '~/libs/dateFunctions'
 import { prisma } from '~/../prisma/db'
 import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
@@ -10,7 +10,7 @@ export async function updateOrCreateTask(
   userId: string
 ) {
   const year = determineYear()
-  const week = determineWeek('today')
+  const week = createDateInstance('today').weekNumber
 
   const weekResults = await findOrCreateWeek(year, week)
 
