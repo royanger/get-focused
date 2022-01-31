@@ -47,7 +47,7 @@ export default function TaskElement({
         <input type="hidden" name="id" value={id} />
         <input type="hidden" name="status" value={`status-${type}`} />
 
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center font-input">
           <Input
             value={value}
             formState={formState}

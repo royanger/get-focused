@@ -2,10 +2,10 @@ import React from 'react'
 import {
   formatDateForDailyNav,
   formatDate,
-  calculateNextWeek,
-  currentWeekNumber,
   startDateAndEndDateFromWeek,
-  calculatePreviousWeek,
+  createDateInstance,
+  createDateFromWeekAndYear,
+  returnNextAndPreviousWeeks,
 } from '~/libs/dateFunctions'
 import BackIcon from '../icons/back'
 import ForwardIcon from '../icons/forward'
@@ -16,19 +16,23 @@ export default function DailyNav({ week, searchParams, setSearchParams }) {
       searchParams.set('date', date)
       setSearchParams(searchParams, { replace: true })
     } else if (date === 'next' || date === 'back') {
-      const currentDate = searchParams.get('date')
-        ? new Date(searchParams.get('date'))
-        : new Date()
+      const activeDate = searchParams.get('date')
+        ? createDateInstance(searchParams.get('date'))
+        : createDateInstance('today')
       const newWeek =
         date === 'next'
-          ? calculateNextWeek(
-              currentDate.getUTCFullYear(),
-              currentWeekNumber(currentDate)
-            )
-          : calculatePreviousWeek(
-              currentDate.getUTCFullYear(),
-              currentWeekNumber(currentDate)
-            )
+          ? returnNextAndPreviousWeeks(
+              createDateFromWeekAndYear(
+                activeDate.weekNumber,
+                activeDate.weekYear
+              )
+            ).next
+          : returnNextAndPreviousWeeks(
+              createDateFromWeekAndYear(
+                activeDate.weekNumber,
+                activeDate.weekYear
+              )
+            ).prev
 
       searchParams.set(
         'date',

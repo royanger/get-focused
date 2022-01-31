@@ -1,11 +1,9 @@
 import {
-  calculateNextWeek,
-  calculatePreviousWeek,
   createDateInstance,
-  determineYear,
   formatDateRange,
-  currentWeekNumber,
   startDateAndEndDateFromWeek,
+  createDateFromWeekAndYear,
+  returnNextAndPreviousWeeks,
 } from '~/libs/dateFunctions'
 
 import {
@@ -53,7 +51,7 @@ export let loader: LoaderFunction = async ({ request }) => {
     url.searchParams.get('week') === null ||
     url.searchParams.get('year') === null
   ) {
-    year = determineYear()
+    year = createDateInstance('today').year
     week = createDateInstance('today').weekNumber
   } else {
     week = parseInt(url.searchParams.get('week'))
@@ -111,12 +109,17 @@ export default function WeeklyReview() {
   const paramWeek = searchParams.get('week')
 
   // if the year and week are undefined, then determine for current date
-  const year = paramYear ? parseInt(paramYear) : determineYear()
-  const week = paramWeek ? parseInt(paramWeek) : currentWeekNumber(new Date())
+  const year = paramYear
+    ? parseInt(paramYear)
+    : createDateInstance('today').year
+  const week = paramWeek
+    ? parseInt(paramWeek)
+    : createDateInstance('today').weekNumber
 
   // get previous week and year, and next week and year
-  const previousWeek = calculatePreviousWeek(year, week)
-  const nextWeek = calculateNextWeek(year, week)
+  const nextAndPrev = returnNextAndPreviousWeeks(
+    createDateFromWeekAndYear(week, year)
+  )
   const startAndEndDates = startDateAndEndDateFromWeek(week)
 
   // format the dates for UI
@@ -129,8 +132,14 @@ export default function WeeklyReview() {
           <HeaderOne>Weekly Review</HeaderOne>
           <WeeklyNav
             navigation={{
-              back: { year: previousWeek.year, week: previousWeek.week },
-              forward: { year: nextWeek.year, week: nextWeek.week },
+              back: {
+                year: nextAndPrev.prev.year,
+                week: nextAndPrev.prev.week,
+              },
+              forward: {
+                year: nextAndPrev.next.year,
+                week: nextAndPrev.next.week,
+              },
             }}
             dates={dates}
             searchParams={searchParams}

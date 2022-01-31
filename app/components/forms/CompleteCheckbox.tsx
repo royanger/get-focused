@@ -22,13 +22,13 @@ export default function CompleteCheckbox({
           method="post"
           id={`completed-${id}`}
           name={`completed-${id}`}
-          className="border-2 border-x-red m-2"
+          className="m-2"
         >
           <input type="hidden" name="formType" value="completeTask" />
           <input type="hidden" name="id" value={id} />
           {/* <input type="hidden" name="status" value={status} /> */}
           <Checkbox status={status} label={label} handleClick={handleClick} />
-          <button type="submit">Submit</button>
+          {/* <button type="submit">Submit</button> */}
         </form>
       )}
     </div>

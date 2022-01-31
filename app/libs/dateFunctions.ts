@@ -15,43 +15,22 @@ export function createDateFromWeekAndYear(week, year) {
   return DateTime.fromObject({ weekYear: year, weekNumber: week })
 }
 
+export function returnNextAndPreviousWeeks(date) {
+  return {
+    prev: {
+      year: date.plus({ weeks: -1 }).year,
+      week: date.plus({ weeks: -1 }).weekNumber,
+    },
+    next: {
+      year: date.plus({ weeks: 1 }).year,
+      week: date.plus({ weeks: 1 }).weekNumber,
+    },
+  }
+}
+
 // ---------------------------------
 // OLD FUNCTIONS BELOW
 // ---------------------------------
-
-export function determineYear() {
-  const date = new Date()
-  return date.getFullYear()
-}
-
-function isLeapYear(year) {
-  return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0)
-}
-
-export function calculateWeeksInYear(year) {
-  const date = new Date(year, 0, 1)
-  const oneJanuary = new Date(date.getFullYear(), 0, 1)
-  const lengthOfFirstWeek = 7 - oneJanuary.getDay()
-  const lengthOfYear = isLeapYear(year) ? 366 : 365
-  const partialStartWeek = lengthOfFirstWeek > 0 ? 1 : 0
-  const fullWeeks = Math.floor((lengthOfYear - lengthOfFirstWeek) / 7)
-  const partialEndWeek = (lengthOfYear - lengthOfFirstWeek) % 7 > 0 ? 1 : 0
-  return partialStartWeek + fullWeeks + partialEndWeek
-}
-
-export function calculatePreviousWeek(year, week) {
-  if (week === 1) {
-    return { year: year - 1, week: calculateWeeksInYear(year - 1) }
-  }
-  return { year: year, week: week - 1 }
-}
-
-export function calculateNextWeek(year, week) {
-  if (week === calculateWeeksInYear(year)) {
-    return { year: year + 1, week: 1 }
-  }
-  return { year: year, week: week + 1 }
-}
 
 export function weeksInMonth(week: string) {
   const targetWeek = startDateAndEndDateFromWeek(currentWeekNumber(week))

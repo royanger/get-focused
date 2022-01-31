@@ -10,7 +10,7 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   if (tasks) {
     taskList = tasks.map(task => {
       return (
-        <div key={task.id} className="border-2 border-blue flex flex-row">
+        <div key={task.id} className="flex flex-row">
           <TaskElement
             key={task.id}
             id={task.id}
@@ -84,7 +84,7 @@ export default function Tasks({ entries, errors }: Tasks) {
           key="p1"
         />
         {generatedP1Tasks && generatedP1Tasks}
-        <div className="border-2 border-blue flex flex-row">
+        <div className="flex flex-row">
           <TaskElement
             key={`newtask-p1`}
             id="newtask-p1"
@@ -109,7 +109,7 @@ export default function Tasks({ entries, errors }: Tasks) {
           key="p2"
         />
         {generatedP2Tasks && generatedP2Tasks}
-        <div className="border-2 border-blue flex flex-row">
+        <div className="flex flex-row">
           <TaskElement
             key={`newtask-p2`}
             id="newtask-p2"
@@ -134,7 +134,7 @@ export default function Tasks({ entries, errors }: Tasks) {
           key="p3"
         />
         {generatedP3Tasks && generatedP3Tasks}
-        <div className="border-2 border-blue flex flex-row">
+        <div className="flex flex-row">
           <TaskElement
             key={`newtask-p3`}
             id="newtask-p3"
