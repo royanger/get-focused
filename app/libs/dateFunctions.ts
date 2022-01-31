@@ -40,9 +40,7 @@ export function startDateAndEndDateFromWeek(week, year) {
 export function weeksInMonth(week: string, year: string) {
   const dt = createDateFromWeekAndYear(week, year)
 
-  console.log(dt.startOf('month').toString())
   const startDate = DateTime.fromISO(dt.startOf('month').toString())
-  console.log(startDate.month)
 
   let weekRange = []
   let weeks = []
@@ -52,10 +50,10 @@ export function weeksInMonth(week: string, year: string) {
     startDate.plus({ months: 1 }).month;
     i++
   ) {
-    weekRange.push(
-      startDate.plus({ weeks: i }).startOf('week').toString(),
-      startDate.plus({ weeks: i }).endOf('week').toString()
-    )
+    weekRange.push({
+      start: startDate.plus({ weeks: i }).startOf('week').toString(),
+      end: startDate.plus({ weeks: i }).endOf('week').toString(),
+    })
     weeks.push(i)
   }
   return { weekRange: weekRange, weeks: weeks }

@@ -28,7 +28,6 @@ import {
   createDateFromWeekAndYear,
   returnNextAndPreviousWeeks,
 } from '~/libs/dateFunctions'
-import { DateTime } from 'luxon'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)

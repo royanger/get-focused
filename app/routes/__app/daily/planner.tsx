@@ -34,14 +34,7 @@ import { validateTaskForm } from '~/libs/daily/taskActions'
 import { validateNotesForm } from '~/libs/daily/noteActions'
 import { validateProductivityForm } from '~/libs/daily/productivityActions'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
-import {
-  createDateInstance,
-  allWeekDaysFromWeek,
-  startDateAndEndDateFromWeek,
-  returnNextAndPreviousWeeks,
-  createDateFromWeekAndYear,
-} from '~/libs/dateFunctions'
-import { DateTime } from 'luxon'
+import { createDateInstance, allWeekDaysFromWeek } from '~/libs/dateFunctions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -129,28 +122,6 @@ export default function DailyPlanner() {
         createDateInstance('today').weekNumber,
         createDateInstance('today').weekYear
       )
-
-  console.log('dates')
-  const tempDate = createDateInstance('2022-01-16')
-  console.log(
-    'TESTING',
-    //  returnNextAndPreviousWeeks(
-    startDateAndEndDateFromWeek(tempDate.weekNumber, tempDate.weekYear)
-    //  )
-  )
-
-  console.log(allWeekDaysFromWeek(3, 2022))
-  //   const dt = createDateInstance('today')
-  //   console.log(dt.weekdayShort)
-  //   console.log(dt.toLocaleString(DateTime.DATE_MED))
-  //   console.log('test', dt.toLocaleString())
-
-  //   console.log(dt.plus({ weeks: -1 }).toString())
-  //   console.log(dt.startOf('week').toString(), dt.endOf('week').toString())
-  //   console.log(dt.plus({ weeks: -1 }).toString())
-  //   console.log(dt.startOf('week').toString(), dt.endOf('week').toString())
-
-  //   console.log('dates')
 
   return (
     <>
