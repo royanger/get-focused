@@ -30,7 +30,7 @@ export default function NoteEl({ id, note }: Note) {
           ref={noteRef}
           defaultValue={note}
           name="message"
-          className="w-full h-36 border-2 border-purple rounded p-2"
+          className="w-full h-36 border-2 border-purple rounded p-2 font-input"
           placeholder="Enter your thoughts and notes here..."
         />
         <NoteSave />

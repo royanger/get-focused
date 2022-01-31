@@ -16,6 +16,7 @@ module.exports = {
     fontFamily: {
       body: ['Lato', 'sans-serif'],
       title: ['Montserrat', 'sans-serif'],
+      input: ['Mali', 'sans-serif'],
     },
     screens: {
       tablet: '960px',

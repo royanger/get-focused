@@ -1,37 +1,30 @@
 import { findAllTasks } from '~/queries/dashboard/tasks'
-import { formatDate, weeksInMonth } from '../dateFunctions'
+import { createDateInstance, formatDate, weeksInMonth } from '../dateFunctions'
 
 export async function generateTasksData(user: string) {
-  const startDate = new Date()
-  startDate.setUTCDate(1)
-  const endDate = new Date()
-  endDate.setUTCMonth(endDate.getUTCMonth() + 1)
-  endDate.setDate(0)
+  const dt = createDateInstance('today')
+
   const data = await findAllTasks(
-    formatDate(startDate),
-    formatDate(endDate),
+    formatDate(dt.startOf('month').toISODate()),
+    formatDate(dt.endOf('month').toISODate()),
     user
   )
-  let completed = data?.partial.filter(task => task.completed === true)
+
+  let completed = data?.partial?.filter(task => task.completed === true)
 
   // use current date
   // TODO use parameter when Dashboard is expanded
-  const weeks = weeksInMonth(formatDate(new Date()))
+  const weeks = weeksInMonth(dt.weekNumber, dt.weekYear)
 
   let tasksByWeek
   await Promise.all(
-    weeks.weekRange.map(week =>
-      findAllTasks(
-        `${week.start.getFullYear()}-${(
-          '0' +
-          (week.start.getMonth() + 1)
-        ).slice(-2)}-${('0' + week.start.getDate()).slice(-2)}`,
-        `${week.end.getFullYear()}-${('0' + (week.end.getMonth() + 1)).slice(
-          -2
-        )}-${('0' + week.end.getDate()).slice(-2)}`,
+    weeks.weekRange.map(week => {
+      return findAllTasks(
+        createDateInstance(week.start.split('T')[0]).toISODate(),
+        createDateInstance(week.end.split('T')[0]).toISODate(),
         user
       )
-    )
+    })
   ).then(results => {
     tasksByWeek = results
   })
@@ -44,8 +37,8 @@ export async function generateTasksData(user: string) {
           label: 'Status by Count',
           data: [
             completed?.length,
-            data?.partial.length - completed?.length,
-            data?.all.length - data?.partial.length,
+            data?.partial?.length - completed?.length,
+            data?.all?.length - data?.partial?.length,
           ],
           backgroundColor: [
             'rgb(63, 81, 181)',
@@ -69,7 +62,7 @@ export async function generateTasksData(user: string) {
         {
           label: 'Tasks by Week',
           data: tasksByWeek.map((week, i) => {
-            return week.partial.length
+            return week?.partial?.length
           }),
           backgroundColor: [
             'rgb(63, 81, 181)',
@@ -89,5 +82,4 @@ export async function generateTasksData(user: string) {
     },
     tasksInfoByWeek: tasksByWeek,
   }
-  //   return null
 }

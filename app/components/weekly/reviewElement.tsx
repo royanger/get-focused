@@ -39,7 +39,7 @@ export default function ReviewElement({ id, value, placeholder, formType }) {
         <input type="hidden" name="id" value={id} />
         <input type="hidden" name="formType" value={formType} />
 
-        <div className="flex flex-row items-center">
+        <div className="flex flex-row items-center font-input">
           <Input
             value={value}
             formState={formState}

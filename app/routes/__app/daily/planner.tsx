@@ -34,7 +34,7 @@ import { validateTaskForm } from '~/libs/daily/taskActions'
 import { validateNotesForm } from '~/libs/daily/noteActions'
 import { validateProductivityForm } from '~/libs/daily/productivityActions'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
-import { allWeekDaysFromWeek, currentWeekNumber } from '~/libs/dateFunctions'
+import { createDateInstance, allWeekDaysFromWeek } from '~/libs/dateFunctions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -114,8 +114,14 @@ export default function DailyPlanner() {
   const paramDate = searchParams.get('date')
 
   const week = paramDate
-    ? allWeekDaysFromWeek(currentWeekNumber(paramDate))
-    : allWeekDaysFromWeek(currentWeekNumber(new Date()))
+    ? allWeekDaysFromWeek(
+        createDateInstance(paramDate).weekNumber,
+        createDateInstance(paramDate).weekYear
+      )
+    : allWeekDaysFromWeek(
+        createDateInstance('today').weekNumber,
+        createDateInstance('today').weekYear
+      )
 
   return (
     <>
@@ -149,14 +155,14 @@ export default function DailyPlanner() {
             errors={errors?.formType === 'task' ? errors : null}
           />
 
-          <Notes
-            entries={data.notes}
-            errors={errors?.formType === 'note' ? errors : null}
-          />
-
           <Productivity
             entries={data.productivity}
             errors={errors?.formType === 'productivity' ? errors : null}
+          />
+
+          <Notes
+            entries={data.notes}
+            errors={errors?.formType === 'note' ? errors : null}
           />
         </div>
       </Container>

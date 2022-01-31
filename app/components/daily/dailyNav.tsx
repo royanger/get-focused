@@ -2,10 +2,10 @@ import React from 'react'
 import {
   formatDateForDailyNav,
   formatDate,
-  calculateNextWeek,
-  currentWeekNumber,
   startDateAndEndDateFromWeek,
-  calculatePreviousWeek,
+  createDateInstance,
+  createDateFromWeekAndYear,
+  returnNextAndPreviousWeeks,
 } from '~/libs/dateFunctions'
 import BackIcon from '../icons/back'
 import ForwardIcon from '../icons/forward'
@@ -16,31 +16,41 @@ export default function DailyNav({ week, searchParams, setSearchParams }) {
       searchParams.set('date', date)
       setSearchParams(searchParams, { replace: true })
     } else if (date === 'next' || date === 'back') {
-      const currentDate = searchParams.get('date')
-        ? new Date(searchParams.get('date'))
-        : new Date()
+      const activeDate = searchParams.get('date')
+        ? createDateInstance(searchParams.get('date'))
+        : createDateInstance('today')
       const newWeek =
         date === 'next'
-          ? calculateNextWeek(
-              currentDate.getUTCFullYear(),
-              currentWeekNumber(currentDate)
-            )
-          : calculatePreviousWeek(
-              currentDate.getUTCFullYear(),
-              currentWeekNumber(currentDate)
-            )
-
+          ? returnNextAndPreviousWeeks(
+              createDateFromWeekAndYear(
+                activeDate.weekNumber,
+                activeDate.weekYear
+              )
+            ).next
+          : returnNextAndPreviousWeeks(
+              createDateFromWeekAndYear(
+                activeDate.weekNumber,
+                activeDate.weekYear
+              )
+            ).prev
       searchParams.set(
         'date',
-        formatDate(startDateAndEndDateFromWeek(newWeek.week).start)
+        formatDate(
+          startDateAndEndDateFromWeek(newWeek.week, newWeek.year).start
+        )
       )
       setSearchParams(searchParams, { replace: true })
     }
   }
 
   const weekdayDivs = week.map(day => {
+    // set current day as active if user hasn't navigated to another day
+    const selectedDate = searchParams.get('date')
+      ? createDateInstance(searchParams.get('date')).toString().split('T')[0]
+      : createDateInstance('today').toString().split('T')[0]
+
     const currentDayHighlight =
-      formatDate(new Date(searchParams.get('date'))) === formatDate(day)
+      selectedDate === day.toString().split('T')[0]
         ? 'bg-purple-300'
         : 'bg-purple'
 
@@ -53,9 +63,9 @@ export default function DailyNav({ week, searchParams, setSearchParams }) {
             onClick={() => handleClick(formatDate(day))}
             className="flex  flex-col"
           >
-            {formatDateForDailyNav(day).dayName}
+            {formatDateForDailyNav(day.toString().split('T')[0]).dayName}
             <span className="text-xs">
-              {formatDateForDailyNav(day).shortDate}
+              {formatDateForDailyNav(day.toString().split('T')[0]).shortDate}
             </span>
           </button>
         </div>

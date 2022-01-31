@@ -22,13 +22,11 @@ import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '~/libs/priorityIds'
 import { findTasks } from '~/queries/weekly/findTasks'
 import { validateTaskForm } from '~/libs/weekly/taskActions'
 import {
-  calculateNextWeek,
-  calculatePreviousWeek,
-  currentWeekNumber,
-  determineWeek,
-  determineYear,
+  createDateInstance,
   formatDateRange,
   startDateAndEndDateFromWeek,
+  createDateFromWeekAndYear,
+  returnNextAndPreviousWeeks,
 } from '~/libs/dateFunctions'
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -47,8 +45,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     url.searchParams.get('week') === null ||
     url.searchParams.get('year') === null
   ) {
-    year = determineYear()
-    week = determineWeek('today')
+    year = createDateInstance('today').year
+    week = createDateInstance('today').weekNumber
   } else {
     week = parseInt(url.searchParams.get('week'))
     year = parseInt(url.searchParams.get('year'))
@@ -127,15 +125,19 @@ export default function WeeklyPlanner() {
   const paramWeek = searchParams.get('week')
 
   // if the year and week are undefined, then determine for current date
-  const year = paramYear ? parseInt(paramYear) : determineYear()
-  const week = paramWeek ? parseInt(paramWeek) : currentWeekNumber(new Date())
+  const year = paramYear
+    ? parseInt(paramYear)
+    : createDateInstance('today').year
+  const week = paramWeek
+    ? parseInt(paramWeek)
+    : createDateInstance('today').weekNumber
 
   // get previous week and year, and next week and year
-  const previousWeek = calculatePreviousWeek(year, week)
-  const nextWeek = calculateNextWeek(year, week)
-  //   const startAndEndDates = weekFromDay(year, week)
-  const startAndEndDates = startDateAndEndDateFromWeek(week)
-  console.log('startAndEndDates', startAndEndDates)
+  const nextAndPrev = returnNextAndPreviousWeeks(
+    createDateFromWeekAndYear(week, year)
+  )
+
+  const startAndEndDates = startDateAndEndDateFromWeek(week, year)
 
   // format the dates for UI
   const dates = formatDateRange(startAndEndDates.start, startAndEndDates.end)
@@ -199,8 +201,14 @@ export default function WeeklyPlanner() {
 
           <WeeklyNav
             navigation={{
-              back: { year: previousWeek.year, week: previousWeek.week },
-              forward: { year: nextWeek.year, week: nextWeek.week },
+              back: {
+                year: nextAndPrev.prev.year,
+                week: nextAndPrev.prev.week,
+              },
+              forward: {
+                year: nextAndPrev.next.year,
+                week: nextAndPrev.next.week,
+              },
             }}
             dates={dates}
             searchParams={searchParams}
