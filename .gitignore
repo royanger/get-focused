@@ -4,6 +4,7 @@ node_modules
 /build
 /public/build
 /temp
+/coverage
 
 .env
 .env.local
