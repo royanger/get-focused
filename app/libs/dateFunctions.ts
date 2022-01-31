@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 
 export function createDateInstance(date: string) {
-  let regex = /^\d\d\d\d-[01]\d-[0123]\d/
+  let regex = /^\d\d\d\d-[01]\d-[0123]\d$/
 
   if (date !== 'today') {
     if (!regex.test(date)) {
@@ -11,7 +11,16 @@ export function createDateInstance(date: string) {
   return date === 'today' ? DateTime.now() : DateTime.fromISO(date)
 }
 
-export function createDateFromWeekAndYear(week, year) {
+export function createDateFromWeekAndYear(week: number, year: number) {
+  let regexYear = /^\d{4}$/
+  let regexWeek = /^\d{1,2}$/
+
+  if (!regexWeek.test(week) || !regexYear.test(year)) {
+    throw new Error('Incorrect values for Week or Year passed')
+  }
+
+  console.log(DateTime.fromObject({ weekYear: 2022, weekNumber: 53 }))
+
   return DateTime.fromObject({ weekYear: year, weekNumber: week })
 }
 
@@ -37,7 +46,7 @@ export function startDateAndEndDateFromWeek(week, year) {
   }
 }
 
-export function weeksInMonth(week: string, year: string) {
+export function weeksInMonth(week, year) {
   const dt = createDateFromWeekAndYear(week, year)
 
   const startDate = DateTime.fromISO(dt.startOf('month').toString())
@@ -86,7 +95,7 @@ export function formatDate(date: string) {
 }
 
 export function formatDateForDailyNav(date: string) {
-  const dt = createDateInstance(date)
+  const dt = createDateInstance(date.split('T')[0])
 
   return {
     dayName: dt.weekdayShort,
