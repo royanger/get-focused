@@ -34,7 +34,14 @@ import { validateTaskForm } from '~/libs/daily/taskActions'
 import { validateNotesForm } from '~/libs/daily/noteActions'
 import { validateProductivityForm } from '~/libs/daily/productivityActions'
 import { findOrCreateDate } from '~/queries/findOrCreateDate'
-import { createDateInstance, allWeekDaysFromWeek } from '~/libs/dateFunctions'
+import {
+  createDateInstance,
+  allWeekDaysFromWeek,
+  startDateAndEndDateFromWeek,
+  returnNextAndPreviousWeeks,
+  createDateFromWeekAndYear,
+} from '~/libs/dateFunctions'
+import { DateTime } from 'luxon'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -114,19 +121,36 @@ export default function DailyPlanner() {
   const paramDate = searchParams.get('date')
 
   const week = paramDate
-    ? allWeekDaysFromWeek(createDateInstance(paramDate).weekNumber)
-    : allWeekDaysFromWeek(createDateInstance('today').weekNumber)
+    ? allWeekDaysFromWeek(
+        createDateInstance(paramDate).weekNumber,
+        createDateInstance(paramDate).weekYear
+      )
+    : allWeekDaysFromWeek(
+        createDateInstance('today').weekNumber,
+        createDateInstance('today').weekYear
+      )
 
   console.log('dates')
-  const dt = createDateInstance('today')
-  console.log(dt.startOf('month').toString())
-  console.log(dt.plus({ weeks: -1 }).toString())
-  console.log(dt.startOf('week').toString(), dt.endOf('week').toString())
-  console.log(dt.plus({ weeks: -1 }).toString())
-  console.log(dt.startOf('week').toString(), dt.endOf('week').toString())
-  console.log(createDateInstance('today').year)
+  const tempDate = createDateInstance('2022-01-16')
+  console.log(
+    'TESTING',
+    //  returnNextAndPreviousWeeks(
+    startDateAndEndDateFromWeek(tempDate.weekNumber, tempDate.weekYear)
+    //  )
+  )
 
-  console.log('dates')
+  console.log(allWeekDaysFromWeek(3, 2022))
+  //   const dt = createDateInstance('today')
+  //   console.log(dt.weekdayShort)
+  //   console.log(dt.toLocaleString(DateTime.DATE_MED))
+  //   console.log('test', dt.toLocaleString())
+
+  //   console.log(dt.plus({ weeks: -1 }).toString())
+  //   console.log(dt.startOf('week').toString(), dt.endOf('week').toString())
+  //   console.log(dt.plus({ weeks: -1 }).toString())
+  //   console.log(dt.startOf('week').toString(), dt.endOf('week').toString())
+
+  //   console.log('dates')
 
   return (
     <>

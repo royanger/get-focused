@@ -138,8 +138,7 @@ export default function WeeklyPlanner() {
     createDateFromWeekAndYear(week, year)
   )
 
-  const startAndEndDates = startDateAndEndDateFromWeek(week)
-  //   console.log('startAndEndDates', startAndEndDates)
+  const startAndEndDates = startDateAndEndDateFromWeek(week, year)
 
   // format the dates for UI
   const dates = formatDateRange(startAndEndDates.start, startAndEndDates.end)

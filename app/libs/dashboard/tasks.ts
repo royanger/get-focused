@@ -1,5 +1,5 @@
 import { findAllTasks } from '~/queries/dashboard/tasks'
-import { formatDate, weeksInMonth } from '../dateFunctions'
+import { createDateInstance, formatDate, weeksInMonth } from '../dateFunctions'
 
 export async function generateTasksData(user: string) {
   const startDate = new Date()
@@ -16,7 +16,8 @@ export async function generateTasksData(user: string) {
 
   // use current date
   // TODO use parameter when Dashboard is expanded
-  const weeks = weeksInMonth(formatDate(new Date()))
+  const dt = createDateInstance('today')
+  const weeks = weeksInMonth(dt.weekNumber, dt.weekYear)
 
   let tasksByWeek
   await Promise.all(

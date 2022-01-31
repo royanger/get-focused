@@ -33,18 +33,24 @@ export default function DailyNav({ week, searchParams, setSearchParams }) {
                 activeDate.weekYear
               )
             ).prev
-
       searchParams.set(
         'date',
-        formatDate(startDateAndEndDateFromWeek(newWeek.week).start)
+        formatDate(
+          startDateAndEndDateFromWeek(newWeek.week, newWeek.year).start
+        )
       )
       setSearchParams(searchParams, { replace: true })
     }
   }
 
   const weekdayDivs = week.map(day => {
+    // set current day as active if user hasn't navigated to another day
+    const selectedDate = searchParams.get('date')
+      ? createDateInstance(searchParams.get('date')).toString().split('T')[0]
+      : createDateInstance('today').toString().split('T')[0]
+
     const currentDayHighlight =
-      formatDate(new Date(searchParams.get('date'))) === formatDate(day)
+      selectedDate === day.toString().split('T')[0]
         ? 'bg-purple-300'
         : 'bg-purple'
 
@@ -57,9 +63,9 @@ export default function DailyNav({ week, searchParams, setSearchParams }) {
             onClick={() => handleClick(formatDate(day))}
             className="flex  flex-col"
           >
-            {formatDateForDailyNav(day).dayName}
+            {formatDateForDailyNav(day.toString().split('T')[0]).dayName}
             <span className="text-xs">
-              {formatDateForDailyNav(day).shortDate}
+              {formatDateForDailyNav(day.toString().split('T')[0]).shortDate}
             </span>
           </button>
         </div>
