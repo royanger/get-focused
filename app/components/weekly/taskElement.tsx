@@ -2,11 +2,10 @@ import * as React from 'react'
 import { Form } from 'remix'
 
 // components
-import Button from '../Button'
-import Checkbox from '../forms/checkbox'
-import Input from '../forms/input'
-import TaskCancel from '../forms/taskCancel'
-import TaskSave from '../forms/taskSave'
+import Checkbox from '../forms/Checkbox'
+import Input from '../forms/Input'
+import TaskCancel from '../forms/TaskCancel'
+import TaskSave from '../forms/TaskSave'
 
 export default function TaskElement({
   id,

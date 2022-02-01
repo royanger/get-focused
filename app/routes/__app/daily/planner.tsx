@@ -11,12 +11,12 @@ import { authenticator } from '~/services/auth.server'
 // components
 import Container from '~/components/container'
 import { HeaderOne } from '~/components/headlines'
-import Wellness from '~/components/daily/wellness'
-import Exercise from '~/components/daily/exercise'
-import Tasks from '~/components/daily/tasks'
-import Notes from '~/components/daily/notes'
-import Productivity from '~/components/daily/productivity'
-import DailyNav from '~/components/daily/dailyNav'
+import Wellness from '~/components/daily/Wellness'
+import Exercise from '~/components/daily/Exercise'
+import Tasks from '~/components/daily/Tasks'
+import Notes from '~/components/daily/Notes'
+import Productivity from '~/components/daily/Productivity'
+import DailyNav from '~/components/daily/DailyNav'
 
 // libs for handling queries
 import { findWellnessEntries } from '~/queries/daily/findWellness'

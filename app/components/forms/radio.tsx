@@ -1,5 +1,3 @@
-import { Radio } from '~/interfaces'
-
 export default function Radio({ value, checked, name }: Radio) {
   return (
     <>

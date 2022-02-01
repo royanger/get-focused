@@ -1,4 +1,4 @@
-import TasksTitle from '../daily/tasksTitle'
+import TasksTitle from '../daily/TasksTitle'
 import React from 'react'
 import ReviewElement from './reviewElement'
 import { Wins } from '~/interfaces'

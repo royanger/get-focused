@@ -10,8 +10,12 @@ import {
 import BackIcon from '../icons/back'
 import ForwardIcon from '../icons/forward'
 
-export default function DailyNav({ week, searchParams, setSearchParams }) {
-  function handleClick(date) {
+export default function DailyNav({
+  week,
+  searchParams,
+  setSearchParams,
+}: DailyNav) {
+  function handleClick(date: string) {
     if (date !== 'back' && date !== 'next') {
       searchParams.set('date', date)
       setSearchParams(searchParams, { replace: true })

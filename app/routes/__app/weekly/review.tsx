@@ -120,7 +120,7 @@ export default function WeeklyReview() {
   const nextAndPrev = returnNextAndPreviousWeeks(
     createDateFromWeekAndYear(week, year)
   )
-  const startAndEndDates = startDateAndEndDateFromWeek(week)
+  const startAndEndDates = startDateAndEndDateFromWeek(week, year)
 
   // format the dates for UI
   const dates = formatDateRange(startAndEndDates.start, startAndEndDates.end)

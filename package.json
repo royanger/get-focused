@@ -45,6 +45,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@remix-run/dev": "^1.1.0",
     "@testing-library/react": "^12.1.2",
+    "@types/chart.js": "^2.9.35",
     "@types/jest": "^27.4.0",
     "@types/luxon": "^2.0.9",
     "@types/react": "^17.0.37",

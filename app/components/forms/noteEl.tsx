@@ -1,8 +1,7 @@
 import React from 'react'
-import NoteSave from './noteSave'
-import NoteCancel from './noteCancel'
+import NoteSave from './NoteSave'
+import NoteCancel from './NoteCancel'
 import { Form, useTransition } from 'remix'
-import { Note } from '~/interfaces'
 
 export default function NoteEl({ id, note }: Note) {
   const transition = useTransition()

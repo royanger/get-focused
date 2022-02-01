@@ -1,6 +1,5 @@
 import React from 'react'
-import { CompleteCheckbox } from '~/interfaces'
-import Checkbox from './checkbox'
+import Checkbox from './Checkbox'
 
 export default function CompleteCheckbox({
   status,
@@ -9,11 +8,12 @@ export default function CompleteCheckbox({
 }: CompleteCheckbox) {
   //   const [completedStatus, setCompletedStatus] = React.useState(status)
 
-  function handleClick(e) {
+  function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     //  if (e.target.checked === true) {
     //  }
     //  setCompletedStatus(e.target.checked)
-    document.forms[`completed-${id}`].submit()
+    const key = `completed-${id}`
+    document.forms[key].submit()
   }
   return (
     <div className="w-12 first:w-7 text-purple h-auto flex justify-center">

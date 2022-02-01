@@ -1,11 +1,4 @@
-const Button = ({
-  title,
-  variant,
-  size,
-  type = 'button',
-  onClick,
-  width,
-}: ButtonType) => {
+const Button = ({ title, variant, size, type, onClick, width }: ButtonType) => {
   let baseStyles = 'rounded shadow-lg uppercase w-28'
 
   let stylesMap: any = {
@@ -41,7 +34,7 @@ const Button = ({
           sizeMap[buttonSize]
         } ${width ? width : ''}`}
         onClick={() => onClick('default')}
-        type={type}
+        type={type ? type : 'button'}
       >
         {title}
       </button>

@@ -14,7 +14,7 @@ import { WeeklyTasksByPriority } from '~/interfaces'
 import Container from '~/components/container'
 import { HeaderOne } from '~/components/headlines'
 import TaskElement from '~/components/weekly/taskElement'
-import TasksTitle from '~/components/daily/tasksTitle'
+import TasksTitle from '~/components/daily/TasksTitle'
 import WeeklyNav from '~/components/weekly/weeklyNav'
 
 // libs for queries and actions

@@ -1,8 +1,7 @@
 import * as React from 'react'
-import TasksTitle from './tasksTitle'
-import TaskElement from '../forms/taskElement'
+import TasksTitle from './TasksTitle'
+import TaskElement from '../forms/TaskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
-import { TasksByPriority, Tasks } from '~/interfaces'
 import DeleteButton from '../forms/DeleteButton'
 
 function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
