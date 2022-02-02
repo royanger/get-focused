@@ -26,6 +26,14 @@ export default function ReviewElement({
     formRef.current?.reset()
   }, [isAdding])
 
+  const isSubmitting =
+    transition.state === 'submitting' &&
+    transition.submission?.formData.get('formType') === formType
+
+  React.useEffect(() => {
+    formRef.current?.reset()
+  }, [isSubmitting])
+
   let defaultDiv = 'border-0 rounded '
   let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
   let [currentStateDiv, setCurrentStateDiv] = React.useState(defaultDiv)
