@@ -141,7 +141,7 @@ export default function WeeklyPlanner() {
   // format the dates for UI
   const dates = formatDateRange(startAndEndDates.start, startAndEndDates.end)
 
-  const priorityOneTasks = weeklyTasks.filter(
+  const priorityOneTasks = data.filter(
     (task: any) => task.statusId === PRIORITY_1
   )
 
@@ -158,7 +158,7 @@ export default function WeeklyPlanner() {
     type: 'p1',
   })
 
-  const priorityTwoTasks = weeklyTasks.filter(
+  const priorityTwoTasks = data.filter(
     (task: any) => task.statusId === PRIORITY_2
   )
 
@@ -175,7 +175,7 @@ export default function WeeklyPlanner() {
     type: 'p2',
   })
 
-  const priorityThreeTasks = weeklyTasks.filter(
+  const priorityThreeTasks = data.filter(
     (task: any) => task.statusId === PRIORITY_3
   )
 

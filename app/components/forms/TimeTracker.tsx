@@ -2,9 +2,9 @@ import * as React from 'react'
 
 export default function TimeTracker({ tracker, setTracker }: TimeTracker) {
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log('handleclick', e.currentTarget.id.split('-').slice(1).join(''))
     setTracker(parseInt(e.currentTarget.id.split('-').slice(1).join('')))
   }
+
   // use the map index as key -- there shouldn't be a reorder
   const inputs = [...Array(10)].map((_, index) => {
     const filled = tracker > index ? 'bg-purple' : 'bg-transparent'
