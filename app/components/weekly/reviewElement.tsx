@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form } from 'remix'
+import { Form, useTransition } from 'remix'
 
 // components
 import Input from '../forms/Input'
@@ -11,8 +11,20 @@ export default function ReviewElement({
   value,
   placeholder,
   formType,
+  reset,
 }: Reviews) {
   const [formState, setFormState] = React.useState('default')
+  const formRef = React.useRef<HTMLFormElement>(null)
+  const transition = useTransition()
+
+  const isAdding =
+    transition.state === 'submitting' &&
+    transition.submission?.formData.get('formType') === formType &&
+    reset === true
+
+  React.useEffect(() => {
+    formRef.current?.reset()
+  }, [isAdding])
 
   let defaultDiv = 'border-0 rounded '
   let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
@@ -40,7 +52,7 @@ export default function ReviewElement({
 
   return (
     <div className={`p-4 ${currentStateDiv}`}>
-      <Form method="post" action="/weekly/review">
+      <Form ref={formRef} method="post" action="/weekly/review">
         <input type="hidden" name="id" value={id} />
         <input type="hidden" name="formType" value={formType} />
 

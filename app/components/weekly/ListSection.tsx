@@ -8,7 +8,7 @@ export default function ListSection({
   info,
   errors,
   formType,
-}: Wins) {
+}: ReviewSections) {
   let itemsList
   if (items) {
     itemsList = items.map(item => {
@@ -40,6 +40,7 @@ export default function ListSection({
         id={`new-${formType}`}
         placeholder="Enter an area to improve"
         formType={formType}
+        reset={true}
       />
       {errors && errors.id === `new-${formType}` ? (
         <div className="text-sm text-error mb-6 h-5">

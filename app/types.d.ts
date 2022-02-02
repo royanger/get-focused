@@ -186,7 +186,7 @@ type Items = {
   item: string
 }
 
-type Wins = {
+type ReviewSections = {
   items: Items[]
   title: string
   info: string
@@ -199,6 +199,7 @@ type Reviews = {
   value?: string
   placeholder: string
   formType: string
+  reset?: boolean
 }
 
 type WeeklyNavOptions = {
