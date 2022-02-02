@@ -1,7 +1,5 @@
 type DailyNav = {
-  week: [string]
-  searchParams: string
-  setSearchParams: any
+  week: string[]
 }
 
 type Productivity = {
@@ -46,10 +44,10 @@ type Container = {
   children: JSX.Element
 }
 
-//  type Headers = {
-//    classes?: string
-//    children: string
-//  }
+type Headlines = {
+  classes?: string
+  children: string
+}
 
 type Note = {
   id: string
@@ -133,17 +131,17 @@ type Wellness = {
 type Checkbox = {
   status?: boolean
   label: string
-  handleClick: (values: any) => void
+  handleClick: (values: any) => void | undefined
 }
 
 type Radio = {
   value?: number | string
   checked?: boolean
-  name: number | string
+  name: string | undefined
 }
 
 type Input = {
-  value: string
+  value?: string
   name: string
   placeholder: string
   width: string
@@ -168,6 +166,14 @@ type TaskElement = {
   type: string
 }
 
+type WeeklyTaskElement = {
+  id: string
+  placeholder: string
+  completed?: boolean
+  value?: string
+  type: string
+}
+
 type CompleteCheckbox = {
   status?: boolean
   label: string
@@ -188,6 +194,13 @@ type Wins = {
   formType: string
 }
 
+type Reviews = {
+  id: string
+  value?: string
+  placeholder: string
+  formType: string
+}
+
 type WeeklyNavOptions = {
   year: number
   week: number
@@ -198,8 +211,6 @@ type WeeklyNav = {
     forward: WeeklyNavOptions
   }
   dates: string
-  searchParams: URLSearchParams
-  setSearchParams: React.Dispatch<React.SetStateAction<string>>
 }
 
 type Tab = {
@@ -214,3 +225,17 @@ type TimeTracker = {
   tracker: number
   setTracker: React.Dispatch<React.SetStateAction<number>>
 }
+
+// type DoughtnutDatasets = {
+//   label: string | number
+//   borderWidth: number
+//   backgroundColor: string[]
+//   data: number[]
+// }
+
+// type DoughnutData = {
+//   data: {
+//     labels: number[]
+//     datasets: DoughtnutDatasets
+//   }
+// }

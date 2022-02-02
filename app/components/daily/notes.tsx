@@ -1,4 +1,4 @@
-import { HeaderTwo } from '../headlines'
+import { HeaderTwo } from '../Headlines'
 import NoteEl from '../forms/NoteEl'
 
 export default function Notes({ entries, errors }: Notes) {

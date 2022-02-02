@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSearchParams } from 'remix'
 import {
   formatDateForDailyNav,
   formatDate,
@@ -10,18 +11,16 @@ import {
 import BackIcon from '../icons/back'
 import ForwardIcon from '../icons/forward'
 
-export default function DailyNav({
-  week,
-  searchParams,
-  setSearchParams,
-}: DailyNav) {
+export default function DailyNav({ week }: DailyNav) {
+  const [searchParams, setSearchParams] = useSearchParams()
+
   function handleClick(date: string) {
     if (date !== 'back' && date !== 'next') {
       searchParams.set('date', date)
       setSearchParams(searchParams, { replace: true })
     } else if (date === 'next' || date === 'back') {
       const activeDate = searchParams.get('date')
-        ? createDateInstance(searchParams.get('date'))
+        ? createDateInstance(searchParams.get('date')!)
         : createDateInstance('today')
       const newWeek =
         date === 'next'
@@ -50,7 +49,7 @@ export default function DailyNav({
   const weekdayDivs = week.map(day => {
     // set current day as active if user hasn't navigated to another day
     const selectedDate = searchParams.get('date')
-      ? createDateInstance(searchParams.get('date')).toString().split('T')[0]
+      ? createDateInstance(searchParams.get('date')!).toString().split('T')[0]
       : createDateInstance('today').toString().split('T')[0]
 
     const currentDayHighlight =

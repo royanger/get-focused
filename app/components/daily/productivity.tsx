@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { HeaderTwo } from '../headlines'
+import { HeaderTwo } from '../Headlines'
 import { Form, useTransition } from 'remix'
 import Button from '../Button'
 

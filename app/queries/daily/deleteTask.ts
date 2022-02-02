@@ -32,7 +32,7 @@ export let deleteTaskQuery = async (id: string, userId: string | undefined) => {
         await prisma.$disconnect()
       })
 
-    if (tasksQueryResults.id) {
+    if (tasksQueryResults?.id) {
       let taskDeleteResults = await taskDelete(tasksQueryResults.id)
         .catch(e => {
           throw new Error(e)

@@ -13,7 +13,7 @@ export default function TaskElement({
   completed,
   value,
   type,
-}) {
+}: WeeklyTaskElement) {
   const [formState, setFormState] = React.useState('default')
 
   let defaultDiv = 'border-0 rounded '

@@ -16,7 +16,7 @@ import {
 import type { LinksFunction } from 'remix'
 import { authenticator } from '~/services/auth.server'
 import Logo from '~/components/icons/logo'
-import Container from '~/components/container'
+import Container from '~/components/Container'
 
 import tailwindUrl from './styles/tailwind.css'
 

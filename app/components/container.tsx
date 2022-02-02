@@ -1,5 +1,3 @@
-import { Container } from '~/interfaces'
-
 const Container = ({ bgColor, children }: Container) => {
   return (
     <div className={`w-full flex flex-col items-center ${bgColor}`}>

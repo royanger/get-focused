@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Form, useTransition } from 'remix'
 import Button from '../Button'
-import { HeaderTwo } from '../headlines'
+import { HeaderTwo } from '../Headlines'
 
 export default function Wellness({ wellness, errors }: Wellness) {
   const transition = useTransition()

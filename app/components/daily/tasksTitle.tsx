@@ -1,4 +1,4 @@
-import { HeaderTwo } from '../headlines'
+import { HeaderTwo } from '../Headlines'
 
 export default function TasksTitle({ title, info }: TaskTitle) {
   return (

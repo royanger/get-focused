@@ -9,7 +9,7 @@ import { Doughnut } from 'react-chartjs-2'
 
 export default function DoughnutChart({
   data,
-}: ChartData<'doughnut', number[], string | number>) {
+}: ChartData<'doughnut', number[], number>) {
   ChartJS.register(ArcElement, Tooltip, Legend)
 
   return (

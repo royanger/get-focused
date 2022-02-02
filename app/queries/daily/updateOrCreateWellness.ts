@@ -15,7 +15,7 @@ export async function updateOrCreateWellness(
   if (id === 'new') {
     let wellness = await prisma.wellness.create({
       data: {
-        rating: parseInt(rating),
+        rating: rating,
         userId: userId,
         dateId: dateResults.id,
       },
@@ -28,7 +28,7 @@ export async function updateOrCreateWellness(
         id: id,
       },
       data: {
-        rating: parseInt(rating),
+        rating: rating,
       },
     })
   }

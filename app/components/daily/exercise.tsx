@@ -1,7 +1,7 @@
 import { Form, useTransition } from 'remix'
 import Button from '../Button'
 import Radio from '../forms/Radio'
-import { HeaderTwo } from '../headlines'
+import { HeaderTwo } from '../Headlines'
 
 export default function Exercise({ entries, errors }: Exercise) {
   const transition = useTransition()

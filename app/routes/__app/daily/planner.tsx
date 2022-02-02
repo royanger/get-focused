@@ -9,8 +9,8 @@ import {
 import { authenticator } from '~/services/auth.server'
 
 // components
-import Container from '~/components/container'
-import { HeaderOne } from '~/components/headlines'
+import Container from '~/components/Container'
+import { HeaderOne } from '~/components/Headlines'
 import Wellness from '~/components/daily/Wellness'
 import Exercise from '~/components/daily/Exercise'
 import Tasks from '~/components/daily/Tasks'
@@ -44,26 +44,21 @@ export let loader: LoaderFunction = async ({ request }) => {
 
   const url = new URL(request.url)
 
-  const dateResults = url.searchParams.get('date')
-    ? await findOrCreateDate(url.searchParams.get('date'))
-    : await findOrCreateDate('today')
+  const date = url.searchParams.get('date')
+    ? url.searchParams.get('date')
+    : 'today'
 
-  let data = {}
-  await Promise.all([
+  const dateResults = await findOrCreateDate(date!)
+
+  const [wellness, exercise, tasks, notes, productivity] = await Promise.all([
     findWellnessEntries(dateResults.id, user.id),
     findExerciseEntries(dateResults.id, user.id),
     findTasksEntries(dateResults.id, user.id),
     findNotesEntries(dateResults.id, user.id),
     findProductivityEntries(dateResults.id, user.id),
-  ]).then(results => {
-    data.wellness = results[0]
-    data.exercise = results[1]
-    data.tasks = results[2]
-    data.notes = results[3]
-    data.productivity = results[4]
-  })
+  ])
 
-  return data
+  return { wellness, exercise, tasks, notes, productivity }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -107,7 +102,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function DailyPlanner() {
-  const data = useLoaderData()
+  const { wellness, exercise, tasks, notes, productivity } = useLoaderData()
   const errors = useActionData()
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -128,40 +123,36 @@ export default function DailyPlanner() {
       <Container>
         <div className="mt-8">
           <HeaderOne>Daily Planner</HeaderOne>
-          <DailyNav
-            week={week}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-          />
+          <DailyNav week={week} />
 
           <div className="grid grid-cols-2 my-8">
             <div>
               <Wellness
-                wellness={data.wellness}
+                wellness={wellness}
                 errors={errors?.formType === 'wellness' ? errors : null}
               />
             </div>
 
             <div>
               <Exercise
-                entries={data.exercise}
+                entries={exercise}
                 errors={errors?.formType === 'exercise' ? errors : null}
               />
             </div>
           </div>
 
           <Tasks
-            entries={data.tasks}
+            entries={tasks}
             errors={errors?.formType === 'task' ? errors : null}
           />
 
           <Productivity
-            entries={data.productivity}
+            entries={productivity}
             errors={errors?.formType === 'productivity' ? errors : null}
           />
 
           <Notes
-            entries={data.notes}
+            entries={notes}
             errors={errors?.formType === 'note' ? errors : null}
           />
         </div>

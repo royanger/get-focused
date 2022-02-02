@@ -1,14 +1,11 @@
 import ForwardIcon from '../icons/forward'
 import BackIcon from '../icons/back'
-import { WeeklyNav } from '~/interfaces'
+import { useSearchParams } from 'remix'
 
-export default function WeeklyNav({
-  navigation,
-  dates,
-  searchParams,
-  setSearchParams,
-}: WeeklyNav) {
-  function handleClick(type) {
+export default function WeeklyNav({ navigation, dates }: WeeklyNav) {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  function handleClick(type: string) {
     searchParams.set('year', navigation[type].year)
     searchParams.set('week', navigation[type].week)
     setSearchParams(searchParams, { replace: true })

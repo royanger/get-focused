@@ -22,7 +22,7 @@ import findWin from '~/queries/weekly/findWin'
 import findImprovements from '~/queries/weekly/findImprovements'
 import findLearningPoints from '~/queries/weekly/findLearningPoints'
 import findRefocus from '~/queries/weekly/findRefocus'
-import WeeklyNav from '~/components/weekly/weeklyNav'
+import WeeklyNav from '~/components/weekly/WeeklyNav'
 
 // actions
 import { validateWinsForm } from '~/libs/weekly/winsActions'
@@ -31,9 +31,9 @@ import { validateLearningPointsForm } from '~/libs/weekly/learningPointsActions'
 import { validateRefocusForm } from '~/libs/weekly/refocusActions'
 
 // components
-import Container from '~/components/container'
-import { HeaderOne, HeaderTwo } from '~/components/headlines'
-import ReviewElement from '~/components/weekly/reviewElement'
+import Container from '~/components/Container'
+import { HeaderOne, HeaderTwo } from '~/components/Headlines'
+import ReviewElement from '~/components/weekly/ReviewElement'
 import ListSection from '~/components/weekly/ListSection'
 
 export let loader: LoaderFunction = async ({ request }) => {
@@ -54,26 +54,20 @@ export let loader: LoaderFunction = async ({ request }) => {
     year = createDateInstance('today').year
     week = createDateInstance('today').weekNumber
   } else {
-    week = parseInt(url.searchParams.get('week'))
-    year = parseInt(url.searchParams.get('year'))
+    week = parseInt(url.searchParams.get('week')!)
+    year = parseInt(url.searchParams.get('year')!)
   }
 
   const weekResults = await findOrCreateWeek(year, week)
-  const win = findWin(weekResults.id, user.id)
-  const improvements = findImprovements(weekResults.id, user.id)
-  const learningpoints = findLearningPoints(weekResults.id, user.id)
-  const refocus = findRefocus(weekResults.id, user.id)
 
-  const data = {}
-  await Promise.all([win, improvements, learningpoints, refocus]).then(
-    results => {
-      data.win = results[0]
-      data.improvements = results[1]
-      data.learningpoints = results[2]
-      data.refocus = results[3]
-    }
-  )
-  return data
+  const [win, improvements, learningpoints, refocus] = await Promise.all([
+    findWin(weekResults.id, user.id),
+    findImprovements(weekResults.id, user.id),
+    findLearningPoints(weekResults.id, user.id),
+    findRefocus(weekResults.id, user.id),
+  ])
+
+  return { win, improvements, learningpoints, refocus }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -101,7 +95,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function WeeklyReview() {
-  const data = useLoaderData()
+  const { win, improvements, learningpoints, refocus } = useLoaderData()
   const errors = useActionData()
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -142,27 +136,25 @@ export default function WeeklyReview() {
               },
             }}
             dates={dates}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
           />
           <HeaderTwo>Primary Win</HeaderTwo>
 
           <p>What was great about your week? What was a solid win for you?</p>
 
           <ReviewElement
-            id={data?.win ? data.win.id : 'win-new'}
-            value={data?.win?.item}
+            id={win ? win.id : 'win-new'}
+            value={win?.item}
             placeholder="Enter your win for the week"
             formType="win"
           />
-          {errors && errors.id === data?.win?.id ? (
+          {errors && errors.id === win?.id ? (
             <div className="text-sm text-error mb-6 h-5">
               {errors ? errors.msg : ''}
             </div>
           ) : null}
 
           <ListSection
-            items={data?.improvements}
+            items={improvements}
             errors={errors}
             title="Tasks and Areas to Improve"
             info="What tasks were not completed? What areas can you improve next week?"
@@ -170,7 +162,7 @@ export default function WeeklyReview() {
           />
 
           <ListSection
-            items={data?.learningpoints}
+            items={learningpoints}
             errors={errors}
             title="Learning Points"
             info="List the things that you learned from or the ways you improved this week."
@@ -181,12 +173,12 @@ export default function WeeklyReview() {
           <p>What can you do to focus for next week?</p>
 
           <ReviewElement
-            id={data?.refocus ? data.refocus.id : 'refocus-new'}
-            value={data?.refocus?.item}
+            id={refocus ? refocus.id : 'refocus-new'}
+            value={refocus?.item}
             placeholder="What will you refocus on next week?"
             formType="refocus"
           />
-          {errors && errors.id === data?.refocus?.id ? (
+          {errors && errors.id === refocus?.id ? (
             <div className="text-sm text-error mb-6 h-5">
               {errors ? errors.msg : ''}
             </div>

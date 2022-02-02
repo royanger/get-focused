@@ -5,8 +5,8 @@ import { Form, useTransition } from 'remix'
 
 export default function NoteEl({ id, note }: Note) {
   const transition = useTransition()
-  let formRef = React.useRef()
-  let noteRef = React.useRef()
+  let formRef = React.useRef<HTMLFormElement>(null)
+  let noteRef = React.useRef<HTMLTextAreaElement>(null)
   let isAdding =
     transition.state === 'submitting' &&
     transition.submission.formData.get('formType') === 'note'

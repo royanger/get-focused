@@ -4,7 +4,7 @@ import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
 export async function updateOrCreateImprovement(
   id: string,
-  item: string | null,
+  item: string,
   userId: string
 ) {
   const year = createDateInstance('today').year
