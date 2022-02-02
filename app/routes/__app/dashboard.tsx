@@ -32,8 +32,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Dashboard() {
   const { wellness, productivity, exercise, tasks } = useLoaderData()
 
-  console.log('datetime', DateTime.now().toISO())
-
   return (
     <>
       <Container>

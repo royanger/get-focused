@@ -7,7 +7,7 @@ export async function updateOrCreateTask(
   taskName: string,
   completed: boolean,
   status: string,
-  userId: string
+  userId: {}
 ) {
   const year = createDateInstance('today').year
   const week = createDateInstance('today').weekNumber

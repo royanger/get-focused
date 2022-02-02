@@ -4,13 +4,7 @@ import DOMPurify from 'isomorphic-dompurify'
 export async function validateTaskForm(formData, user: string) {
   const errors = {}
 
-  const taskName = formData.get('taskname')
-    ? DOMPurify.sanitize(formData.get('taskname'))
-    : null
-
-  const completed = formData.get('completed') === 'on' ? true : false
-
-  if (taskName === null) {
+  if (formData.get('taskname') === null) {
     errors.formType = 'task'
     errors.id = formData.get('id')
     errors.msg =
@@ -21,12 +15,15 @@ export async function validateTaskForm(formData, user: string) {
     return errors
   }
 
-  // latter we need to update the database
-  // there is no check yet to see if the entry exists, so do .upsert
+  const taskName = DOMPurify.sanitize(formData.get('taskname'))
+
+  const completed = formData.get('completed') === 'on' ? true : false
 
   let results = {
     success: true,
+    data: {},
   }
+
   results.data = await updateOrCreateTask(
     formData.get('id'),
     taskName,
@@ -34,5 +31,6 @@ export async function validateTaskForm(formData, user: string) {
     formData.get('status'),
     user.id
   )
+
   return results
 }
