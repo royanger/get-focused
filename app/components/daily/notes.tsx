@@ -1,6 +1,5 @@
-import { HeaderTwo } from '../headlines'
-import NoteEl from '../forms/noteEl'
-import { Notes } from '~/interfaces'
+import { HeaderTwo } from '../Headlines'
+import NoteEl from '../forms/NoteEl'
 
 export default function Notes({ entries, errors }: Notes) {
   return (

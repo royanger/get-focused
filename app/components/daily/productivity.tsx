@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { HeaderTwo } from '../headlines'
-import Radio from '../forms/radio'
+import { HeaderTwo } from '../Headlines'
 import { Form, useTransition } from 'remix'
 import Button from '../Button'
 
@@ -17,8 +16,8 @@ export default function Productivity({ entries, errors }: Productivity) {
       ? { text: 'Saved!', variant: 'success' }
       : { text: 'Save', variant: 'default' }
 
-  const handleClick = e => {
-    setRating(e.target.id.split('-').slice(1).join(''))
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setRating(parseInt(event.currentTarget.id.split('-').slice(1).join('')))
   }
 
   // use the map index as key -- there shouldn't be a reorder

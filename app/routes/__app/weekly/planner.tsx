@@ -8,14 +8,13 @@ import {
   useSearchParams,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
-import { WeeklyTasksByPriority } from '~/interfaces'
 
 // components
-import Container from '~/components/container'
-import { HeaderOne } from '~/components/headlines'
-import TaskElement from '~/components/weekly/taskElement'
-import TasksTitle from '~/components/daily/tasksTitle'
-import WeeklyNav from '~/components/weekly/weeklyNav'
+import Container from '~/components/Container'
+import { HeaderOne } from '~/components/Headlines'
+import TaskElement from '~/components/weekly/TaskElement'
+import TasksTitle from '~/components/daily/TasksTitle'
+import WeeklyNav from '~/components/weekly/WeeklyNav'
 
 // libs for queries and actions
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '~/libs/priorityIds'
@@ -48,8 +47,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     year = createDateInstance('today').year
     week = createDateInstance('today').weekNumber
   } else {
-    week = parseInt(url.searchParams.get('week'))
-    year = parseInt(url.searchParams.get('year'))
+    week = parseInt(url.searchParams.get('week')!)
+    year = parseInt(url.searchParams.get('year')!)
   }
 
   const results = await findTasks(year, week, user.id)
@@ -143,7 +142,7 @@ export default function WeeklyPlanner() {
   const dates = formatDateRange(startAndEndDates.start, startAndEndDates.end)
 
   const priorityOneTasks = weeklyTasks.filter(
-    task => task.statusId === PRIORITY_1
+    (task: any) => task.statusId === PRIORITY_1
   )
 
   let generatedP1Tasks
@@ -160,7 +159,7 @@ export default function WeeklyPlanner() {
   })
 
   const priorityTwoTasks = weeklyTasks.filter(
-    task => task.statusId === PRIORITY_2
+    (task: any) => task.statusId === PRIORITY_2
   )
 
   let generatedP2Tasks
@@ -177,7 +176,7 @@ export default function WeeklyPlanner() {
   })
 
   const priorityThreeTasks = weeklyTasks.filter(
-    task => task.statusId === PRIORITY_3
+    (task: any) => task.statusId === PRIORITY_3
   )
 
   let generatedP3Tasks
@@ -211,8 +210,6 @@ export default function WeeklyPlanner() {
               },
             }}
             dates={dates}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
           />
           {generatedP1Tasks}
           {generatedP2Tasks}

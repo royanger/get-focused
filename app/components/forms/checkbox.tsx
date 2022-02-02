@@ -1,5 +1,3 @@
-import { Checkbox } from '~/interfaces'
-
 export default function Checkbox({ status, label, handleClick }: Checkbox) {
   return (
     <>

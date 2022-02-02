@@ -15,16 +15,14 @@ export function createDateFromWeekAndYear(week: number, year: number) {
   let regexYear = /^\d{4}$/
   let regexWeek = /^\d{1,2}$/
 
-  if (!regexWeek.test(week) || !regexYear.test(year)) {
+  if (!regexWeek.test(week.toString()) || !regexYear.test(year.toString())) {
     throw new Error('Incorrect values for Week or Year passed')
   }
-
-  console.log(DateTime.fromObject({ weekYear: 2022, weekNumber: 53 }))
 
   return DateTime.fromObject({ weekYear: year, weekNumber: week })
 }
 
-export function returnNextAndPreviousWeeks(date) {
+export function returnNextAndPreviousWeeks(date: DateTime) {
   return {
     prev: {
       year: date.plus({ weeks: -1 }).year,
@@ -37,7 +35,7 @@ export function returnNextAndPreviousWeeks(date) {
   }
 }
 
-export function startDateAndEndDateFromWeek(week, year) {
+export function startDateAndEndDateFromWeek(week: number, year: number) {
   const dt = createDateFromWeekAndYear(week, year)
 
   return {
@@ -46,7 +44,7 @@ export function startDateAndEndDateFromWeek(week, year) {
   }
 }
 
-export function weeksInMonth(week, year) {
+export function weeksInMonth(week: number, year: number) {
   const dt = createDateFromWeekAndYear(week, year)
 
   const startDate = DateTime.fromISO(dt.startOf('month').toString())
@@ -68,7 +66,7 @@ export function weeksInMonth(week, year) {
   return { weekRange: weekRange, weeks: weeks }
 }
 
-export function allWeekDaysFromWeek(week, year) {
+export function allWeekDaysFromWeek(week: number, year: number) {
   const dt = createDateFromWeekAndYear(week, year)
 
   // generate the whole week

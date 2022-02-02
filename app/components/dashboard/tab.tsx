@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Tab as HeadlessTab } from '@headlessui/react'
 
-export default function Tab({ title }) {
+export default function Tab({ title }: Tab) {
   return (
     <HeadlessTab as={React.Fragment}>
       {({ selected }) => (

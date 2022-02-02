@@ -1,7 +1,6 @@
-import TasksTitle from '../daily/tasksTitle'
+import TasksTitle from '../daily/TasksTitle'
 import React from 'react'
-import ReviewElement from './reviewElement'
-import { Wins } from '~/interfaces'
+import ReviewElement from './ReviewElement'
 
 export default function ListSection({
   items,

@@ -1,9 +1,5 @@
 import Delete from '../icons/delete'
 
-interface DeleteButton {
-  id: string
-}
-
 export default function DeleteButton({ id }: DeleteButton) {
   return (
     <>

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Input } from '~/interfaces'
 
 export default function Input({
   value,

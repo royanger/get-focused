@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { Form, useTransition } from 'remix'
 import Button from '../Button'
-import { HeaderTwo } from '../headlines'
+import { HeaderTwo } from '../Headlines'
 
-export default function Wellness({ wellness, errors }) {
+export default function Wellness({ wellness, errors }: Wellness) {
   const transition = useTransition()
   const [score, setScore] = React.useState(
     wellness?.rating ? wellness.rating : 0
@@ -18,8 +18,8 @@ export default function Wellness({ wellness, errors }) {
       ? { text: 'Saved!', variant: 'success' }
       : { text: 'Save', variant: 'default' }
 
-  const handleClick = e => {
-    setScore(e.target.id.split('-').slice(1).join(''))
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setScore(parseInt(e.currentTarget.id.split('-').slice(1).join('')))
   }
 
   // use the map index as key -- there shouldn't be a reorder

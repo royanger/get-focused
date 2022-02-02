@@ -39,7 +39,7 @@ export let completeTaskQuery = async (
         await prisma.$disconnect()
       })
 
-    if (tasksQueryResults.id) {
+    if (tasksQueryResults?.id) {
       let taskCreateResults = await taskComplete(tasksQueryResults.id, status)
         .catch(e => {
           throw new Error(e)
