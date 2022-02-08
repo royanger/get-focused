@@ -26,6 +26,8 @@ export default function TaskElement({
 
   const isDeleting = fetcher.submission?.formData.get('id') === id
 
+  const deleteFailed = fetcher.data?.error
+
   let defaultDiv = 'border-0 rounded '
   let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
   let [currentStateDiv, setCurrentStateDiv] = React.useState(defaultDiv)
@@ -54,7 +56,11 @@ export default function TaskElement({
   const completedCSS = 'line-through text-grey-700'
 
   return (
-    <div className={`flex flex-row ${isDeleting && 'hidden'}`}>
+    <div
+      className={`flex flex-row border-2 border-transparent rounded ${
+        deleteFailed && 'border-red'
+      } ${isDeleting && 'hidden'}`}
+    >
       <CompleteCheckbox label="completed" id={id} status={completed} />
       <div className={`mb-3 ${currentStateDiv}`}>
         <Form method="post" action="/daily/planner">
@@ -138,11 +144,15 @@ export default function TaskElement({
           <input type="hidden" name="formType" value="deleteTask" />
           <input type="hidden" name="id" value={id} />
           <div className="flex flex-col items-center justify-end h-8">
-            <button type="submit" className="first:w-6 w-full text-purple">
+            <button
+              aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
+              type="submit"
+              className="first:w-6 w-full text-purple"
+            >
               <DeleteIcon />
             </button>
           </div>
-          <div>Delete</div>
+          <div>{deleteFailed ? 'Retry' : 'Delete'}</div>
         </div>
       </fetcher.Form>
     </div>
