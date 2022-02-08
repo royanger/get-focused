@@ -1,4 +1,6 @@
-let Logo = () => {
+import type { SVGProps } from 'react'
+
+let Logo = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="100%"
@@ -13,6 +15,7 @@ let Logo = () => {
         strokeLinejoin: 'round',
         strokeMiterlimit: '1.5',
       }}
+      {...props}
     >
       <g transform="matrix(0.947322,0,0,0.899912,15.5399,30.0263)">
         <path

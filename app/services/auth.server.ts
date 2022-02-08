@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import { findOrCreateUser } from '../queries/findOrCreateUser'
-import { Authenticator, LocalStrategy, GoogleStrategy } from 'remix-auth'
+import { Authenticator, GoogleStrategy } from 'remix-auth'
 import { sessionStorage } from '~/services/session.server'
 
 // Create an instance of the authenticator, pass a generic with what your

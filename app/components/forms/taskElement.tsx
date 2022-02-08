@@ -3,9 +3,10 @@ import Input from './Input'
 import TaskSave from './TaskSave'
 import TaskCancel from './TaskCancel'
 import Edit from '../icons/edit'
-import { Form } from 'remix'
+import { Form, useFetcher } from 'remix'
 import CompleteCheckbox from './CompleteCheckbox'
 import TimeTracker from './TimeTracker'
+import DeleteIcon from '../icons/delete'
 
 export default function TaskElement({
   id,
@@ -20,6 +21,12 @@ export default function TaskElement({
   // this controls changes for all elements. Pass this as a prop as needed
   let [formState, setFormState] = React.useState('default')
   const [tracker, setTracker] = React.useState(timeTracker)
+
+  const fetcher = useFetcher()
+
+  const isDeleting = fetcher.submission?.formData.get('id') === id
+
+  const deleteFailed = fetcher.data?.error
 
   let defaultDiv = 'border-0 rounded '
   let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
@@ -41,6 +48,7 @@ export default function TaskElement({
     }
   }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
 
+  // TODO: delete ?
   function clickHandler() {
     setFormState('edit')
   }
@@ -48,7 +56,11 @@ export default function TaskElement({
   const completedCSS = 'line-through text-grey-700'
 
   return (
-    <>
+    <div
+      className={`flex flex-row border-2 border-transparent rounded ${
+        deleteFailed && 'border-red'
+      } ${isDeleting && 'hidden'}`}
+    >
       <CompleteCheckbox label="completed" id={id} status={completed} />
       <div className={`mb-3 ${currentStateDiv}`}>
         <Form method="post" action="/daily/planner">
@@ -89,7 +101,7 @@ export default function TaskElement({
                   setFormState={setFormState}
                   width="w-14"
                 />
-                <div className="w-12 first:w-7 text-purple h-auto flex justify-center">
+                <div className="w-12 first:w-7 h-8 ml-4 text-purple flex justify-center">
                   <button
                     type="button"
                     className="first:w-6 w-full "
@@ -115,7 +127,7 @@ export default function TaskElement({
                 <div className="text-sm w-14 flex flex-row justify-center ">
                   Actual
                 </div>
-                <div className="text-sm w-12 flex flex-row justify-center ">
+                <div className="text-sm w-12 ml-4 flex flex-row justify-center ">
                   Edit
                 </div>
               </div>
@@ -127,6 +139,22 @@ export default function TaskElement({
           </div>
         </Form>
       </div>
-    </>
+      <fetcher.Form method="post" className="my-2">
+        <div className="w-12 flex flex-col align-center">
+          <input type="hidden" name="formType" value="deleteTask" />
+          <input type="hidden" name="id" value={id} />
+          <div className="flex flex-col items-center justify-end h-8">
+            <button
+              aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
+              type="submit"
+              className="first:w-6 w-full text-purple"
+            >
+              <DeleteIcon />
+            </button>
+          </div>
+          <div>{deleteFailed ? 'Retry' : 'Delete'}</div>
+        </div>
+      </fetcher.Form>
+    </div>
   )
 }
