@@ -12,7 +12,7 @@ export default function CompleteCheckbox({
     //  if (e.target.checked === true) {
     //  }
     //  setCompletedStatus(e.target.checked)
-    const key = `completed-${id}`
+    const key: string = `completed-${id}`
     document.forms[key].submit()
   }
   return (

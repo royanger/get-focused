@@ -80,10 +80,10 @@ export default function DailyNav({ week }: DailyNav) {
     <div key="back" className=" flex flex-row">
       <div className="font-bold mx-[2px] grow h-8 flex items-end">
         <button
-          className="relative h-full w-full flex justify-end"
+          className="relative h-full w-full flex justify-end text-purple"
           onClick={e => handleClick('back')}
         >
-          <BackIcon classes="h-20 text-purple absolute -top-[16px] mr-2" />
+          <BackIcon className="h-20  absolute -top-[16px] mr-2" />
         </button>
       </div>
       {weekdayDivs}
@@ -92,10 +92,10 @@ export default function DailyNav({ week }: DailyNav) {
         className="font-bold mx-[2px] grow h-8 items-center justify-center flex"
       >
         <button
-          className="relative h-full w-full flex justify-start"
+          className="relative h-full w-full flex justify-start text-purple"
           onClick={e => handleClick('next')}
         >
-          <ForwardIcon classes="h-20 text-purple absolute -top-[16px] ml-2" />
+          <ForwardIcon className="h-20 absolute -top-[16px] ml-2" />
         </button>
       </div>
     </div>

@@ -16,10 +16,10 @@ export default function WeeklyNav({ navigation, dates }: WeeklyNav) {
       <div className="mb-4 flex h-10">
         <div className="w-12">
           <button
-            className="relative h-full w-full flex justify-center"
+            className="relative h-full w-full flex justify-center text-purple-300"
             onClick={e => handleClick('back')}
           >
-            <BackIcon classes="h-12 text-purple-300 absolute -top-[5px] " />
+            <BackIcon className="h-12 absolute -top-[5px] " />
           </button>
         </div>
         <div className=" flex grow border-2 mx-8 border-purple text-lg font-bold h-10 items-center justify-center">
@@ -29,10 +29,10 @@ export default function WeeklyNav({ navigation, dates }: WeeklyNav) {
         <div className="mb-4 flex h-10">
           <div className="w-12">
             <button
-              className="relative h-full w-full flex justify-center"
+              className="relative h-full w-full flex justify-center text-purple-300 "
               onClick={e => handleClick('forward')}
             >
-              <ForwardIcon classes="h-12 text-purple-300 absolute -top-[5px] " />
+              <ForwardIcon className="h-12 absolute -top-[5px] " />
             </button>
           </div>
         </div>
