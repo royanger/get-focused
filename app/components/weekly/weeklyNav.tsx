@@ -13,7 +13,7 @@ export default function WeeklyNav({ navigation, dates }: WeeklyNav) {
 
   return (
     <>
-      <div className="mb-4 flex h-10">
+      <div className="mb-12 flex h-10">
         <div className="w-12">
           <button
             className="relative h-full w-full flex justify-center text-purple-300"

@@ -65,13 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
   return results
 }
 
-function tasksByPriority({
-  tasks,
-  title,
-  info,
-  errors,
-  type,
-}: WeeklyTasksByPriority) {
+function tasksByPriority({ tasks, errors, type }: WeeklyTasksByPriority) {
   const taskList = tasks.map(task => {
     return (
       <React.Fragment key={task.id}>
@@ -92,34 +86,14 @@ function tasksByPriority({
     )
   })
 
-  return (
-    <React.Fragment key={Math.random()}>
-      <TasksTitle title={title} info={info} key={type} />
-      <ol key={`list-${type}`}>
-        {taskList}
-        <TaskElement
-          key={`newtask-${type}`}
-          id={`newtask-${type}`}
-          placeholder="Create a new task"
-          completed={false}
-          type={type}
-        />
-        {errors && errors.id === `newtask-${type}` ? (
-          <div className="text-sm text-error mb-6 h-5">
-            {errors ? errors.msg : ''}
-          </div>
-        ) : null}
-      </ol>
-    </React.Fragment>
-  )
+  return taskList
 }
 
 export default function WeeklyPlanner() {
   const data = useLoaderData()
-  const actionData = useActionData()
+  const errors = useActionData()
 
-  const [weeklyTasks, _] = React.useState(data)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
   const paramWeek = searchParams.get('week')
 
@@ -146,15 +120,10 @@ export default function WeeklyPlanner() {
   )
 
   let generatedP1Tasks
-  const p1Title = 'Primary Tasks'
-  const p1Info =
-    'These are the most important tasks for your week, the tasks that need to be completed'
 
   generatedP1Tasks = tasksByPriority({
     tasks: priorityOneTasks,
-    title: p1Title,
-    info: p1Info,
-    errors: actionData,
+    errors: errors,
     type: 'p1',
   })
 
@@ -163,15 +132,10 @@ export default function WeeklyPlanner() {
   )
 
   let generatedP2Tasks
-  const p2Title = 'Secondary Tasks'
-  const p2Info =
-    'The tasks here should be completed, but only after you complete the primary tasks.'
 
   generatedP2Tasks = tasksByPriority({
     tasks: priorityTwoTasks,
-    title: p2Title,
-    info: p2Info,
-    errors: actionData,
+    errors: errors,
     type: 'p2',
   })
 
@@ -180,42 +144,103 @@ export default function WeeklyPlanner() {
   )
 
   let generatedP3Tasks
-  const p3Title = 'Non-Essential Tasks'
-  const p3Info =
-    'Extra tasks that would be a pure bonus if you could complete them.'
 
   generatedP3Tasks = tasksByPriority({
     tasks: priorityThreeTasks,
-    title: p3Title,
-    info: p3Info,
-    errors: actionData,
+    errors: errors,
     type: 'p3',
   })
 
   return (
-    <>
-      <Container>
-        <div className="mt-8">
-          <HeaderOne>Weekly Planner</HeaderOne>
+    <Container>
+      <>
+        <HeaderOne>Weekly Planner</HeaderOne>
 
-          <WeeklyNav
-            navigation={{
-              back: {
-                year: nextAndPrev.prev.year,
-                week: nextAndPrev.prev.week,
-              },
-              forward: {
-                year: nextAndPrev.next.year,
-                week: nextAndPrev.next.week,
-              },
-            }}
-            dates={dates}
-          />
-          {generatedP1Tasks}
-          {generatedP2Tasks}
-          {generatedP3Tasks}
+        <WeeklyNav
+          navigation={{
+            back: {
+              year: nextAndPrev.prev.year,
+              week: nextAndPrev.prev.week,
+            },
+            forward: {
+              year: nextAndPrev.next.year,
+              week: nextAndPrev.next.week,
+            },
+          }}
+          dates={dates}
+        />
+        <TasksTitle
+          title="Primary Tasks"
+          info="These are the most important tasks for your week, the tasks that need to be completed."
+          key="p1"
+        />
+        <div className="mt-2 mb-8">
+          <ol key="list-p1">
+            {generatedP1Tasks}
+
+            <TaskElement
+              key={`newtask-p1`}
+              id={`newtask-p1`}
+              placeholder="Create a new task"
+              completed={false}
+              type="p1"
+            />
+            {errors && errors.id === 'newtask-p1' ? (
+              <div className="text-sm text-error mb-6 h-5">
+                {errors ? errors.msg : ''}
+              </div>
+            ) : null}
+          </ol>
         </div>
-      </Container>
-    </>
+
+        <TasksTitle
+          title="Secondary Tasks"
+          info="The tasks here should be completed, but only after you complete the primary tasks."
+          key="p2"
+        />
+        <div className="mt-2 mb-8">
+          <ol key="list-p2">
+            {generatedP2Tasks}
+
+            <TaskElement
+              key={`newtask-p2`}
+              id={`newtask-p2`}
+              placeholder="Create a new task"
+              completed={false}
+              type="p2"
+            />
+            {errors && errors.id === 'newtask-p2' ? (
+              <div className="text-sm text-error mb-6 h-5">
+                {errors ? errors.msg : ''}
+              </div>
+            ) : null}
+          </ol>
+        </div>
+
+        <TasksTitle
+          title="Non-Essential Tasks"
+          info="These are the most important tasks for your week, the tasks that need to be completed."
+          key="p3"
+        />
+        <div className="mt-2 mb-8">
+          <ol key="list-p3">
+            {generatedP3Tasks}
+
+            <TaskElement
+              key={`newtask-p3`}
+              id={`newtask-p3`}
+              placeholder="Create a new task"
+              completed={false}
+              type="p3"
+            />
+            {errors && errors.id === 'newtask-p3' ? (
+              <div className="text-sm text-error mb-6 h-5">
+                {errors ? errors.msg : ''}
+              </div>
+            ) : null}
+          </ol>
+        </div>
+      </>
+    </Container>
   )
 }

@@ -107,8 +107,6 @@ type WeeklyTasksByPriority = {
     task: string
     completed: boolean
   }[]
-  title: string
-  info: string
   type: string
   errors: any
 }
@@ -155,13 +153,14 @@ type Cancel = {
 }
 
 type TaskElement = {
+  inputRef?: React.MutableRefObject<undefined>
   id: string
   completed?: boolean
   statusId?: string
-  value?: string | undefined
+  value?: FormDataEntryValue | string | null
   placeholder: string
   actualTime: string
-  goalTime: string
+  goalTime: FormDataEntryValue | string | null
   timeTracker: number
   type: string
 }

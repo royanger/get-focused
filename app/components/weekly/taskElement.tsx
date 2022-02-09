@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { Form } from 'remix'
+import { Form, useFetcher } from 'remix'
 
 // components
 import Checkbox from '../forms/Checkbox'
 import Input from '../forms/Input'
 import TaskCancel from '../forms/TaskCancel'
 import TaskSave from '../forms/TaskSave'
+import DeleteIcon from '../icons/delete'
 
 export default function TaskElement({
   id,
@@ -15,6 +16,7 @@ export default function TaskElement({
   type,
 }: WeeklyTaskElement) {
   const [formState, setFormState] = React.useState('default')
+  const fetcher = useFetcher()
 
   let defaultDiv = 'border-0 rounded '
   let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
@@ -41,12 +43,13 @@ export default function TaskElement({
   }
 
   return (
-    <li className={`p-4 ${currentStateDiv}`}>
+    <li className={`py-4 ${currentStateDiv}`}>
       <Form method="post" action="/weekly/planner">
         <input type="hidden" name="id" value={id} />
         <input type="hidden" name="status" value={`status-${type}`} />
 
         <div className="flex flex-row items-center font-input">
+          <Checkbox status={completed} label="Completed" />
           <Input
             value={value}
             formState={formState}
@@ -55,9 +58,23 @@ export default function TaskElement({
             setFormState={setFormState}
             width="flex-grow"
           />
-          <Checkbox status={completed} label="Completed" />
+          <fetcher.Form method="post" className="my-2">
+            <div className="w-12 flex flex-col align-center">
+              <input type="hidden" name="formType" value="deleteTask" />
+              <input type="hidden" name="id" value={id} />
+              <div className="flex flex-col items-center justify-end h-8">
+                <button
+                  //   aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
+                  type="submit"
+                  className="first:w-6 w-full text-purple"
+                >
+                  <DeleteIcon />
+                </button>
+              </div>
+              {/* <div>{deleteFailed ? 'Retry' : 'Delete'}</div> */}
+            </div>
+          </fetcher.Form>
         </div>
-
         <div className={`${currentStateButtons} col-span-7`}>
           <TaskSave />
           <TaskCancel setFormState={setFormState} />
