@@ -227,6 +227,14 @@ type TimeTracker = {
   setTracker: React.Dispatch<React.SetStateAction<number>>
 }
 
+type QueryInfo = {
+  (
+    id: FormDataEntryValue | null,
+    user: {
+      id: string
+    }
+  ): Tasks | { error: boolean } | null
+}
 // type DoughtnutDatasets = {
 //   label: string | number
 //   borderWidth: number

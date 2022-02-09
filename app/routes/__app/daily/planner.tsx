@@ -88,7 +88,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (formData.get('formType') === 'deleteTask') {
-    let results = await deleteTask(formData, user)
+    let results = await deleteTask(formData.get('id'), user)
     return results
   }
 

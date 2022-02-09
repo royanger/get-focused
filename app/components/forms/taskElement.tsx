@@ -3,7 +3,7 @@ import Input from './Input'
 import TaskSave from './TaskSave'
 import TaskCancel from './TaskCancel'
 import Edit from '../icons/edit'
-import { Form, useFetcher } from 'remix'
+import { Form, useFetcher, useTransition } from 'remix'
 import CompleteCheckbox from './CompleteCheckbox'
 import TimeTracker from './TimeTracker'
 import DeleteIcon from '../icons/delete'
@@ -21,11 +21,23 @@ export default function TaskElement({
   // this controls changes for all elements. Pass this as a prop as needed
   let [formState, setFormState] = React.useState('default')
   const [tracker, setTracker] = React.useState(timeTracker)
+  let formRef = React.useRef<HTMLFormElement>(null)
+
+  const transition = useTransition()
+
+  const isAdding =
+    transition.submission &&
+    transition.submission.formData.get('formType') === 'task' &&
+    transition.submission.formData.get('id') === id
+
+  React.useEffect(() => {
+    if (isAdding) {
+      formRef.current?.reset()
+    }
+  })
 
   const fetcher = useFetcher()
-
   const isDeleting = fetcher.submission?.formData.get('id') === id
-
   const deleteFailed = fetcher.data?.error
 
   let defaultDiv = 'border-0 rounded '
@@ -48,11 +60,6 @@ export default function TaskElement({
     }
   }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
 
-  // TODO: delete ?
-  function clickHandler() {
-    setFormState('edit')
-  }
-
   const completedCSS = 'line-through text-grey-700'
 
   return (
@@ -63,7 +70,7 @@ export default function TaskElement({
     >
       <CompleteCheckbox label="completed" id={id} status={completed} />
       <div className={`mb-3 ${currentStateDiv}`}>
-        <Form method="post" action="/daily/planner">
+        <Form ref={formRef} method="post" action="/daily/planner">
           <input type="hidden" name="formType" value="task" />
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="type" value={type} />

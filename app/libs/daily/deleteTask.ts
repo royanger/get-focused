@@ -1,8 +1,8 @@
 import { deleteTaskQuery } from '~/queries/daily/deleteTask'
 
-export async function deleteTask(formData, user) {
+export const deleteTask: QueryInfo = async (id, user) => {
   try {
-    return await deleteTaskQuery(formData.get('id'), user.id)
+    return await deleteTaskQuery(id, user.id)
   } catch (e) {
     return { error: true }
   }

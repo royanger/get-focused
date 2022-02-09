@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import NoteSave from './NoteSave'
 import NoteCancel from './NoteCancel'
 import { Form, useTransition } from 'remix'
@@ -14,7 +14,7 @@ export default function NoteEl({ id, note }: Note) {
   React.useEffect(() => {
     if (!isAdding) {
       formRef.current?.reset()
-      // TODO This might be casuing issues with the page loading and jumping
+      // TODO This might be causing issues with the page loading and jumping
       // halfway down when there are multiple Notes
       // noteRef.current?.focus()
     }

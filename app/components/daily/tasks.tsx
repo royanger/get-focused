@@ -39,6 +39,19 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
 export default function Tasks({ entries, errors }: Tasks) {
   const transition = useTransition()
 
+  // create some isAdding variables to handle optimistic UI per task type
+  const isAddingP1 =
+    transition.submission &&
+    transition.submission.formData.get('id') === 'newtask-p1'
+
+  const isAddingP2 =
+    transition.submission &&
+    transition.submission.formData.get('id') === 'newtask-p2'
+
+  const isAddingP3 =
+    transition.submission &&
+    transition.submission.formData.get('id') === 'newtask-p3'
+
   let priorityOneTasks = entries
     ? entries.filter(task => task.statusId === PRIORITY_1)
     : null
@@ -80,7 +93,18 @@ export default function Tasks({ entries, errors }: Tasks) {
         key="p1"
       />
       {generatedP1Tasks && generatedP1Tasks}
-      {/* <div className="flex flex-row"> */}
+      {isAddingP1 && (
+        <TaskElement
+          key={Math.random()}
+          id="updatingtask-p1"
+          placeholder="Enter your task here..."
+          value={transition.submission.formData.get('taskname')}
+          goalTime={transition.submission.formData.get('goaltime')}
+          actualTime="0"
+          timeTracker={0}
+          type="p1"
+        />
+      )}
       <TaskElement
         key={`newtask-p1`}
         id="newtask-p1"
@@ -90,7 +114,6 @@ export default function Tasks({ entries, errors }: Tasks) {
         timeTracker={0}
         type="p1"
       />
-      {/* </div> */}
       {errors && errors.id === 'newtask-p1' ? (
         <div className="text-sm text-error mb-6 h-5">
           {errors ? errors.msg : ''}
@@ -103,6 +126,18 @@ export default function Tasks({ entries, errors }: Tasks) {
         key="p2"
       />
       {generatedP2Tasks && generatedP2Tasks}
+      {isAddingP2 && (
+        <TaskElement
+          key={Math.random()}
+          id="updatingtask-p1"
+          placeholder="Enter your task here..."
+          value={transition.submission.formData.get('taskname')}
+          goalTime={transition.submission.formData.get('goaltime')}
+          actualTime="0"
+          timeTracker={0}
+          type="p1"
+        />
+      )}
       <div className="flex flex-row">
         <TaskElement
           key={`newtask-p2`}
@@ -126,6 +161,18 @@ export default function Tasks({ entries, errors }: Tasks) {
         key="p3"
       />
       {generatedP3Tasks && generatedP3Tasks}
+      {isAddingP3 && (
+        <TaskElement
+          key={Math.random()}
+          id="updatingtask-p1"
+          placeholder="Enter your task here..."
+          value={transition.submission.formData.get('taskname')}
+          goalTime={transition.submission.formData.get('goaltime')}
+          actualTime="0"
+          timeTracker={0}
+          type="p1"
+        />
+      )}
       <div className="flex flex-row">
         <TaskElement
           key={`newtask-p3`}
