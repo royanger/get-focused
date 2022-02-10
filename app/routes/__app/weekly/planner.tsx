@@ -6,6 +6,7 @@ import {
   useActionData,
   useLoaderData,
   useSearchParams,
+  useTransition,
 } from 'remix'
 import { authenticator } from '~/services/auth.server'
 
@@ -101,6 +102,20 @@ function tasksByPriority({ tasks, errors, type }: WeeklyTasksByPriority) {
 export default function WeeklyPlanner() {
   const data = useLoaderData()
   const errors = useActionData()
+  const transition = useTransition()
+
+  // create some isAdding variables to handle optimistic UI per task type
+  const isAddingP1 =
+    transition.submission &&
+    transition.submission.formData.get('id') === 'newtask-p1'
+
+  const isAddingP2 =
+    transition.submission &&
+    transition.submission.formData.get('id') === 'newtask-p2'
+
+  const isAddingP3 =
+    transition.submission &&
+    transition.submission.formData.get('id') === 'newtask-p3'
 
   const [searchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
@@ -186,7 +201,16 @@ export default function WeeklyPlanner() {
         <div className="mt-2 mb-8">
           <ol key="list-p1">
             {generatedP1Tasks}
-
+            {isAddingP1 && (
+              <TaskElement
+                key={Math.random()}
+                id="addingtask-p1"
+                placeholder="Enter your task here..."
+                value={transition.submission.formData.get('taskname')}
+                completed={false}
+                type="p1"
+              />
+            )}
             <TaskElement
               key={`newtask-p1`}
               id={`newtask-p1`}
@@ -210,7 +234,16 @@ export default function WeeklyPlanner() {
         <div className="mt-2 mb-8">
           <ol key="list-p2">
             {generatedP2Tasks}
-
+            {isAddingP2 && (
+              <TaskElement
+                key={Math.random()}
+                id="addingtask-p2"
+                placeholder="Enter your task here..."
+                value={transition.submission.formData.get('taskname')}
+                completed={false}
+                type="p2"
+              />
+            )}
             <TaskElement
               key={`newtask-p2`}
               id={`newtask-p2`}
@@ -234,7 +267,16 @@ export default function WeeklyPlanner() {
         <div className="mt-2 mb-8">
           <ol key="list-p3">
             {generatedP3Tasks}
-
+            {isAddingP3 && (
+              <TaskElement
+                key={Math.random()}
+                id="addingtask-p3"
+                placeholder="Enter your task here..."
+                value={transition.submission.formData.get('taskname')}
+                completed={false}
+                type="p3"
+              />
+            )}
             <TaskElement
               key={`newtask-p3`}
               id={`newtask-p3`}

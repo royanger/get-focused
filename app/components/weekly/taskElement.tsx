@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, useFetcher } from 'remix'
+import { Form, useFetcher, useTransition } from 'remix'
 
 // components
 import Checkbox from '../forms/Checkbox'
@@ -16,7 +16,23 @@ export default function TaskElement({
   type,
 }: WeeklyTaskElement) {
   const [formState, setFormState] = React.useState('default')
+  const formRef = React.useRef<HTMLFormElement>(null)
+  const transition = useTransition()
+
+  const isAdding =
+    transition.submission &&
+    transition.submission.formData.get('formType') === 'addWeeklyTask' &&
+    transition.submission.formData.get('id') === id
+
+  React.useEffect(() => {
+    if (isAdding) {
+      formRef.current?.reset()
+    }
+  })
+
   const fetcher = useFetcher()
+  const isDeleting = fetcher.submission?.formData.get('id') === id
+  const deleteFailed = fetcher.data?.error
 
   let defaultDiv = 'border-0 rounded '
   let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
@@ -43,11 +59,11 @@ export default function TaskElement({
   }
 
   return (
-    <li className={`py-4 ${currentStateDiv}`}>
+    <li className={`py-4 ${currentStateDiv} ${isDeleting && 'hidden'}`}>
       <div className="flex flex-row">
         <div className="flex-grow">
-          <Form method="post" action="/weekly/planner">
-            <input type="hidden" name="formType" value="addWeeeklyTask" />
+          <Form ref={formRef} method="post" action="/weekly/planner">
+            <input type="hidden" name="formType" value="addWeeklyTask" />
             <input type="hidden" name="id" value={id} />
             <input type="hidden" name="status" value={`status-${type}`} />
 

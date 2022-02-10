@@ -21,7 +21,7 @@ export default function TaskElement({
   // this controls changes for all elements. Pass this as a prop as needed
   let [formState, setFormState] = React.useState('default')
   const [tracker, setTracker] = React.useState(timeTracker)
-  let formRef = React.useRef<HTMLFormElement>(null)
+  const formRef = React.useRef<HTMLFormElement>(null)
 
   const transition = useTransition()
 
@@ -34,7 +34,7 @@ export default function TaskElement({
     if (isAdding) {
       formRef.current?.reset()
     }
-  })
+  }, [isAdding])
 
   const fetcher = useFetcher()
   const isDeleting = fetcher.submission?.formData.get('id') === id

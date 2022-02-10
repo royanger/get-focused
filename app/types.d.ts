@@ -169,7 +169,7 @@ type WeeklyTaskElement = {
   id: string
   placeholder: string
   completed?: boolean
-  value?: string
+  value?: string | FormDataEntryValue | null
   type: string
 }
 
