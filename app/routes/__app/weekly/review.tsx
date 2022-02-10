@@ -26,7 +26,10 @@ import WeeklyNav from '~/components/weekly/WeeklyNav'
 
 // actions
 import { validateWinsForm } from '~/libs/weekly/winsActions'
-import { validateImprovementsForm } from '~/libs/weekly/improvementsActions'
+import {
+  deleteImprovementsForm,
+  validateImprovementsForm,
+} from '~/libs/weekly/improvementsActions'
 import { validateLearningPointsForm } from '~/libs/weekly/learningPointsActions'
 import { validateRefocusForm } from '~/libs/weekly/refocusActions'
 
@@ -74,31 +77,53 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   let user = await authenticator.isAuthenticated(request)
 
-  if (formData.get('formType') === 'win') {
-    let results = validateWinsForm(formData, user)
-    return results
+  let results
+  switch (formData.get('formType')) {
+    case 'win':
+      results = await validateWinsForm(formData, user)
+      break
+    case 'improvements':
+      results = await validateImprovementsForm(formData, user)
+      break
+    case 'learningpoints':
+      results = await validateLearningPointsForm(formData, user)
+      break
+    case 'refocus':
+      results = await validateRefocusForm(formData, user)
+      break
+    case 'deleteimprovements':
+      results = await deleteImprovementsForm(formData.get('id'), user)
+      break
+    default:
+      results = 'Type does not meet valid action'
   }
-  if (formData.get('formType') === 'improvements') {
-    let results = validateImprovementsForm(formData, user)
-    return results
-  }
-  if (formData.get('formType') === 'learningpoints') {
-    let results = validateLearningPointsForm(formData, user)
-    return results
-  }
-  if (formData.get('formType') === 'refocus') {
-    let results = validateRefocusForm(formData, user)
-    return results
-  }
+  return results
 
-  return null
+  //   if (formData.get('formType') === 'win') {
+  //     let results = validateWinsForm(formData, user)
+  //     return results
+  //   }
+  //   if (formData.get('formType') === 'improvements') {
+  //     let results = validateImprovementsForm(formData, user)
+  //     return results
+  //   }
+  //   if (formData.get('formType') === 'learningpoints') {
+  //     let results = validateLearningPointsForm(formData, user)
+  //     return results
+  //   }
+  //   if (formData.get('formType') === 'refocus') {
+  //     let results = validateRefocusForm(formData, user)
+  //     return results
+  //   }
+
+  //   return null
 }
 
 export default function WeeklyReview() {
   const { win, improvements, learningpoints, refocus } = useLoaderData()
   const errors = useActionData()
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
   const paramWeek = searchParams.get('week')
 
