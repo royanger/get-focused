@@ -27,10 +27,13 @@ import WeeklyNav from '~/components/weekly/WeeklyNav'
 // actions
 import { validateWinsForm } from '~/libs/weekly/winsActions'
 import {
-  deleteImprovementsForm,
+  deleteImprovements,
   validateImprovementsForm,
 } from '~/libs/weekly/improvementsActions'
-import { validateLearningPointsForm } from '~/libs/weekly/learningPointsActions'
+import {
+  deleteLearningPoints,
+  validateLearningPointsForm,
+} from '~/libs/weekly/learningPointsActions'
 import { validateRefocusForm } from '~/libs/weekly/refocusActions'
 
 // components
@@ -92,31 +95,15 @@ export const action: ActionFunction = async ({ request }) => {
       results = await validateRefocusForm(formData, user)
       break
     case 'deleteimprovements':
-      results = await deleteImprovementsForm(formData.get('id'), user)
+      results = await deleteImprovements(formData.get('id'), user)
+      break
+    case 'deletelearningpoints':
+      results = await deleteLearningPoints(formData.get('id'), user)
       break
     default:
       results = 'Type does not meet valid action'
   }
   return results
-
-  //   if (formData.get('formType') === 'win') {
-  //     let results = validateWinsForm(formData, user)
-  //     return results
-  //   }
-  //   if (formData.get('formType') === 'improvements') {
-  //     let results = validateImprovementsForm(formData, user)
-  //     return results
-  //   }
-  //   if (formData.get('formType') === 'learningpoints') {
-  //     let results = validateLearningPointsForm(formData, user)
-  //     return results
-  //   }
-  //   if (formData.get('formType') === 'refocus') {
-  //     let results = validateRefocusForm(formData, user)
-  //     return results
-  //   }
-
-  //   return null
 }
 
 export default function WeeklyReview() {

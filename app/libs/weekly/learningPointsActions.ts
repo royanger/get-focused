@@ -1,4 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
+import { deleteLearningPointQuery } from '~/queries/weekly/deleteLearningPoints'
 import { updateOrCreateLearningPoint } from '~/queries/weekly/updateOrCreateLearningPoint'
 
 export async function validateLearningPointsForm(formData, user: string) {
@@ -25,4 +26,15 @@ export async function validateLearningPointsForm(formData, user: string) {
     user.id
   )
   return results
+}
+
+export async function deleteLearningPoints(
+  id: FormDataEntryValue | null,
+  user: string
+) {
+  try {
+    return await deleteLearningPointQuery(id, user.id)
+  } catch (e) {
+    return { error: true }
+  }
 }

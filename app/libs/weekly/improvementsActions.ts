@@ -28,7 +28,7 @@ export async function validateImprovementsForm(formData, user: string) {
   return results
 }
 
-export async function deleteImprovementsForm(
+export async function deleteImprovements(
   id: FormDataEntryValue | null,
   user: { id: string }
 ) {
