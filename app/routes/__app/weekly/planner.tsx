@@ -19,7 +19,7 @@ import WeeklyNav from '~/components/weekly/WeeklyNav'
 // libs for queries and actions
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '~/libs/priorityIds'
 import { findTasks } from '~/queries/weekly/findTasks'
-import { validateTaskForm } from '~/libs/weekly/taskActions'
+import { deleteTask, validateTaskForm } from '~/libs/weekly/taskActions'
 import {
   createDateInstance,
   formatDateRange,
@@ -60,8 +60,17 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const user = await authenticator.isAuthenticated(request)
 
-  const results = await validateTaskForm(formData, user)
-
+  let results
+  switch (formData.get('formType')) {
+    case 'addWeeklyTask':
+      results = await await validateTaskForm(formData, user)
+      break
+    case 'deleteWeeklyTask':
+      results = await deleteTask(formData.get('id'), user)
+      break
+    default:
+      results = 'Type does not meet valid action'
+  }
   return results
 }
 

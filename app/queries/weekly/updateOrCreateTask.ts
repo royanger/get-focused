@@ -3,10 +3,10 @@ import { prisma } from '~/../prisma/db'
 import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
 export async function updateOrCreateTask(
-  id: string,
+  id: FormDataEntryValue | null,
   taskName: string,
   completed: boolean,
-  status: string,
+  status: FormDataEntryValue | null,
   userId: {}
 ) {
   const year = createDateInstance('today').year

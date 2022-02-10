@@ -44,25 +44,36 @@ export default function TaskElement({
 
   return (
     <li className={`py-4 ${currentStateDiv}`}>
-      <Form method="post" action="/weekly/planner">
-        <input type="hidden" name="id" value={id} />
-        <input type="hidden" name="status" value={`status-${type}`} />
+      <div className="flex flex-row">
+        <div className="flex-grow">
+          <Form method="post" action="/weekly/planner">
+            <input type="hidden" name="formType" value="addWeeeklyTask" />
+            <input type="hidden" name="id" value={id} />
+            <input type="hidden" name="status" value={`status-${type}`} />
 
-        <div className="flex flex-row items-center font-input">
-          <Checkbox status={completed} label="Completed" />
-          <Input
-            value={value}
-            formState={formState}
-            name="taskname"
-            placeholder={placeholder}
-            setFormState={setFormState}
-            width="flex-grow"
-          />
-          <fetcher.Form method="post" className="my-2">
-            <div className="w-12 flex flex-col align-center">
-              <input type="hidden" name="formType" value="deleteTask" />
+            <div className="flex flex-row items-center font-input">
+              <Checkbox status={completed} label="Completed" />
+              <Input
+                value={value}
+                formState={formState}
+                name="taskname"
+                placeholder={placeholder}
+                setFormState={setFormState}
+                width="flex-grow"
+              />
+            </div>
+            <div className={`${currentStateButtons} col-span-7`}>
+              <TaskSave />
+              <TaskCancel setFormState={setFormState} />
+            </div>
+          </Form>
+        </div>
+        <div>
+          <fetcher.Form method="post">
+            <div className="w-12">
+              <input type="hidden" name="formType" value="deleteWeeklyTask" />
               <input type="hidden" name="id" value={id} />
-              <div className="flex flex-col items-center justify-end h-8">
+              <div className="flex flex-col items-center justify-start h-8">
                 <button
                   //   aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
                   type="submit"
@@ -75,11 +86,7 @@ export default function TaskElement({
             </div>
           </fetcher.Form>
         </div>
-        <div className={`${currentStateButtons} col-span-7`}>
-          <TaskSave />
-          <TaskCancel setFormState={setFormState} />
-        </div>
-      </Form>
+      </div>
     </li>
   )
 }

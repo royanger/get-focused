@@ -65,40 +65,34 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   let user = await authenticator.isAuthenticated(request)
 
-  if (formData.get('formType') === 'wellness') {
-    let results = await validateWellnessForm(formData, user)
-    return results
-  }
+  let results
+  switch (formData.get('formType')) {
+    case 'wellness':
+      results = await validateWellnessForm(formData, user)
+      break
+    case 'exercise':
+      results = await validateExerciseForm(formData, user)
+      break
+    case 'task':
+      results = await validateTaskForm(formData, user)
+      break
+    case 'note':
+      results = await validateNotesForm(formData, user)
+      break
+    case 'productivity':
+      results = await validateProductivityForm(formData, user)
+      break
+    case 'deleteTask':
+      results = await deleteTask(formData.get('id'), user)
+      break
+    case 'completeTask':
+      results = await completeTask(formData, user)
+      break
 
-  if (formData.get('formType') === 'exercise') {
-    let results = await validateExerciseForm(formData, user)
-    return results
+    default:
+      results = 'Type does not meet valid action'
   }
-  if (formData.get('formType') === 'task') {
-    let results = await validateTaskForm(formData, user)
-    return results
-  }
-  if (formData.get('formType') === 'note') {
-    let results = await validateNotesForm(formData, user)
-    return results
-  }
-  if (formData.get('formType') === 'productivity') {
-    let results = await validateProductivityForm(formData, user)
-    return results
-  }
-
-  if (formData.get('formType') === 'deleteTask') {
-    let results = await deleteTask(formData.get('id'), user)
-    return results
-  }
-
-  if (formData.get('formType') === 'completeTask') {
-    let results = await completeTask(formData, user)
-    return results
-  }
-
-  // might want to throw an error here
-  return 'Type does not meet valid action'
+  return results
 }
 
 export default function DailyPlanner() {

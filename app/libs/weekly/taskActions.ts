@@ -1,7 +1,8 @@
 import { updateOrCreateTask } from '~/queries/weekly/updateOrCreateTask'
 import DOMPurify from 'isomorphic-dompurify'
+import { deleteTaskQuery } from '~/queries/weekly/deleteTask'
 
-export async function validateTaskForm(formData, user: string) {
+export async function validateTaskForm(formData: FormData, user: string) {
   const errors = {}
 
   if (formData.get('taskname') === null) {
@@ -33,4 +34,12 @@ export async function validateTaskForm(formData, user: string) {
   )
 
   return results
+}
+
+export async function deleteTask(id: FormDataEntryValue | null, user: string) {
+  try {
+    return await deleteTaskQuery(id, user.id)
+  } catch (e) {
+    return { error: true }
+  }
 }
