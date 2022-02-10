@@ -18,6 +18,7 @@ export default function TaskElement({
   const [formState, setFormState] = React.useState('default')
   const formRef = React.useRef<HTMLFormElement>(null)
   const transition = useTransition()
+  const fetcher = useFetcher()
 
   const isAdding =
     transition.submission &&
@@ -30,7 +31,6 @@ export default function TaskElement({
     }
   })
 
-  const fetcher = useFetcher()
   const isDeleting = fetcher.submission?.formData.get('id') === id
   const deleteFailed = fetcher.data?.error
 

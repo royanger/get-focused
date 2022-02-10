@@ -1,10 +1,11 @@
 import * as React from 'react'
-import { Form, useTransition } from 'remix'
+import { Form, useFetcher, useTransition } from 'remix'
 
 // components
 import Input from '../forms/Input'
 import TaskCancel from '../forms/TaskCancel'
 import TaskSave from '../forms/TaskSave'
+import DeleteIcon from '../icons/delete'
 
 export default function ReviewElement({
   id,
@@ -16,6 +17,7 @@ export default function ReviewElement({
   const [formState, setFormState] = React.useState('default')
   const formRef = React.useRef<HTMLFormElement>(null)
   const transition = useTransition()
+  const fetcher = useFetcher()
 
   const isAdding =
     transition.state === 'submitting' &&
@@ -34,8 +36,11 @@ export default function ReviewElement({
     formRef.current?.reset()
   }, [isSubmitting])
 
-  let defaultDiv = 'border-0 rounded '
-  let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
+  const isDeleting = fetcher.submission?.formData.get('id') === id
+  const deleteFailed = fetcher.data?.error
+
+  let defaultDiv = 'border-2 border-transparent rounded '
+  let editDiv = 'border-2 border-transparent bg-grey-200 rounded shadow-lg'
   let [currentStateDiv, setCurrentStateDiv] = React.useState(defaultDiv)
 
   let defaultButtons = 'hidden'
@@ -54,17 +59,26 @@ export default function ReviewElement({
     }
   }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
 
-  function clickHandler() {
-    setFormState('edit')
-  }
+  React.useEffect(() => {
+    console.log('isDeleting', isDeleting)
+  }, [isDeleting])
 
   return (
-    <div className={`p-4 ${currentStateDiv}`}>
-      <Form ref={formRef} method="post" action="/weekly/review">
+    <div
+      className={`p-4 flex flex-row flex-grow ${currentStateDiv} ${
+        deleteFailed && 'border-red'
+      } ${isDeleting && 'hidden'}`}
+    >
+      <Form
+        className="flex-grow"
+        ref={formRef}
+        method="post"
+        action="/weekly/review"
+      >
         <input type="hidden" name="id" value={id} />
         <input type="hidden" name="formType" value={formType} />
 
-        <div className="flex flex-row items-center font-input">
+        <div className="flex flex-row flex-grow items-center font-input">
           <Input
             value={value}
             formState={formState}
@@ -81,6 +95,23 @@ export default function ReviewElement({
           <TaskCancel setFormState={setFormState} />
         </div>
       </Form>
+      <div>
+        <fetcher.Form method="post">
+          <div className="w-12">
+            <input type="hidden" name="formType" value={`delete${formType}`} />
+            <input type="hidden" name="id" value={id} />
+            <div className="flex flex-col items-center justify-start h-8">
+              <button
+                aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
+                type="submit"
+                className="first:w-6 w-full text-purple"
+              >
+                <DeleteIcon />
+              </button>
+            </div>
+          </div>
+        </fetcher.Form>
+      </div>
     </div>
   )
 }
