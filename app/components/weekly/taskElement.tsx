@@ -34,8 +34,8 @@ export default function TaskElement({
   const isDeleting = fetcher.submission?.formData.get('id') === id
   const deleteFailed = fetcher.data?.error
 
-  let defaultDiv = 'border-0 rounded '
-  let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
+  let defaultDiv = 'border-2 border-transparent rounded'
+  let editDiv = 'border-2 border-transparent bg-grey-200 rounded shadow-lg'
   let [currentStateDiv, setCurrentStateDiv] = React.useState(defaultDiv)
 
   let defaultButtons = 'hidden'
@@ -59,7 +59,11 @@ export default function TaskElement({
   }
 
   return (
-    <li className={`py-4 ${currentStateDiv} ${isDeleting && 'hidden'}`}>
+    <li
+      className={`p-4 border-2 rounded ${currentStateDiv} ${
+        deleteFailed && 'border-red'
+      }  ${isDeleting && 'hidden'}`}
+    >
       <div className="flex flex-row">
         <div className="flex-grow">
           <Form ref={formRef} method="post" action="/weekly/planner">
@@ -91,7 +95,7 @@ export default function TaskElement({
               <input type="hidden" name="id" value={id} />
               <div className="flex flex-col items-center justify-start h-8">
                 <button
-                  //   aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
+                  aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
                   type="submit"
                   className="first:w-6 w-full text-purple"
                 >

@@ -64,7 +64,7 @@ export const action: ActionFunction = async ({ request }) => {
   let results
   switch (formData.get('formType')) {
     case 'addWeeklyTask':
-      results = await await validateTaskForm(formData, user)
+      results = await validateTaskForm(formData, user)
       break
     case 'deleteWeeklyTask':
       results = await deleteTask(formData.get('id'), user)
