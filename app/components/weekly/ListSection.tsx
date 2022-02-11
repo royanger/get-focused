@@ -1,6 +1,7 @@
+import * as React from 'react'
 import TasksTitle from '../daily/TasksTitle'
-import React from 'react'
 import ReviewElement from './ReviewElement'
+import { useTransition } from 'remix'
 
 export default function ListSection({
   items,
@@ -9,24 +10,25 @@ export default function ListSection({
   errors,
   formType,
 }: ReviewSections) {
+  const transition = useTransition()
+
+  const isAdding =
+    transition.submission &&
+    transition.submission?.formData.get('formType') === formType &&
+    transition.submission?.formData.get('id') === `new-${formType}`
+
   let itemsList
   if (items) {
     itemsList = items.map(item => {
       return (
-        <React.Fragment key={item.id}>
-          <ReviewElement
-            key={item.id}
-            id={item.id}
-            value={item.item}
-            placeholder="Enter an area to improve"
-            formType={formType}
-          />
-          {errors && errors.id === item.id ? (
-            <div className="text-sm text-error mb-6 h-5">
-              {errors ? errors.msg : ''}
-            </div>
-          ) : null}
-        </React.Fragment>
+        <ReviewElement
+          key={item.id}
+          id={item.id}
+          value={item.item}
+          placeholder="Enter an area to improve"
+          formType={formType}
+          errors={errors}
+        />
       )
     })
   }
@@ -35,18 +37,25 @@ export default function ListSection({
     <React.Fragment>
       <TasksTitle title={title} info={info} />
       {items && itemsList}
+      {isAdding && (
+        <ReviewElement
+          key={`adding-${formType}`}
+          id={`adding-${formType}`}
+          placeholder="Enter an area to improve"
+          value={transition.submission.formData.get('item')}
+          formType={formType}
+          reset={true}
+          errors={errors}
+        />
+      )}
       <ReviewElement
         key={`new-${formType}`}
         id={`new-${formType}`}
         placeholder="Enter an area to improve"
         formType={formType}
         reset={true}
+        errors={errors}
       />
-      {errors && errors.id === `new-${formType}` ? (
-        <div className="text-sm text-error mb-6 h-5">
-          {errors ? errors.msg : ''}
-        </div>
-      ) : null}
     </React.Fragment>
   )
 }

@@ -1,4 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
+import { deleteImprovementQuery } from '~/queries/weekly/deleteImprovement'
 import { updateOrCreateImprovement } from '~/queries/weekly/updateOrCreateImprovement'
 
 export async function validateImprovementsForm(formData, user: string) {
@@ -25,4 +26,15 @@ export async function validateImprovementsForm(formData, user: string) {
     user.id
   )
   return results
+}
+
+export async function deleteImprovements(
+  id: FormDataEntryValue | null,
+  user: { id: string }
+) {
+  try {
+    return await deleteImprovementQuery(id, user.id)
+  } catch (e) {
+    return { error: true }
+  }
 }
