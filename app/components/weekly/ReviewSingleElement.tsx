@@ -7,7 +7,7 @@ import TaskCancel from '../forms/TaskCancel'
 import TaskSave from '../forms/TaskSave'
 import DeleteIcon from '../icons/delete'
 
-export default function ReviewElement({
+export default function ReviewSingleElement({
   id,
   value,
   placeholder,
@@ -20,24 +20,14 @@ export default function ReviewElement({
   const transition = useTransition()
   const fetcher = useFetcher()
 
-  const isAdding =
-    transition.state === 'submitting' &&
-    transition.submission?.formData.get('formType') === formType &&
-    reset === true
-
-  React.useEffect(() => {
-    formRef.current?.reset()
-  }, [isAdding])
-
   const isSubmitting =
     transition.state === 'submitting' &&
     transition.submission?.formData.get('formType') === formType
 
   React.useEffect(() => {
-    formRef.current?.reset()
+    setFormState('default')
   }, [isSubmitting])
 
-  const isDeleting = fetcher.submission?.formData.get('id') === id
   const deleteFailed = fetcher.data?.error
 
   let defaultDiv = 'border-2 border-transparent rounded '
@@ -61,11 +51,7 @@ export default function ReviewElement({
   }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
 
   return (
-    <div
-      className={`flex flew-grow flex-row ${deleteFailed && 'border-red'} ${
-        isDeleting && 'hidden'
-      }`}
-    >
+    <div className={`flex flew-grow flex-row ${deleteFailed && 'border-red'}`}>
       <div className={`p-4 flex flex-row flex-grow ${currentStateDiv}`}>
         <Form
           className="flex-grow"
@@ -93,27 +79,6 @@ export default function ReviewElement({
             <TaskCancel setFormState={setFormState} />
           </div>
         </Form>
-        <div>
-          <fetcher.Form method="post">
-            <div className="w-12">
-              <input
-                type="hidden"
-                name="formType"
-                value={`delete${formType}`}
-              />
-              <input type="hidden" name="id" value={id} />
-              <div className="flex flex-col items-center justify-start h-8">
-                <button
-                  aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
-                  type="submit"
-                  className="first:w-6 w-full text-purple"
-                >
-                  <DeleteIcon />
-                </button>
-              </div>
-            </div>
-          </fetcher.Form>
-        </div>
       </div>
       {errors && errors.id === id ? (
         <div className="text-sm text-error mb-6 h-5">

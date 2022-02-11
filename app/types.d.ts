@@ -195,10 +195,15 @@ type ReviewSections = {
 
 type Reviews = {
   id: string
-  value?: string
+  value?: string | FormDataEntryValue | null
   placeholder: string
   formType: string
   reset?: boolean
+  errors?: {
+    formType: string
+    id: string
+    msg: string
+  }
 }
 
 type WeeklyNavOptions = {

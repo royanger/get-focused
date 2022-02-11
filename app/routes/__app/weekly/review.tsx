@@ -41,6 +41,7 @@ import Container from '~/components/Container'
 import { HeaderOne, HeaderTwo } from '~/components/Headlines'
 import ReviewElement from '~/components/weekly/ReviewElement'
 import ListSection from '~/components/weekly/ListSection'
+import ReviewSingleElement from '~/components/weekly/ReviewSingleElement'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -153,17 +154,13 @@ export default function WeeklyReview() {
 
           <p>What was great about your week? What was a solid win for you?</p>
 
-          <ReviewElement
+          <ReviewSingleElement
             id={win ? win.id : 'win-new'}
             value={win?.item}
             placeholder="Enter your win for the week"
             formType="win"
+            errors={errors}
           />
-          {errors && errors.id === win?.id ? (
-            <div className="text-sm text-error mb-6 h-5">
-              {errors ? errors.msg : ''}
-            </div>
-          ) : null}
 
           <ListSection
             items={improvements}
@@ -184,17 +181,13 @@ export default function WeeklyReview() {
           <HeaderTwo>Refocus for Next Week</HeaderTwo>
           <p>What can you do to focus for next week?</p>
 
-          <ReviewElement
+          <ReviewSingleElement
             id={refocus ? refocus.id : 'refocus-new'}
             value={refocus?.item}
             placeholder="What will you refocus on next week?"
             formType="refocus"
+            errors={errors}
           />
-          {errors && errors.id === refocus?.id ? (
-            <div className="text-sm text-error mb-6 h-5">
-              {errors ? errors.msg : ''}
-            </div>
-          ) : null}
         </div>
       </Container>
     </>
