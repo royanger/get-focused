@@ -139,7 +139,7 @@ type Radio = {
 }
 
 type Input = {
-  value?: string
+  value?: string | FormDataEntryValue | null
   name: string
   placeholder: string
   width: string

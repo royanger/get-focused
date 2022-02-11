@@ -51,11 +51,11 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
             <Link className="mr-8 hover:text-grey-300" to="/weekly/planner">
               Weekly Planner
             </Link>
-            <Link className="mr-8 hover:text-grey-300" to="/weekly/review">
-              Weekly Review
-            </Link>
             <Link className="mr-8 hover:text-grey-300" to="/daily/planner">
               Daily Planner
+            </Link>
+            <Link className="mr-8 hover:text-grey-300" to="/weekly/review">
+              Weekly Review
             </Link>
             {data?.user ? (
               <>

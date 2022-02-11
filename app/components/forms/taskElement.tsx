@@ -22,13 +22,23 @@ export default function TaskElement({
   let [formState, setFormState] = React.useState('default')
   const [tracker, setTracker] = React.useState(timeTracker)
   const formRef = React.useRef<HTMLFormElement>(null)
-
   const transition = useTransition()
+  const fetcher = useFetcher()
 
   const isAdding =
-    transition.submission &&
-    transition.submission.formData.get('formType') === 'task' &&
-    transition.submission.formData.get('id') === id
+    fetcher.submission &&
+    fetcher.submission.formData.get('formType') === 'task' &&
+    fetcher.submission.formData.get('id') === id
+  const addFailed = fetcher.data?.error && fetcher.data.type == 'task'
+
+  React.useEffect(() => {
+    console.log(
+      'fetcher',
+      fetcher.submission,
+      fetcher.submission?.formData?.get('formType'),
+      fetcher.submission?.formData?.get('id')
+    )
+  }, [fetcher])
 
   React.useEffect(() => {
     if (isAdding) {
@@ -36,9 +46,16 @@ export default function TaskElement({
     }
   }, [isAdding])
 
-  const fetcher = useFetcher()
-  const isDeleting = fetcher.submission?.formData.get('id') === id
-  const deleteFailed = fetcher.data?.error
+  const isDeleting =
+    fetcher.submission?.formData.get('id') === id &&
+    fetcher.submission.formData.get('formType') === 'deleteTask'
+  const deleteFailed = fetcher.data?.error && fetcher.data.type === 'delete'
+
+  React.useEffect(() => {
+    // console.log('fetcher data', fetcher.data?.errors)
+    //  console.log('fetcher submission', fetcher.submission)
+    console.log('isadding', isAdding)
+  }, [fetcher, isAdding])
 
   let defaultDiv = 'border-0 rounded '
   let editDiv = 'border-0 bg-grey-200 rounded shadow-lg'
@@ -63,105 +80,108 @@ export default function TaskElement({
   const completedCSS = 'line-through text-grey-700'
 
   return (
-    <div
-      className={`flex flex-row border-2 border-transparent rounded ${
-        deleteFailed && 'border-red'
-      } ${isDeleting && 'hidden'}`}
-    >
-      <CompleteCheckbox label="completed" id={id} status={completed} />
-      <div className={`mb-3 ${currentStateDiv}`}>
-        <Form ref={formRef} method="post" action="/daily/planner">
-          <input type="hidden" name="formType" value="task" />
-          <input type="hidden" name="id" value={id} />
-          <input type="hidden" name="type" value={type} />
-          <input type="hidden" name="timetracker" value={tracker} />
-          <div className="p-2 grid grid-cols-10">
-            <div className="flex flex-row items-center col-span-7  pr-4">
-              <Input
-                value={value}
-                formState={formState}
-                name="taskname"
-                placeholder={placeholder}
-                setFormState={setFormState}
-                width="flex-grow"
-                completed={completed ? completedCSS : ''}
-              />
-            </div>
-            <div className="row-start-1 row-end-3 col-start-8 col-end-11">
-              <div className="flex flex-row items-center">
+    <>
+      <div
+        className={`flex flex-row border-2 border-transparent rounded ${
+          (deleteFailed || addFailed) && 'border-red'
+        } ${isDeleting && 'hidden'}`}
+      >
+        <CompleteCheckbox label="completed" id={id} status={completed} />
+        <div className={`mb-3 ${currentStateDiv}`}>
+          <fetcher.Form ref={formRef} method="post" action="/daily/planner">
+            <input type="hidden" name="formType" value="task" />
+            <input type="hidden" name="id" value={id} />
+            <input type="hidden" name="type" value={type} />
+            <input type="hidden" name="timetracker" value={tracker} />
+            <div className="p-2 grid grid-cols-10">
+              <div className="flex flex-row items-center col-span-7  pr-4">
                 <Input
-                  value={goalTime}
+                  value={value}
                   formState={formState}
-                  name="goaltime"
-                  placeholder=""
+                  name="taskname"
+                  placeholder={placeholder}
                   setFormState={setFormState}
-                  width="w-14"
+                  width="flex-grow"
+                  completed={completed ? completedCSS : ''}
                 />
-                <div className="w-36 flex flex-row justify-center px-4">
-                  <TimeTracker tracker={tracker} setTracker={setTracker} />
-                </div>
-                <Input
-                  value={actualTime}
-                  formState={formState}
-                  name="actualtime"
-                  placeholder=""
-                  setFormState={setFormState}
-                  width="w-14"
-                />
-                <div className="w-12 first:w-7 h-8 ml-4 text-purple flex justify-center">
-                  <button
-                    type="button"
-                    className="first:w-6 w-full "
-                    onClick={() => setFormState('edit')}
-                  >
-                    <Edit />
-                  </button>
-                </div>
               </div>
+              <div className="row-start-1 row-end-3 col-start-8 col-end-11">
+                <div className="flex flex-row items-center">
+                  <Input
+                    value={goalTime}
+                    formState={formState}
+                    name="goaltime"
+                    placeholder=""
+                    setFormState={setFormState}
+                    width="w-14"
+                  />
+                  <div className="w-36 flex flex-row justify-center px-4">
+                    <TimeTracker tracker={tracker} setTracker={setTracker} />
+                  </div>
+                  <Input
+                    value={actualTime}
+                    formState={formState}
+                    name="actualtime"
+                    placeholder=""
+                    setFormState={setFormState}
+                    width="w-14"
+                  />
+                  <div className="w-12 first:w-7 h-8 ml-4 text-purple flex justify-center">
+                    <button
+                      type="button"
+                      className="first:w-6 w-full "
+                      onClick={() => setFormState('edit')}
+                    >
+                      <Edit />
+                    </button>
+                  </div>
+                </div>
 
-              <div className="flex flex-row items-center">
-                <div className="text-sm w-14 flex flex-row justify-center ">
-                  Target
-                </div>
-                <div className="text-sm w-36 flex flex-row justify-center ">
-                  {tracker < 1
-                    ? 'Track your time'
-                    : `${Math.floor(((tracker * 25) / 60) % 60)}h ${
-                        tracker * 25 -
-                        Math.floor(((tracker * 25) / 60) % 60) * 60
-                      }m `}
-                </div>
-                <div className="text-sm w-14 flex flex-row justify-center ">
-                  Actual
-                </div>
-                <div className="text-sm w-12 ml-4 flex flex-row justify-center ">
-                  Edit
+                <div className="flex flex-row items-center">
+                  <div className="text-sm w-14 flex flex-row justify-center ">
+                    Target
+                  </div>
+                  <div className="text-sm w-36 flex flex-row justify-center ">
+                    {tracker < 1
+                      ? 'Track your time'
+                      : `${Math.floor(((tracker * 25) / 60) % 60)}h ${
+                          tracker * 25 -
+                          Math.floor(((tracker * 25) / 60) % 60) * 60
+                        }m `}
+                  </div>
+                  <div className="text-sm w-14 flex flex-row justify-center ">
+                    Actual
+                  </div>
+                  <div className="text-sm w-12 ml-4 flex flex-row justify-center ">
+                    Edit
+                  </div>
                 </div>
               </div>
+              <div className={`${currentStateButtons} col-span-7`}>
+                <TaskSave />
+                <TaskCancel setFormState={setFormState} />
+              </div>
             </div>
-            <div className={`${currentStateButtons} col-span-7`}>
-              <TaskSave />
-              <TaskCancel setFormState={setFormState} />
-            </div>
-          </div>
-        </Form>
-      </div>
-      <fetcher.Form method="post" className="my-2">
-        <div className="w-12 flex flex-col align-center">
-          <input type="hidden" name="formType" value="deleteTask" />
-          <input type="hidden" name="id" value={id} />
-          <div className="flex flex-col items-center justify-end h-8">
-            <button
-              aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
-              type="submit"
-              className="first:w-6 w-full text-purple"
-            >
-              <DeleteIcon />
-            </button>
-          </div>
-          <div>{deleteFailed ? 'Retry' : 'Delete'}</div>
+          </fetcher.Form>
         </div>
-      </fetcher.Form>
-    </div>
+        <fetcher.Form method="post" className="my-2">
+          <div className="w-12 flex flex-col align-center">
+            <input type="hidden" name="formType" value="deleteTask" />
+            <input type="hidden" name="id" value={id} />
+            <div className="flex flex-col items-center justify-end h-8">
+              <button
+                aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
+                type="submit"
+                className="first:w-6 w-full text-purple"
+              >
+                <DeleteIcon />
+              </button>
+            </div>
+            <div>{deleteFailed ? 'Retry' : 'Delete'}</div>
+          </div>
+        </fetcher.Form>
+      </div>
+      <div>{addFailed ? 'failed' : 'success'}</div>
+    </>
   )
 }
