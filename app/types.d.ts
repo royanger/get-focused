@@ -143,13 +143,13 @@ type Input = {
   name: string
   placeholder: string
   width: string
-  formState?: React.ReactChild
-  setFormState: React.Dispatch<React.SetStateAction<string>>
+  editing?: boolean
+  setEditing: React.Dispatch<React.SetStateAction<boolean>>
   completed?: string
 }
 
 type Cancel = {
-  setFormState: React.Dispatch<React.SetStateAction<string>>
+  setEditing: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type TaskElement = {
@@ -160,7 +160,7 @@ type TaskElement = {
   value?: FormDataEntryValue | string | null
   placeholder: string
   actualTime: string
-  goalTime: FormDataEntryValue | string | null
+  goalTime: FormDataEntryValue | string | null | undefined
   timeTracker: number
   type: string
 }

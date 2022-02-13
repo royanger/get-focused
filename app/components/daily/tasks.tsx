@@ -2,7 +2,7 @@ import * as React from 'react'
 import TasksTitle from './TasksTitle'
 import TaskElement from '../forms/TaskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
-import { useTransition } from 'remix'
+import { useFetchers } from 'remix'
 
 function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   let taskList
@@ -37,20 +37,39 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   return taskList
 }
 export default function Tasks({ entries, errors }: Tasks) {
-  const transition = useTransition()
+  const fetchers = useFetchers()
 
   // create some isAdding variables to handle optimistic UI per task type
-  const isAddingP1 =
-    transition.submission &&
-    transition.submission.formData.get('id') === 'newtask-p1'
+  // grab submitted data from useFetchers at the same time to render new item
+  let isAddingP1, taskName, goaltime, fetchState
+  for (const f of fetchers) {
+    if (f.submission && f.submission?.formData.get('id') === 'newtask-p1') {
+      isAddingP1 = true
+      taskName = f.submission?.formData.get('taskname')
+      goaltime = f.submission?.formData.get('goaltime')
+      fetchState = f.state
+    }
+  }
 
-  const isAddingP2 =
-    transition.submission &&
-    transition.submission.formData.get('id') === 'newtask-p2'
+  let isAddingP2
+  for (const f of fetchers) {
+    if (f.submission && f.submission?.formData.get('id') === 'newtask-p2') {
+      isAddingP2 = true
+      taskName = f.submission?.formData.get('taskname')
+      goaltime = f.submission?.formData.get('goaltime')
+      fetchState = f.state
+    }
+  }
 
-  const isAddingP3 =
-    transition.submission &&
-    transition.submission.formData.get('id') === 'newtask-p3'
+  let isAddingP3
+  for (const f of fetchers) {
+    if (f.submission && f.submission?.formData.get('id') === 'newtask-p3') {
+      isAddingP3 = true
+      taskName = f.submission?.formData.get('taskname')
+      goaltime = f.submission?.formData.get('goaltime')
+      fetchState = f.state
+    }
+  }
 
   let priorityOneTasks = entries
     ? entries.filter(task => task.statusId === PRIORITY_1)
@@ -98,22 +117,24 @@ export default function Tasks({ entries, errors }: Tasks) {
           key={Math.random()}
           id="updatingtask-p1"
           placeholder="Enter your task here..."
-          value={transition.submission.formData.get('taskname')}
-          goalTime={transition.submission.formData.get('goaltime')}
+          value={taskName}
+          goalTime={goaltime}
           actualTime="0"
           timeTracker={0}
           type="p1"
         />
       )}
-      <TaskElement
-        key={`newtask-p1`}
-        id="newtask-p1"
-        placeholder="Create a new task"
-        goalTime="0"
-        actualTime="0"
-        timeTracker={0}
-        type="p1"
-      />
+      <div className={`flex flex-row ${fetchState ? 'hidden' : 'display'}`}>
+        <TaskElement
+          key={`newtask-p1`}
+          id="newtask-p1"
+          placeholder="Create a new task"
+          goalTime="0"
+          actualTime="0"
+          timeTracker={0}
+          type="p1"
+        />
+      </div>
       {errors && errors.id === 'newtask-p1' ? (
         <div className="text-sm text-error mb-6 h-5">
           {errors ? errors.msg : ''}
@@ -131,14 +152,15 @@ export default function Tasks({ entries, errors }: Tasks) {
           key={Math.random()}
           id="updatingtask-p1"
           placeholder="Enter your task here..."
-          value={transition.submission.formData.get('taskname')}
-          goalTime={transition.submission.formData.get('goaltime')}
+          value={taskName}
+          goalTime={goaltime}
           actualTime="0"
           timeTracker={0}
           type="p1"
         />
       )}
-      <div className="flex flex-row">
+
+      <div className={`flex flex-row ${fetchState ? 'hidden' : 'display'}`}>
         <TaskElement
           key={`newtask-p2`}
           id="newtask-p2"
@@ -149,6 +171,7 @@ export default function Tasks({ entries, errors }: Tasks) {
           type="p2"
         />
       </div>
+
       {errors && errors.id === 'newtask-p2' ? (
         <div className="text-sm text-error mb-6 h-5">
           {errors ? errors.msg : ''}
@@ -166,14 +189,14 @@ export default function Tasks({ entries, errors }: Tasks) {
           key={Math.random()}
           id="updatingtask-p1"
           placeholder="Enter your task here..."
-          value={transition.submission.formData.get('taskname')}
-          goalTime={transition.submission.formData.get('goaltime')}
+          value={taskName}
+          goalTime={goaltime}
           actualTime="0"
           timeTracker={0}
           type="p1"
         />
       )}
-      <div className="flex flex-row">
+      <div className={`flex flex-row ${fetchState ? 'hidden' : 'display'}`}>
         <TaskElement
           key={`newtask-p3`}
           id="newtask-p3"

@@ -12,29 +12,21 @@ export async function validateTaskForm(formData, user) {
   //   const errors = {}
 
   if (taskName === null || goalTime === null || goalTime === '0') {
-    //  errors.formType = 'task'
-    //  errors.id = formData.get('id')
-    //  errors.msg =
-    //    'Please make sure you fill out the name and target fields. These are required.'
     return {
       error: true,
       message:
         'Please make sure you fill out the name and target fields. These are required.',
-      formType: 'task',
       type: 'task',
-      id: formData.get('id'),
+      taskName: taskName,
+      goalTime: goalTime,
     }
   }
-
-  //   if (Object.keys(errors).length) {
-  //     return errors
-  //   }
 
   // handle updating/creating
   let results = await updateOrCreateTask(
     formData.get('id'),
-    formData.get('taskname'),
-    formData.get('goaltime'),
+    taskName,
+    goalTime,
     formData.get('actualtime'),
     parseInt(formData.get('timetracker')),
     formData.get('type'),
