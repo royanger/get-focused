@@ -72,7 +72,6 @@ type Tasks = {
     dateId: string
     statusId: string
     name: string
-    actualTime: string
     goalTime: string
     timeTracker: number
     completed?: boolean
@@ -88,7 +87,6 @@ type TasksByPriority = {
         dateId: string
         statusId: string
         name: string
-        actualTime: string
         goalTime: string
         timeTracker: number
         completed?: boolean
@@ -159,7 +157,6 @@ type TaskElement = {
   statusId?: string
   value?: FormDataEntryValue | string | null
   placeholder: string
-  actualTime: string
   goalTime: FormDataEntryValue | string | null | undefined
   timeTracker: number
   type: string

@@ -16,7 +16,6 @@ function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
             value={task.name}
             placeholder="Enter your task here..."
             goalTime={task.goalTime}
-            actualTime={task.actualTime}
             timeTracker={task.timeTracker}
             type={type}
             completed={task.completed}
@@ -41,33 +40,37 @@ export default function Tasks({ entries, errors }: Tasks) {
 
   // create some isAdding variables to handle optimistic UI per task type
   // grab submitted data from useFetchers at the same time to render new item
-  let isAddingP1, taskName, goaltime, fetchState
+  let isAddingP1, taskName, goaltime, fetchStateP1
   for (const f of fetchers) {
     if (f.submission && f.submission?.formData.get('id') === 'newtask-p1') {
+      console.log('submitting new p1', f.state)
+
       isAddingP1 = true
       taskName = f.submission?.formData.get('taskname')
       goaltime = f.submission?.formData.get('goaltime')
-      fetchState = f.state
+      fetchStateP1 = f.state
     }
   }
 
-  let isAddingP2
+  let isAddingP2, fetchStateP2
   for (const f of fetchers) {
     if (f.submission && f.submission?.formData.get('id') === 'newtask-p2') {
+      console.log('submitting new p2')
       isAddingP2 = true
       taskName = f.submission?.formData.get('taskname')
       goaltime = f.submission?.formData.get('goaltime')
-      fetchState = f.state
+      fetchStateP2 = f.state
     }
   }
 
-  let isAddingP3
+  let isAddingP3, fetchStateP3
   for (const f of fetchers) {
     if (f.submission && f.submission?.formData.get('id') === 'newtask-p3') {
+      console.log('submitting new p3')
       isAddingP3 = true
       taskName = f.submission?.formData.get('taskname')
       goaltime = f.submission?.formData.get('goaltime')
-      fetchState = f.state
+      fetchStateP3 = f.state
     }
   }
 
@@ -119,18 +122,16 @@ export default function Tasks({ entries, errors }: Tasks) {
           placeholder="Enter your task here..."
           value={taskName}
           goalTime={goaltime}
-          actualTime="0"
           timeTracker={0}
           type="p1"
         />
       )}
-      <div className={`flex flex-row ${fetchState ? 'hidden' : 'display'}`}>
+      <div className={`flex flex-row ${fetchStateP1 ? 'hidden' : 'display'}`}>
         <TaskElement
           key={`newtask-p1`}
           id="newtask-p1"
           placeholder="Create a new task"
           goalTime="0"
-          actualTime="0"
           timeTracker={0}
           type="p1"
         />
@@ -154,19 +155,17 @@ export default function Tasks({ entries, errors }: Tasks) {
           placeholder="Enter your task here..."
           value={taskName}
           goalTime={goaltime}
-          actualTime="0"
           timeTracker={0}
           type="p1"
         />
       )}
 
-      <div className={`flex flex-row ${fetchState ? 'hidden' : 'display'}`}>
+      <div className={`flex flex-row ${fetchStateP2 ? 'hidden' : 'display'}`}>
         <TaskElement
           key={`newtask-p2`}
           id="newtask-p2"
           placeholder="Create a new task"
           goalTime="0"
-          actualTime="0"
           timeTracker={0}
           type="p2"
         />
@@ -191,18 +190,16 @@ export default function Tasks({ entries, errors }: Tasks) {
           placeholder="Enter your task here..."
           value={taskName}
           goalTime={goaltime}
-          actualTime="0"
           timeTracker={0}
           type="p1"
         />
       )}
-      <div className={`flex flex-row ${fetchState ? 'hidden' : 'display'}`}>
+      <div className={`flex flex-row ${fetchStateP3 ? 'hidden' : 'display'}`}>
         <TaskElement
           key={`newtask-p3`}
           id="newtask-p3"
           placeholder="Create a new task"
           goalTime="0"
-          actualTime="0"
           timeTracker={0}
           type="p3"
         />

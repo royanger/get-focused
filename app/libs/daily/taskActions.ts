@@ -27,7 +27,6 @@ export async function validateTaskForm(formData, user) {
     formData.get('id'),
     taskName,
     goalTime,
-    formData.get('actualtime'),
     parseInt(formData.get('timetracker')),
     formData.get('type'),
     user.id,
