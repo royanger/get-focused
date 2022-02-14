@@ -17,9 +17,8 @@ export default function TaskElement({
   type,
   completed,
 }: TaskElement) {
-  // this controls changes for all elements. Pass this as a prop as needed
+  // 'editing' controls changes for all elements. Pass these as a prop as needed
   const [editing, setEditing] = React.useState(false)
-
   const [tracker, setTracker] = React.useState(timeTracker)
   const formRef = React.useRef<HTMLFormElement>(null)
   const fetcher = useFetcher()
@@ -33,22 +32,16 @@ export default function TaskElement({
   React.useEffect(() => {
     if (isAdding) {
       formRef.current?.reset()
-      setEditing(false)
+      if (fetcher.state === 'loading') {
+        setEditing(false)
+      }
     }
-  }, [isAdding])
+  }, [isAdding, fetcher])
 
   const isDeleting =
     fetcher.submission?.formData.get('id') === id &&
     fetcher.submission.formData.get('formType') === 'deleteTask'
   const deleteFailed = fetcher.data?.error && fetcher.data.type === 'delete'
-
-  function handleEditingState() {
-    console.log('trying to change')
-
-    setEditing(current => !current)
-  }
-
-  console.log('completed', completed)
 
   return (
     <div
@@ -115,57 +108,86 @@ export default function TaskElement({
             </div>
             <div className="flex flex-col justify-center">
               <div className="w-12 h-full text-purple flex justify-center items-end">
-                {editing ? (
-                  <button type="submit" className="first:w-6 w-full ">
-                    <SaveIcon />
-                    <span className="h-6 text-sm flex flex-col items-center">
-                      Save
-                    </span>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="first:w-6 w-full flex flex-col items-center"
-                    onClick={() => handleEditingState()}
-                  >
-                    <Edit />
-                    <span className="text-sm h-6">Edit</span>
-                  </button>
-                )}
+                <button
+                  type="submit"
+                  className={`w-full flex flex-col items-center ${
+                    editing ||
+                    id === 'newtask-p1' ||
+                    id === 'newtask-p2' ||
+                    id === 'newtask-p3'
+                      ? 'display'
+                      : 'hidden'
+                  }`}
+                >
+                  <SaveIcon className="h-6" />
+                  <span className="h-6 text-sm ">Save</span>
+                </button>
+
+                <button
+                  type="button"
+                  className={`w-full flex flex-col items-center ${
+                    editing ||
+                    id === 'newtask-p1' ||
+                    id === 'newtask-p2' ||
+                    id === 'newtask-p3'
+                      ? 'hidden'
+                      : 'display'
+                  }`}
+                  onClick={() => setEditing(true)}
+                >
+                  <Edit className="h-6" />
+                  <span className="text-sm h-6">Edit</span>
+                </button>
               </div>
             </div>
           </div>
         </fetcher.Form>
       </div>
       <div className="flex flex-col items-center justify-end m-2">
-        {editing ? (
-          <div className="w-12">
+        <div
+          className={`w-12 ${
+            editing ||
+            id === 'newtask-p1' ||
+            id === 'newtask-p2' ||
+            id === 'newtask-p3'
+              ? 'display'
+              : 'hidden'
+          }`}
+        >
+          <button
+            onClick={() => setEditing(false)}
+            className="w-full text-purple flex flex-col items-center"
+          >
+            <CancelIcon className="h-6" />
+            <span className="text-sm h-6">Cancel</span>
+          </button>
+        </div>
+
+        <div
+          className={`w-12 flex flex-col align-center justify-center ${
+            editing ||
+            id === 'newtask-p1' ||
+            id === 'newtask-p2' ||
+            id === 'newtask-p3'
+              ? 'hidden'
+              : 'display'
+          }`}
+        >
+          <fetcher.Form method="post">
+            <input type="hidden" name="formType" value="deleteTask" />
+            <input type="hidden" name="id" value={id} />
             <button
-              onClick={() => setEditing(false)}
+              aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
+              type="submit"
               className="w-full text-purple flex flex-col items-center"
             >
-              <CancelIcon className="w-6" />
-              <span className="text-sm h-6">Cancel</span>
+              <DeleteIcon className="w-6" />
+              <span className="text-sm h-6">
+                {deleteFailed ? 'Retry' : 'Delete'}
+              </span>
             </button>
-          </div>
-        ) : (
-          <div className="w-12 flex flex-col align-center justify-center">
-            <fetcher.Form method="post">
-              <input type="hidden" name="formType" value="deleteTask" />
-              <input type="hidden" name="id" value={id} />
-              <button
-                aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
-                type="submit"
-                className="w-full text-purple flex flex-col items-center"
-              >
-                <DeleteIcon className="w-6" />
-                <span className="text-sm h-6">
-                  {deleteFailed ? 'Retry Delete' : 'Delete'}
-                </span>
-              </button>
-            </fetcher.Form>
-          </div>
-        )}
+          </fetcher.Form>
+        </div>
       </div>
     </div>
   )

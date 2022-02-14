@@ -43,8 +43,6 @@ export default function Tasks({ entries, errors }: Tasks) {
   let isAddingP1, taskName, goaltime, fetchStateP1
   for (const f of fetchers) {
     if (f.submission && f.submission?.formData.get('id') === 'newtask-p1') {
-      console.log('submitting new p1', f.state)
-
       isAddingP1 = true
       taskName = f.submission?.formData.get('taskname')
       goaltime = f.submission?.formData.get('goaltime')
@@ -55,7 +53,6 @@ export default function Tasks({ entries, errors }: Tasks) {
   let isAddingP2, fetchStateP2
   for (const f of fetchers) {
     if (f.submission && f.submission?.formData.get('id') === 'newtask-p2') {
-      console.log('submitting new p2')
       isAddingP2 = true
       taskName = f.submission?.formData.get('taskname')
       goaltime = f.submission?.formData.get('goaltime')
@@ -66,7 +63,6 @@ export default function Tasks({ entries, errors }: Tasks) {
   let isAddingP3, fetchStateP3
   for (const f of fetchers) {
     if (f.submission && f.submission?.formData.get('id') === 'newtask-p3') {
-      console.log('submitting new p3')
       isAddingP3 = true
       taskName = f.submission?.formData.get('taskname')
       goaltime = f.submission?.formData.get('goaltime')
