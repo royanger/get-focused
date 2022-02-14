@@ -43,9 +43,14 @@ export default function TaskElement({
     fetcher.submission.formData.get('formType') === 'deleteTask'
   const deleteFailed = fetcher.data?.error && fetcher.data.type === 'delete'
 
+  function handleReset() {
+    setEditing(false)
+    formRef.current?.reset()
+  }
+
   return (
     <div
-      className={`flex flex-row mb-2 pt-2 px-2 rounded  w-full ${
+      className={`flex flex-row pt-2 px-2 rounded  w-full ${
         editing
           ? 'border-2 border-transparent bg-grey-200 rounded shadow-lg'
           : 'border-2 border-transparent rounded'
@@ -96,7 +101,11 @@ export default function TaskElement({
             </div>
             <div className="w-36 flex flex-col items-center justify-end px-4 ">
               <div>
-                <TimeTracker tracker={tracker} setTracker={setTracker} />
+                <TimeTracker
+                  tracker={tracker}
+                  setTracker={setTracker}
+                  setEditing={setEditing}
+                />
               </div>
               <div className="text-sm w-36 flex flex-row justify-center h-6">
                 {tracker < 1
@@ -155,7 +164,7 @@ export default function TaskElement({
           }`}
         >
           <button
-            onClick={() => setEditing(false)}
+            onClick={() => handleReset()}
             className="w-full text-purple flex flex-col items-center"
           >
             <CancelIcon className="h-6" />
