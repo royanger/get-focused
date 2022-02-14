@@ -1,8 +1,13 @@
 import * as React from 'react'
 
-export default function TimeTracker({ tracker, setTracker }: TimeTracker) {
+export default function TimeTracker({
+  tracker,
+  setTracker,
+  setEditing,
+}: TimeTracker) {
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setTracker(parseInt(e.currentTarget.id.split('-').slice(1).join('')))
+    setEditing(true)
   }
 
   // use the map index as key -- there shouldn't be a reorder

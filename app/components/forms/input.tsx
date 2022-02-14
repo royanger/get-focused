@@ -4,34 +4,25 @@ export default function Input({
   value,
   name,
   placeholder,
-  formState,
+  editing,
   width,
-  setFormState,
+  setEditing,
   completed,
 }: Input) {
-  // set some styles for the form for 'default' and 'edit' states
-  // TODO probably add 'error' state later after form validation
-  let defaultState =
-    'border-[1px] border-b-purple border-l-transparent border-r-transparent border-t-transparent p-1 border-opacity-50 outline-none focus:ring-0 align-bottom font-input'
-  let editState =
-    'border-1 border-grey-700 p-1 text-black rounded align-bottom focus:outline-none focus:border-purple-300 focus:ring-0'
-  let [currentState, setCurrentState] = React.useState(defaultState)
-
-  React.useEffect(() => {
-    if (formState === 'edit') setCurrentState(editState)
-    if (formState === 'default') setCurrentState(defaultState)
-  }, [formState, currentState])
-
   return (
     <div className={`${width} flex`}>
       <input
-        className={`${width} ${currentState} ${completed}`}
+        className={`${width} ${
+          editing
+            ? 'border-1 border-grey-700 p-1 text-black rounded align-bottom focus:outline-none focus:border-purple-300 focus:ring-0'
+            : 'border-[1px] border-b-purple border-l-transparent border-r-transparent border-t-transparent p-1 border-opacity-50 outline-none focus:ring-0 align-bottom font-input'
+        }`}
         type="text"
         name={name}
         placeholder={placeholder}
         aria-label={placeholder}
         defaultValue={value}
-        onClick={() => setFormState('edit')}
+        onClick={() => setEditing(true)}
       />
     </div>
   )

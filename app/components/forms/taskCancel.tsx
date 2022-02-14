@@ -2,7 +2,7 @@ import Button from '../Button'
 
 // TODO will need to clear form/reset to default values
 
-export default function TaskCancel({ setFormState }: Cancel) {
+export default function TaskCancel({ setEditing }: Cancel) {
   return (
     <>
       <Button
@@ -10,7 +10,7 @@ export default function TaskCancel({ setFormState }: Cancel) {
         variant="cancel"
         size="sm"
         type="reset"
-        onClick={() => setFormState('default')}
+        onClick={() => setEditing(false)}
       />
     </>
   )

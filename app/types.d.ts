@@ -72,7 +72,6 @@ type Tasks = {
     dateId: string
     statusId: string
     name: string
-    actualTime: string
     goalTime: string
     timeTracker: number
     completed?: boolean
@@ -88,7 +87,6 @@ type TasksByPriority = {
         dateId: string
         statusId: string
         name: string
-        actualTime: string
         goalTime: string
         timeTracker: number
         completed?: boolean
@@ -139,17 +137,17 @@ type Radio = {
 }
 
 type Input = {
-  value?: string
+  value?: string | FormDataEntryValue | null
   name: string
   placeholder: string
   width: string
-  formState?: React.ReactChild
-  setFormState: React.Dispatch<React.SetStateAction<string>>
+  editing?: boolean
+  setEditing: React.Dispatch<React.SetStateAction<boolean>>
   completed?: string
 }
 
 type Cancel = {
-  setFormState: React.Dispatch<React.SetStateAction<string>>
+  setEditing: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type TaskElement = {
@@ -159,8 +157,7 @@ type TaskElement = {
   statusId?: string
   value?: FormDataEntryValue | string | null
   placeholder: string
-  actualTime: string
-  goalTime: FormDataEntryValue | string | null
+  goalTime: FormDataEntryValue | string | null | undefined
   timeTracker: number
   type: string
 }

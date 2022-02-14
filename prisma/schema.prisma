@@ -58,7 +58,6 @@ model Task {
    dateId      String      @db.ObjectId
    date        Date        @relation(fields: [dateId], references:[id])
    goalTime    String
-   actualTime  String
    timeTracker Int
    statusId    String
    completed   Boolean     @default(false)
