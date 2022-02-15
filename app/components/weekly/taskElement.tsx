@@ -15,7 +15,7 @@ export default function TaskElement({
   value,
   type,
 }: WeeklyTaskElement) {
-  const [formState, setFormState] = React.useState('default')
+  const [editing, setEditing] = React.useState(false)
   const formRef = React.useRef<HTMLFormElement>(null)
   const transition = useTransition()
   const fetcher = useFetcher()
@@ -34,35 +34,13 @@ export default function TaskElement({
   const isDeleting = fetcher.submission?.formData.get('id') === id
   const deleteFailed = fetcher.data?.error
 
-  let defaultDiv = 'border-2 border-transparent rounded'
-  let editDiv = 'border-2 border-transparent bg-grey-200 rounded shadow-lg'
-  let [currentStateDiv, setCurrentStateDiv] = React.useState(defaultDiv)
-
-  let defaultButtons = 'hidden'
-  let editButtons = 'display'
-  let [currentStateButtons, setCurrentStateButtons] =
-    React.useState(defaultButtons)
-
-  React.useEffect(() => {
-    if (formState === 'edit') {
-      setCurrentStateButtons(editButtons)
-      setCurrentStateDiv(editDiv)
-    }
-    if (formState === 'default') {
-      setCurrentStateDiv(defaultDiv)
-      setCurrentStateButtons(defaultButtons)
-    }
-  }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
-
-  function clickHandler() {
-    setFormState('edit')
-  }
-
   return (
     <li
-      className={`p-4 border-2 rounded ${currentStateDiv} ${
-        deleteFailed && 'border-red'
-      }  ${isDeleting && 'hidden'}`}
+      className={`p-4 border-2 rounded ${
+        editing
+          ? 'border-2 border-transparent bg-grey-200 rounded shadow-lg'
+          : 'border-2 border-transparent rounded'
+      } ${deleteFailed && 'border-red'}  ${isDeleting && 'hidden'}`}
     >
       <div className="flex flex-row">
         <div className="flex-grow">
@@ -75,16 +53,16 @@ export default function TaskElement({
               <Checkbox status={completed} label="Completed" />
               <Input
                 value={value}
-                formState={formState}
+                editing={editing}
                 name="taskname"
                 placeholder={placeholder}
-                setFormState={setFormState}
+                setEditing={setEditing}
                 width="flex-grow"
               />
             </div>
-            <div className={`${currentStateButtons} col-span-7`}>
+            <div className={`${editing ? 'display' : 'hidden'} col-span-7`}>
               <TaskSave />
-              <TaskCancel setFormState={setFormState} />
+              <TaskCancel setEditing={setEditing} />
             </div>
           </Form>
         </div>

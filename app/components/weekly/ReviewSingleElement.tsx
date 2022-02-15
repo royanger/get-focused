@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Form, useFetcher, useTransition } from 'remix'
+import Button from '../button'
 
 // components
 import Input from '../forms/Input'
@@ -15,44 +16,36 @@ export default function ReviewSingleElement({
   reset,
   errors,
 }: Reviews) {
-  const [formState, setFormState] = React.useState('default')
+  //   const [formState, setFormState] = React.useState('default')
+  const [editing, setEditing] = React.useState(false)
   const formRef = React.useRef<HTMLFormElement>(null)
   const transition = useTransition()
   const fetcher = useFetcher()
 
-  const isSubmitting =
+  const buttonState =
     transition.state === 'submitting' &&
     transition.submission?.formData.get('formType') === formType
+      ? { text: 'Saving', variant: 'warning' }
+      : transition.state === 'loading' &&
+        transition?.submission?.formData.get('formType') === formType
+      ? { text: 'Saved!', variant: 'success' }
+      : { text: 'Save', variant: 'default' }
 
-  React.useEffect(() => {
-    setFormState('default')
-  }, [isSubmitting])
+  //   React.useEffect(() => {
+  //     setFormState('default')
+  //   }, [isSubmitting])
 
   const deleteFailed = fetcher.data?.error
 
-  let defaultDiv = 'border-2 border-transparent rounded '
-  let editDiv = 'border-2 border-transparent bg-grey-200 rounded shadow-lg'
-  let [currentStateDiv, setCurrentStateDiv] = React.useState(defaultDiv)
-
-  let defaultButtons = 'hidden'
-  let editButtons = 'display'
-  let [currentStateButtons, setCurrentStateButtons] =
-    React.useState(defaultButtons)
-
-  React.useEffect(() => {
-    if (formState === 'edit') {
-      setCurrentStateButtons(editButtons)
-      setCurrentStateDiv(editDiv)
-    }
-    if (formState === 'default') {
-      setCurrentStateDiv(defaultDiv)
-      setCurrentStateButtons(defaultButtons)
-    }
-  }, [formState, currentStateDiv, currentStateButtons, setCurrentStateButtons])
-
   return (
     <div className={`flex flew-grow flex-row ${deleteFailed && 'border-red'}`}>
-      <div className={`p-4 flex flex-row flex-grow ${currentStateDiv}`}>
+      <div
+        className={`p-4 flex flex-row flex-grow ${
+          editing
+            ? 'border-2 border-transparent bg-grey-200 rounded shadow-lg'
+            : 'border-2 border-transparent rounded'
+        }`}
+      >
         <Form
           className="flex-grow"
           ref={formRef}
@@ -65,18 +58,23 @@ export default function ReviewSingleElement({
           <div className="flex flex-row flex-grow items-center font-input">
             <Input
               value={value}
-              formState={formState}
+              editing={editing}
               name="item"
               placeholder={placeholder}
-              setFormState={setFormState}
+              setEditing={setEditing}
               width="flex-grow"
               aria-label={value ? value : placeholder}
             />
           </div>
 
-          <div className={`${currentStateButtons} col-span-7`}>
+          <div className={`${editing ? 'display' : 'hidden'} col-span-7`}>
+            <Button
+              type="submit"
+              title={buttonState.text}
+              variant={buttonState.variant}
+            />
             <TaskSave />
-            <TaskCancel setFormState={setFormState} />
+            <TaskCancel setEditing={setEditing} />
           </div>
         </Form>
       </div>
