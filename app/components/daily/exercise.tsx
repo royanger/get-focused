@@ -15,10 +15,10 @@ export default function Exercise({ entries, errors }: Exercise) {
       : { text: 'Save', variant: 'default' }
 
   return (
-    <div className="mb-4">
+    <div className="m-2 p-3 border-0 rounded-lg shadow-md shadow-purple-100">
       <HeaderTwo>Did you exercise today?</HeaderTwo>
       <Form method="post" action="/daily/planner">
-        <div className="grid grid-cols-2">
+        <div>
           <input type="hidden" name="formType" value="exercise" />
           <input
             type="hidden"
@@ -42,7 +42,7 @@ export default function Exercise({ entries, errors }: Exercise) {
             </div>
           </div>
 
-          <div className="col-start-2 col-end-2 row-start-1 row-end-3">
+          <div>
             <Button
               type="submit"
               title={buttonState.text}
@@ -50,9 +50,9 @@ export default function Exercise({ entries, errors }: Exercise) {
             />
           </div>
         </div>
-        <div className="text-sm text-error mb-6 h-5">
-          {errors ? errors.error : ''}
-        </div>
+        {errors
+          ? `<div className="text-sm text-error mb-6 h-5">${errors.error}</div>`
+          : ''}
       </Form>
     </div>
   )

@@ -6,21 +6,21 @@ export async function updateOrCreateWellness(
   rating: number,
   userId: string
 ) {
-  let dateResults = await findOrCreateDate('today')
+  const dateResults = await findOrCreateDate('today')
 
   await prisma.$connect()
 
   let wellness
   // if there was no wellness entry, create one
   if (id === 'new') {
-    let wellness = await prisma.wellness.create({
+    const results = await prisma.wellness.create({
       data: {
         rating: rating,
         userId: userId,
         dateId: dateResults.id,
       },
     })
-    return wellness
+    return results
   } else {
     // update existing entry
     wellness = await prisma.wellness.update({

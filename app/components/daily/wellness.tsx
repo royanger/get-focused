@@ -39,7 +39,7 @@ export default function Wellness({ wellness, errors }: Wellness) {
   })
 
   return (
-    <>
+    <div className="m-2 p-3 border-0 rounded-lg shadow-md shadow-purple-100">
       <HeaderTwo>How do you feel?</HeaderTwo>
       <p className="mb-2">Rate how you are feeling out of 10.</p>
       <Form method="post">
@@ -58,6 +58,6 @@ export default function Wellness({ wellness, errors }: Wellness) {
           width="w-28"
         />
       </Form>
-    </>
+    </div>
   )
 }

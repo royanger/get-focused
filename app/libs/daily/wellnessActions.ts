@@ -6,7 +6,7 @@ export async function validateWellnessForm(formData, user) {
     // create entry in database
     const results = await updateOrCreateWellness(
       formData.get('id'),
-      formData.get('rating'),
+      parseInt(formData.get('rating')),
       user.id
     )
 
@@ -25,7 +25,7 @@ export async function validateWellnessForm(formData, user) {
 
   const results = await updateOrCreateWellness(
     formData.get('id'),
-    formData.get('rating'),
+    parseInt(formData.get('rating')),
     user.id
   )
 

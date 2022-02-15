@@ -1,24 +1,22 @@
 import * as React from 'react'
+import { Form } from 'remix'
 import Checkbox from './Checkbox'
 
 export default function CompleteCheckbox({
   status,
+  setCompletedStatus,
   id,
   label,
 }: CompleteCheckbox) {
-  //   const [completedStatus, setCompletedStatus] = React.useState(status)
-
   function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    //  if (e.target.checked === true) {
-    //  }
-    //  setCompletedStatus(e.target.checked)
+    setCompletedStatus(e.currentTarget.checked)
     const key: string = `completed-${id}`
     document.forms[key].submit()
   }
   return (
     <div className="w-12 first:w-7 text-purple h-auto flex justify-center">
       {id !== 'newtask-p1' && id !== 'newtask-p2' && id !== 'newtask-p3' && (
-        <form
+        <Form
           method="post"
           id={`completed-${id}`}
           name={`completed-${id}`}
@@ -26,10 +24,8 @@ export default function CompleteCheckbox({
         >
           <input type="hidden" name="formType" value="completeTask" />
           <input type="hidden" name="id" value={id} />
-          {/* <input type="hidden" name="status" value={status} /> */}
           <Checkbox status={status} label={label} handleClick={handleClick} />
-          {/* <button type="submit">Submit</button> */}
-        </form>
+        </Form>
       )}
     </div>
   )

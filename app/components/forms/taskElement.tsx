@@ -20,6 +20,9 @@ export default function TaskElement({
   // 'editing' controls changes for all elements. Pass these as a prop as needed
   const [editing, setEditing] = React.useState(false)
   const [tracker, setTracker] = React.useState(timeTracker)
+  const [completedStatus, setCompletedStatus] = React.useState(
+    completed ? completed : false
+  )
   const formRef = React.useRef<HTMLFormElement>(null)
   const fetcher = useFetcher()
 
@@ -59,7 +62,12 @@ export default function TaskElement({
       }`}
     >
       <div className="">
-        <CompleteCheckbox label="completed" id={id} status={completed} />
+        <CompleteCheckbox
+          label="completed"
+          id={id}
+          status={completedStatus}
+          setCompletedStatus={setCompletedStatus}
+        />
       </div>
       <div className=" grow">
         <fetcher.Form ref={formRef} method="post" action="/daily/planner">
@@ -78,7 +86,9 @@ export default function TaskElement({
                   placeholder={placeholder}
                   setEditing={setEditing}
                   width="flex-grow"
-                  completed={completed ? 'line-through text-grey-700' : ''}
+                  completed={
+                    completedStatus ? 'line-through text-grey-700' : ''
+                  }
                 />
               </div>
               <div className=" text-red">
@@ -94,7 +104,9 @@ export default function TaskElement({
                   placeholder=""
                   setEditing={setEditing}
                   width="w-14"
-                  completed={completed ? 'line-through text-grey-700' : ''}
+                  completed={
+                    completedStatus ? 'line-through text-grey-700' : ''
+                  }
                 />
               </div>
               <div className="text-sm h-6">Est. Time</div>

@@ -37,7 +37,7 @@ export default function Productivity({ entries, errors }: Productivity) {
   })
 
   return (
-    <>
+    <div className="m-2 mt-8 p-3 border-0 rounded-lg shadow-md shadow-purple-100">
       <HeaderTwo>Productivity Score?</HeaderTwo>
       <p>Rate how you productive you felt out of 10.</p>
       <Form method="post" action="/daily/planner">
@@ -55,6 +55,6 @@ export default function Productivity({ entries, errors }: Productivity) {
           variant={buttonState.variant}
         />
       </Form>
-    </>
+    </div>
   )
 }

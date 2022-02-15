@@ -97,6 +97,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function DailyPlanner() {
   const { wellness, exercise, tasks, notes, productivity } = useLoaderData()
+
   const errors = useActionData()
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -120,19 +121,15 @@ export default function DailyPlanner() {
           <DailyNav week={week} />
 
           <div className="grid grid-cols-2 my-8">
-            <div>
-              <Wellness
-                wellness={wellness}
-                errors={errors?.formType === 'wellness' ? errors : null}
-              />
-            </div>
+            <Wellness
+              wellness={wellness}
+              errors={errors?.formType === 'wellness' ? errors : null}
+            />
 
-            <div>
-              <Exercise
-                entries={exercise}
-                errors={errors?.formType === 'exercise' ? errors : null}
-              />
-            </div>
+            <Exercise
+              entries={exercise}
+              errors={errors?.formType === 'exercise' ? errors : null}
+            />
           </div>
 
           <Tasks

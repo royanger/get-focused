@@ -131,7 +131,7 @@ type Checkbox = {
 }
 
 type Radio = {
-  value?: number | string
+  value?: string
   checked?: boolean
   name: string | undefined
 }
@@ -172,6 +172,7 @@ type WeeklyTaskElement = {
 
 type CompleteCheckbox = {
   status?: boolean
+  setCompletedStatus: React.Dispatch<React.SetStateAction<boolean>>
   label: string
   id: string
 }
@@ -226,6 +227,7 @@ type DeleteButton = {
 type TimeTracker = {
   tracker: number
   setTracker: React.Dispatch<React.SetStateAction<number>>
+  setEditing: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type QueryInfo = {

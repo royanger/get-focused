@@ -104,7 +104,7 @@ export default function Tasks({ entries, errors }: Tasks) {
   })
 
   return (
-    <>
+    <div className="m-2 p-3 border-0 rounded-lg shadow-md shadow-purple-100">
       <TasksTitle
         title="What is your most important goal(s) today?"
         info="Try to focus on one goal, but you can focus on a few."
@@ -205,6 +205,6 @@ export default function Tasks({ entries, errors }: Tasks) {
           {errors ? errors.msg : ''}
         </div>
       ) : null}
-    </>
+    </div>
   )
 }
