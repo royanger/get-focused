@@ -2,9 +2,10 @@ import { prisma } from '../../../prisma/db'
 import { findOrCreateDate } from '../findOrCreateDate'
 
 export async function updateOrCreateExercise(
-  id: string,
+  id: FormDataEntryValue | null,
   completed: boolean,
-  userId: string
+  userId: string,
+  date?: string
 ) {
   let dateResults = await findOrCreateDate('today')
 

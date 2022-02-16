@@ -59,6 +59,8 @@ export let findOrCreateDate = async (targetDate: string) => {
       .finally(async () => {
         await prisma.$disconnect()
       })
+    console.log('DATE', newDateResults)
+
     return newDateResults
   }
 

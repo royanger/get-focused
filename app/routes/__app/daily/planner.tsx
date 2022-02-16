@@ -65,13 +65,20 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   let user = await authenticator.isAuthenticated(request)
 
+  const url = new URL(request.url)
+  const date = url.searchParams.get('date')
+    ? url.searchParams.get('date')
+    : 'today'
+
+  const dateResults = await findOrCreateDate(date!)
+
   let results
   switch (formData.get('formType')) {
     case 'wellness':
       results = await validateWellnessForm(formData, user)
       break
     case 'exercise':
-      results = await validateExerciseForm(formData, user)
+      results = await validateExerciseForm(formData, user, dateResults.id)
       break
     case 'task':
       results = await validateTaskForm(formData, user)

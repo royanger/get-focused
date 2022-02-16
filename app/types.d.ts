@@ -238,6 +238,11 @@ type QueryInfo = {
     }
   ): Tasks | { error: boolean } | null
 }
+
+type ErrorObject = {
+  formType: string
+  error: string
+}
 // type DoughtnutDatasets = {
 //   label: string | number
 //   borderWidth: number

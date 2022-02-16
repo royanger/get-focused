@@ -1,7 +1,11 @@
 import { updateOrCreateExercise } from '~/queries/daily/updateorCreateExercise'
 
-export async function validateExerciseForm(formData, user) {
-  const errors = {}
+export async function validateExerciseForm(
+  formData: FormData,
+  user: { id: string },
+  date: string
+) {
+  const errors = {} as ErrorObject
 
   // make sure that value is not null
   if (formData.get('exercise') === null) {
@@ -19,7 +23,8 @@ export async function validateExerciseForm(formData, user) {
   const results = await updateOrCreateExercise(
     formData.get('id'),
     completed,
-    user.id
+    user.id,
+    date
   )
-  return null
+  return results
 }
