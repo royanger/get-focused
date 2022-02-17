@@ -7,10 +7,10 @@ export async function validateTaskForm(
   date: string
 ) {
   const taskName = formData.get('taskname')
-    ? DOMPurify.sanitize(formData.get('taskname'))
+    ? DOMPurify.sanitize(formData.get('taskname') as string)
     : null
   const goalTime = formData.get('goaltime')
-    ? DOMPurify.sanitize(formData.get('goaltime'))
+    ? DOMPurify.sanitize(formData.get('goaltime') as string)
     : null
 
   if (taskName === null || goalTime === null || goalTime === '0') {
@@ -29,7 +29,7 @@ export async function validateTaskForm(
     formData.get('id')?.toString(),
     taskName,
     goalTime,
-    parseInt(formData.get('timetracker')),
+    parseInt(formData.get('timetracker') as string),
     formData.get('type')?.toString(),
     user.id,
     formData.get('completed') === 'on' ? true : false,

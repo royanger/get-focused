@@ -66,15 +66,11 @@ export const action: ActionFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
 
   const url = new URL(request.url)
-  const date = url.searchParams.get('date')
-    ? url.searchParams.get('date')
+  const date = url.searchParams.get('year')
+    ? url.searchParams.get('year')
     : 'today'
 
-  console.log('DATE', date)
-
   const dateResults = await findOrCreateDate(date!)
-
-  console.log('date results', dateResults)
 
   let results
   switch (formData.get('formType')) {
@@ -94,7 +90,7 @@ export const action: ActionFunction = async ({ request }) => {
       results = await validateProductivityForm(formData, user, dateResults.id)
       break
     case 'deleteTask':
-      results = await deleteTask(formData.get('id'), user)
+      results = await deleteTask(formData.get('id') as string, user)
       break
     case 'completeTask':
       results = await completeTask(formData, user)

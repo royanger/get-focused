@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, useFetcher, useTransition } from 'remix'
+import { Form, useFetcher, useSearchParams, useTransition } from 'remix'
 
 // components
 import Checkbox from '../forms/Checkbox'
@@ -19,6 +19,10 @@ export default function TaskElement({
   const formRef = React.useRef<HTMLFormElement>(null)
   const transition = useTransition()
   const fetcher = useFetcher()
+
+  const [searchParams] = useSearchParams()
+  const paramWeek = searchParams.get('week')
+  const paramYear = searchParams.get('year')
 
   const isAdding =
     transition.submission &&
@@ -44,7 +48,13 @@ export default function TaskElement({
     >
       <div className="flex flex-row">
         <div className="flex-grow">
-          <Form ref={formRef} method="post" action="/weekly/planner">
+          <Form
+            ref={formRef}
+            method="post"
+            action={`/weekly/planner${
+              paramWeek ? `?year=${paramYear}&week=${paramWeek}` : ''
+            }`}
+          >
             <input type="hidden" name="formType" value="addWeeklyTask" />
             <input type="hidden" name="id" value={id} />
             <input type="hidden" name="status" value={`status-${type}`} />

@@ -5,9 +5,10 @@ export async function validateProductivityForm(
   user: { id: string },
   date: string
 ) {
+  const test = formData.get('rating') as string
   // error if the form was submitted without a score
   const errors = {} as ErrorObject
-  if (formData && parseInt(formData.get('rating')) < 1) {
+  if (parseInt(test) < 1) {
     errors.formType = 'productivity'
     errors.message = 'Please enter a productivity score'
   }
@@ -20,8 +21,8 @@ export async function validateProductivityForm(
     // this is new productivity entry and not an edit/update
     // create entry in database
     const results = await updateOrCreateProductivity(
-      formData.get('id')?.toString(),
-      formData.get('rating'),
+      formData.get('id') as string,
+      formData.get('rating') as string,
       user.id,
       date
     )
@@ -29,8 +30,8 @@ export async function validateProductivityForm(
   }
 
   const results = await updateOrCreateProductivity(
-    formData.get('id')?.toString(),
-    formData.get('rating'),
+    formData.get('id') as string,
+    formData.get('rating') as string,
     user.id,
     date
   )

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, useFetcher, useTransition } from 'remix'
+import { Form, useFetcher, useSearchParams, useTransition } from 'remix'
 
 // components
 import Input from '../forms/Input'
@@ -20,6 +20,10 @@ export default function ReviewElement({
   const formRef = React.useRef<HTMLFormElement>(null)
   const transition = useTransition()
   const fetcher = useFetcher()
+
+  const [searchParams] = useSearchParams()
+  const paramWeek = searchParams.get('week')
+  const paramYear = searchParams.get('year')
 
   const isAdding =
     transition.state === 'submitting' &&
@@ -58,7 +62,9 @@ export default function ReviewElement({
           className="flex-grow"
           ref={formRef}
           method="post"
-          action="/weekly/review"
+          action={`/weekly/review${
+            paramWeek ? `?year=${paramYear}&week=${paramWeek}` : ''
+          }`}
         >
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="formType" value={formType} />
@@ -104,7 +110,7 @@ export default function ReviewElement({
       </div>
       {errors && errors.id === id ? (
         <div className="text-sm text-error mb-6 h-5">
-          {errors ? errors.msg : ''}
+          {errors ? errors.message : ''}
         </div>
       ) : null}
     </div>

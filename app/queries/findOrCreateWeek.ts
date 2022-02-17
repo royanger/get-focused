@@ -12,7 +12,7 @@ export let findOrCreateWeek = async (year: number, week: number) => {
     })
   }
 
-  // query to create weekentry
+  // query to create week entry
   async function createWeekEntry(year: number, week: number) {
     await prisma
     return await prisma.week.create({

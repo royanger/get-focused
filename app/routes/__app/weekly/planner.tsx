@@ -28,6 +28,7 @@ import {
   createDateFromWeekAndYear,
   returnNextAndPreviousWeeks,
 } from '~/libs/dateFunctions'
+import { DateTime } from 'luxon'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -61,10 +62,19 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const user = await authenticator.isAuthenticated(request)
 
+  const url = new URL(request.url)
+  const date = DateTime.now().setZone('America/New_York')
+  const year = url.searchParams.get('year')
+    ? parseInt(url.searchParams.get('year') as string)
+    : date.weekYear
+  const week = url.searchParams.get('week')
+    ? parseInt(url.searchParams.get('week') as string)
+    : date.weekNumber
+
   let results
   switch (formData.get('formType')) {
     case 'addWeeklyTask':
-      results = await validateTaskForm(formData, user)
+      results = await validateTaskForm(formData, user, year, week)
       break
     case 'deleteWeeklyTask':
       results = await deleteTask(formData.get('id'), user)

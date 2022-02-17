@@ -6,11 +6,11 @@ export async function validateNotesForm(
   user: { id: string },
   date: string
 ) {
-  let id = formData.get('id')?.toString()
-  const msg = formData.get('message')?.toString()
+  const tempId = formData.get('id') as string
+  const tempMsg = formData.get('message') as string
 
-  id = id ? DOMPurify.sanitize(id) : undefined
-  const message = msg ? DOMPurify.sanitize(msg) : null
+  const id = tempId ? DOMPurify.sanitize(tempId) : undefined
+  const message = tempMsg ? DOMPurify.sanitize(tempMsg) : null
 
   const errors = {} as ErrorObject
 
@@ -19,9 +19,6 @@ export async function validateNotesForm(
     errors.id = formData.get('id')
     errors.message =
       'Please make sure you fill out the note section. You can not save a blank form.'
-  }
-
-  if (Object.keys(errors).length) {
     return errors
   }
 

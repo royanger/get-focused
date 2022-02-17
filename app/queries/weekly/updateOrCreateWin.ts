@@ -4,11 +4,11 @@ import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
 export async function updateOrCreateWin(
   id: string,
-  item: string | null,
-  userId: string
+  item: string,
+  userId: string,
+  year: number,
+  week: number
 ) {
-  const year = createDateInstance('today').year
-  const week = createDateInstance('today').weekNumber
   let weekResults = await findOrCreateWeek(year, week)
 
   await prisma.$connect()

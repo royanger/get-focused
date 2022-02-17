@@ -1,16 +1,17 @@
-import { createDateInstance } from '~/libs/dateFunctions'
 import { prisma } from '~/../prisma/db'
 import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
 
 export async function updateOrCreateTask(
-  id: FormDataEntryValue | null,
+  id: string,
   taskName: string,
   completed: boolean,
-  status: FormDataEntryValue | null,
-  userId: {}
+  status: string,
+  userId: string,
+  year: number,
+  week: number
 ) {
-  const year = createDateInstance('today').year
-  const week = createDateInstance('today').weekNumber
+  //   const year = createDateInstance('today').year
+  //   const week = createDateInstance('today').weekNumber
 
   const weekResults = await findOrCreateWeek(year, week)
 

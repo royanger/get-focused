@@ -42,6 +42,7 @@ import { HeaderOne, HeaderTwo } from '~/components/Headlines'
 import ReviewElement from '~/components/weekly/ReviewElement'
 import ListSection from '~/components/weekly/ListSection'
 import ReviewSingleElement from '~/components/weekly/ReviewSingleElement'
+import { DateTime } from 'luxon'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)
@@ -81,19 +82,28 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   let user = await authenticator.isAuthenticated(request)
 
+  const url = new URL(request.url)
+  const date = DateTime.now().setZone('America/New_York')
+  const year = url.searchParams.get('year')
+    ? parseInt(url.searchParams.get('year') as string)
+    : date.weekYear
+  const week = url.searchParams.get('week')
+    ? parseInt(url.searchParams.get('week') as string)
+    : date.weekNumber
+
   let results
   switch (formData.get('formType')) {
     case 'win':
-      results = await validateWinsForm(formData, user)
+      results = await validateWinsForm(formData, user, year, week)
       break
     case 'improvements':
-      results = await validateImprovementsForm(formData, user)
+      results = await validateImprovementsForm(formData, user, year, week)
       break
     case 'learningpoints':
-      results = await validateLearningPointsForm(formData, user)
+      results = await validateLearningPointsForm(formData, user, year, week)
       break
     case 'refocus':
-      results = await validateRefocusForm(formData, user)
+      results = await validateRefocusForm(formData, user, year, week)
       break
     case 'deleteimprovements':
       results = await deleteImprovements(formData.get('id'), user)
