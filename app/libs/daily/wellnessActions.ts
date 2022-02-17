@@ -1,22 +1,31 @@
 import { updateOrCreateWellness } from '~/queries/daily/updateOrCreateWellness'
 
-export async function validateWellnessForm(formData, user) {
+export async function validateWellnessForm(
+  formData: FormData,
+  user: { id: string },
+  date: string
+) {
+  const rating = formData.get('rating')
+    ? formData.get('rating')?.toString()
+    : '1'
+
   if (formData.get(`id`) === 'new') {
     // this is new wellness entry and not an edit/update
     // create entry in database
     const results = await updateOrCreateWellness(
-      formData.get('id'),
-      parseInt(formData.get('rating')),
-      user.id
+      formData.get('id')?.toString(),
+      parseInt(rating),
+      user.id,
+      date
     )
 
     return results
   }
 
-  const errors = {}
-  if (formData.get('rating') < 1) {
+  const errors = {} as ErrorObject
+  if (parseInt(rating) < 1) {
     errors.formType = 'wellness'
-    errors.error = 'Please enter a wellness score'
+    errors.message = 'Please enter a wellness score'
   }
 
   if (Object.keys(errors).length) {
@@ -24,9 +33,10 @@ export async function validateWellnessForm(formData, user) {
   }
 
   const results = await updateOrCreateWellness(
-    formData.get('id'),
-    parseInt(formData.get('rating')),
-    user.id
+    formData.get('id')?.toString(),
+    parseInt(formData.get('rating')?.toString()),
+    user.id,
+    date
   )
 
   return results

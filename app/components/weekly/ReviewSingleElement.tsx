@@ -1,12 +1,11 @@
 import * as React from 'react'
-import { Form, useFetcher, useTransition } from 'remix'
+import { Form, useFetcher, useSearchParams, useTransition } from 'remix'
 import Button from '../button'
 
 // components
 import Input from '../forms/Input'
 import TaskCancel from '../forms/TaskCancel'
 import TaskSave from '../forms/TaskSave'
-import DeleteIcon from '../icons/delete'
 
 export default function ReviewSingleElement({
   id,
@@ -16,11 +15,14 @@ export default function ReviewSingleElement({
   reset,
   errors,
 }: Reviews) {
-  //   const [formState, setFormState] = React.useState('default')
   const [editing, setEditing] = React.useState(false)
   const formRef = React.useRef<HTMLFormElement>(null)
   const transition = useTransition()
   const fetcher = useFetcher()
+
+  const [searchParams] = useSearchParams()
+  const paramWeek = searchParams.get('week')
+  const paramYear = searchParams.get('year')
 
   const buttonState =
     transition.state === 'submitting' &&
@@ -50,7 +52,9 @@ export default function ReviewSingleElement({
           className="flex-grow"
           ref={formRef}
           method="post"
-          action="/weekly/review"
+          action={`/weekly/review${
+            paramWeek ? `?year=${paramYear}&week=${paramWeek}` : ''
+          }`}
         >
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="formType" value={formType} />
@@ -80,7 +84,7 @@ export default function ReviewSingleElement({
       </div>
       {errors && errors.id === id ? (
         <div className="text-sm text-error mb-6 h-5">
-          {errors ? errors.msg : ''}
+          {errors ? errors.message : ''}
         </div>
       ) : null}
     </div>

@@ -1,16 +1,17 @@
 import { prisma } from '~/../prisma/db'
-import { findOrCreateDate } from '~/queries/findOrCreateDate'
+// import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 export async function updateOrCreateTask(
-  id: string,
+  id: string | undefined,
   taskname: string,
   goalTime: string,
   timetracker: number,
-  type: string,
+  type: string | undefined,
   userId: string,
-  completed: boolean
+  completed: boolean,
+  date: string
 ) {
-  let dateResults = await findOrCreateDate('today')
+  //   let dateResults = await findOrCreateDate('today')
 
   await prisma.$connect()
 
@@ -25,7 +26,7 @@ export async function updateOrCreateTask(
         timeTracker: timetracker,
         statusId: `status-${type}`,
         completed: false,
-        dateId: dateResults.id,
+        dateId: date,
       },
     })
     return task

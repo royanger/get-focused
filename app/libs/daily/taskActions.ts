@@ -1,15 +1,17 @@
 import DOMPurify from 'isomorphic-dompurify'
 import { updateOrCreateTask } from '~/queries/daily/updateOrCreateTask'
 
-export async function validateTaskForm(formData, user) {
-  let taskName = formData.get('taskname')
-    ? DOMPurify.sanitize(formData.get('taskname'))
+export async function validateTaskForm(
+  formData: FormData,
+  user: { id: string },
+  date: string
+) {
+  const taskName = formData.get('taskname')
+    ? DOMPurify.sanitize(formData.get('taskname') as string)
     : null
-  let goalTime = formData.get('goaltime')
-    ? DOMPurify.sanitize(formData.get('goaltime'))
+  const goalTime = formData.get('goaltime')
+    ? DOMPurify.sanitize(formData.get('goaltime') as string)
     : null
-
-  //   const errors = {}
 
   if (taskName === null || goalTime === null || goalTime === '0') {
     return {
@@ -24,13 +26,14 @@ export async function validateTaskForm(formData, user) {
 
   // handle updating/creating
   let results = await updateOrCreateTask(
-    formData.get('id'),
+    formData.get('id')?.toString(),
     taskName,
     goalTime,
-    parseInt(formData.get('timetracker')),
-    formData.get('type'),
+    parseInt(formData.get('timetracker') as string),
+    formData.get('type')?.toString(),
     user.id,
-    formData.get('completed') === 'on' ? true : false
+    formData.get('completed') === 'on' ? true : false,
+    date
   )
   return results
 }

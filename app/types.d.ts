@@ -187,7 +187,7 @@ type ReviewSections = {
   items: Items[]
   title: string
   info: string
-  errors: any
+  errors: ErrorObject
   formType: string
 }
 
@@ -197,11 +197,7 @@ type Reviews = {
   placeholder: string
   formType: string
   reset?: boolean
-  errors?: {
-    formType: string
-    id: string
-    msg: string
-  }
+  errors?: ErrorObject
 }
 
 type WeeklyNavOptions = {
@@ -230,13 +226,10 @@ type TimeTracker = {
   setEditing: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-type QueryInfo = {
-  (
-    id: FormDataEntryValue | null,
-    user: {
-      id: string
-    }
-  ): Tasks | { error: boolean } | null
+type ErrorObject = {
+  formType: string
+  message: string
+  id?: FormDataEntryValue | null
 }
 // type DoughtnutDatasets = {
 //   label: string | number

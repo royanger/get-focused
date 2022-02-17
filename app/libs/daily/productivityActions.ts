@@ -1,11 +1,16 @@
 import { updateOrCreateProductivity } from '~/queries/daily/updateOrCreateProductivity'
 
-export async function validateProductivityForm(formData, user) {
+export async function validateProductivityForm(
+  formData: FormData,
+  user: { id: string },
+  date: string
+) {
+  const test = formData.get('rating') as string
   // error if the form was submitted without a score
-  const errors = {}
-  if (formData.get('rating') < 1) {
+  const errors = {} as ErrorObject
+  if (parseInt(test) < 1) {
     errors.formType = 'productivity'
-    errors.msg = 'Please enter a productivity score'
+    errors.message = 'Please enter a productivity score'
   }
 
   if (Object.keys(errors).length) {
@@ -16,17 +21,19 @@ export async function validateProductivityForm(formData, user) {
     // this is new productivity entry and not an edit/update
     // create entry in database
     const results = await updateOrCreateProductivity(
-      formData.get('id'),
-      formData.get('rating'),
-      user.id
+      formData.get('id') as string,
+      formData.get('rating') as string,
+      user.id,
+      date
     )
     return results
   }
 
   const results = await updateOrCreateProductivity(
-    formData.get('id'),
-    formData.get('rating'),
-    user.id
+    formData.get('id') as string,
+    formData.get('rating') as string,
+    user.id,
+    date
   )
   return results
 }

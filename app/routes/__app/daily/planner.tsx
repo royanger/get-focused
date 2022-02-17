@@ -65,25 +65,32 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   let user = await authenticator.isAuthenticated(request)
 
+  const url = new URL(request.url)
+  const date = url.searchParams.get('year')
+    ? url.searchParams.get('year')
+    : 'today'
+
+  const dateResults = await findOrCreateDate(date!)
+
   let results
   switch (formData.get('formType')) {
     case 'wellness':
-      results = await validateWellnessForm(formData, user)
+      results = await validateWellnessForm(formData, user, dateResults.id)
       break
     case 'exercise':
-      results = await validateExerciseForm(formData, user)
+      results = await validateExerciseForm(formData, user, dateResults.id)
       break
     case 'task':
-      results = await validateTaskForm(formData, user)
+      results = await validateTaskForm(formData, user, dateResults.id)
       break
     case 'note':
-      results = await validateNotesForm(formData, user)
+      results = await validateNotesForm(formData, user, dateResults.id)
       break
     case 'productivity':
-      results = await validateProductivityForm(formData, user)
+      results = await validateProductivityForm(formData, user, dateResults.id)
       break
     case 'deleteTask':
-      results = await deleteTask(formData.get('id'), user)
+      results = await deleteTask(formData.get('id') as string, user)
       break
     case 'completeTask':
       results = await completeTask(formData, user)

@@ -1,13 +1,11 @@
 import { prisma } from '~/../prisma/db'
-import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 export async function updateOrCreateProductivity(
   id: string,
   score: string,
-  userId: string
+  userId: string,
+  date: string
 ) {
-  let dateResults = await findOrCreateDate('today')
-
   await prisma.$connect()
 
   let productivity
@@ -17,7 +15,7 @@ export async function updateOrCreateProductivity(
       data: {
         score: parseInt(score),
         userId: userId,
-        dateId: dateResults.id,
+        dateId: date,
       },
     })
     return productivity

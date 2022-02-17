@@ -1,12 +1,13 @@
 import { prisma } from '../../../prisma/db'
-import { findOrCreateDate } from '../findOrCreateDate'
+// import { findOrCreateDate } from '../findOrCreateDate'
 
 export async function updateOrCreateExercise(
-  id: string,
+  id: FormDataEntryValue | null,
   completed: boolean,
-  userId: string
+  userId: string,
+  date: string
 ) {
-  let dateResults = await findOrCreateDate('today')
+  //   let dateResults = await findOrCreateDate('today')
 
   await prisma.$connect()
 
@@ -17,7 +18,7 @@ export async function updateOrCreateExercise(
       data: {
         completed: completed,
         userId: userId,
-        dateId: dateResults.id,
+        dateId: date,
       },
     })
     return wellness
@@ -25,7 +26,7 @@ export async function updateOrCreateExercise(
     // update existing entry
     await prisma.exercise.update({
       where: {
-        id: id,
+        id: id?.toString(),
       },
       data: {
         completed: completed,
@@ -36,7 +37,7 @@ export async function updateOrCreateExercise(
   let results = await prisma.exercise
     .findUnique({
       where: {
-        id: id,
+        id: id?.toString(),
       },
     })
     .catch(e => {

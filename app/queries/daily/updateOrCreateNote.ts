@@ -1,13 +1,11 @@
 import { prisma } from '~/../prisma/db'
-import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 export async function updateOrCreateNote(
   id: string,
   message: string,
-  userId: string
+  userId: string,
+  date: string
 ) {
-  let dateResults = await findOrCreateDate('today')
-
   await prisma.$connect()
 
   let note
@@ -17,7 +15,7 @@ export async function updateOrCreateNote(
       data: {
         note: message,
         userId: userId,
-        dateId: dateResults.id,
+        dateId: date,
       },
     })
     return note

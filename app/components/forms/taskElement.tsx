@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Input from './Input'
 import Edit from '../icons/edit'
-import { useFetcher } from 'remix'
+import { useFetcher, useSearchParams } from 'remix'
 import CompleteCheckbox from './CompleteCheckbox'
 import TimeTracker from './TimeTracker'
 import DeleteIcon from '../icons/delete'
@@ -25,6 +25,8 @@ export default function TaskElement({
   )
   const formRef = React.useRef<HTMLFormElement>(null)
   const fetcher = useFetcher()
+  const [searchParams] = useSearchParams()
+  const paramDate = searchParams.get('date')
 
   const isAdding =
     fetcher.submission &&
@@ -70,7 +72,11 @@ export default function TaskElement({
         />
       </div>
       <div className=" grow">
-        <fetcher.Form ref={formRef} method="post" action="/daily/planner">
+        <fetcher.Form
+          ref={formRef}
+          method="post"
+          action={`/daily/planner${paramDate ? `?date=${paramDate}` : ''}`}
+        >
           <input type="hidden" name="formType" value="task" />
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="type" value={type} />

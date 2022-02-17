@@ -28,7 +28,7 @@ async function taskComplete(id: string, status: boolean) {
 export let completeTaskQuery = async (
   status: boolean,
   id: string,
-  userId: string | undefined
+  userId: string
 ) => {
   if (id && userId) {
     let tasksQueryResults = await tasksQuery(id, userId)

@@ -1,13 +1,11 @@
 import { prisma } from '~/../prisma/db'
-import { findOrCreateDate } from '~/queries/findOrCreateDate'
 
 export async function updateOrCreateWellness(
-  id: string,
+  id: string | undefined,
   rating: number,
-  userId: string
+  userId: string,
+  date: string
 ) {
-  const dateResults = await findOrCreateDate('today')
-
   await prisma.$connect()
 
   let wellness
@@ -17,7 +15,7 @@ export async function updateOrCreateWellness(
       data: {
         rating: rating,
         userId: userId,
-        dateId: dateResults.id,
+        dateId: date,
       },
     })
     return results

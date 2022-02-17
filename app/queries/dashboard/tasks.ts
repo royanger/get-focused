@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon'
 import { prisma } from '~/../prisma/db'
 
 async function tasksByRange(
@@ -51,7 +52,7 @@ export let findAllTasks = async (
     }
     const endDate = `${endDateParam}T23:59:59.000Z`
 
-    const currentDate = new Date()
+    const currentDate = DateTime.now().setZone('America/New_York').toISO()
     let tasksPartial = await tasksByRange(startDate, endDate, userId)
       .catch(e => {
         throw new Error(e)
