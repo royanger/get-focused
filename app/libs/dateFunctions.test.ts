@@ -62,7 +62,7 @@ test('Jan 31, 2022 to return error', () => {
   }).toThrow('Incorrect date format passed')
 })
 
-test('Expect "today" to return correct URC date', () => {
+test('Expect "today" to return correct UTC date', () => {
   expect(createDateInstance('today').toUTC().toString().split('.')[0]).toBe(
     new Date().toISOString().split('.')[0]
   )

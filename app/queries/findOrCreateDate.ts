@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon'
 import { prisma } from '../../prisma/db'
 
 export let findOrCreateDate = async (targetDate: string) => {
@@ -11,24 +12,21 @@ export let findOrCreateDate = async (targetDate: string) => {
     }
   }
 
-  let date
-
-  if (targetDate != 'today') {
-    date = `${targetDate}T00:00:00.000Z`
-  } else {
-    // no date was passed, use current date
-    const today = new Date().toISOString().slice(0, 10)
-    date = `${today}T00:00:00.000Z`
-  }
+  let date =
+    targetDate !== 'today'
+      ? DateTime.fromISO(targetDate).setZone('America/New_York')
+      : DateTime.now().setZone('America/New_York')
 
   // query to see if date entry exists
   async function dateQuery(date: string) {
     await prisma.$connect()
-    return await prisma.date.findUnique({
+    const results = await prisma.date.findUnique({
       where: {
         date: date,
       },
     })
+    console.log('results', results, date)
+    return results
   }
 
   // query to create date entry
@@ -42,7 +40,7 @@ export let findOrCreateDate = async (targetDate: string) => {
   }
 
   // check if date exists using above query
-  let results = await dateQuery(date)
+  let results = await dateQuery(date.toISO())
     .catch(e => {
       throw new Error(e)
     })
@@ -52,7 +50,7 @@ export let findOrCreateDate = async (targetDate: string) => {
 
   // if date doesn't exist, create a new entry and return data
   if (!results) {
-    let newDateResults = await createDateEntry(date)
+    let newDateResults = await createDateEntry(date.toISO())
       .catch(e => {
         throw new Error(e)
       })

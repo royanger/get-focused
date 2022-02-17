@@ -5,12 +5,14 @@ export async function validateExerciseForm(
   user: { id: string },
   date: string
 ) {
+  console.log('date', date)
+
   const errors = {} as ErrorObject
 
   // make sure that value is not null
   if (formData.get('exercise') === null) {
     errors.formType = 'exercise'
-    errors.error = 'Please indicate whether you exercised or not.'
+    errors.message = 'Please indicate whether you exercised or not.'
   }
 
   if (Object.keys(errors).length) {

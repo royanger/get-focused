@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, useTransition } from 'remix'
+import { Form, useSearchParams, useTransition } from 'remix'
 import Button from '../Button'
 import { HeaderTwo } from '../Headlines'
 
@@ -8,6 +8,8 @@ export default function Wellness({ wellness, errors }: Wellness) {
   const [score, setScore] = React.useState(
     wellness?.rating ? wellness.rating : 0
   )
+  const [searchParams] = useSearchParams()
+  const paramDate = searchParams.get('date')
 
   const buttonState =
     transition.state === 'submitting' &&
@@ -42,7 +44,10 @@ export default function Wellness({ wellness, errors }: Wellness) {
     <div className="m-2 p-3 border-0 rounded-lg shadow-md shadow-purple-100">
       <HeaderTwo>How do you feel?</HeaderTwo>
       <p className="mb-2">Rate how you are feeling out of 10.</p>
-      <Form method="post">
+      <Form
+        method="post"
+        action={`/daily/planner${paramDate ? `?date=${paramDate}` : ''}`}
+      >
         <input type="hidden" name="formType" value="wellness" />
         <input
           type="hidden"

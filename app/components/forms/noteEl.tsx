@@ -1,12 +1,15 @@
 import * as React from 'react'
 import NoteSave from './NoteSave'
 import NoteCancel from './NoteCancel'
-import { Form, useTransition } from 'remix'
+import { Form, useSearchParams, useTransition } from 'remix'
 
 export default function NoteEl({ id, note }: Note) {
   const transition = useTransition()
   let formRef = React.useRef<HTMLFormElement>(null)
   let noteRef = React.useRef<HTMLTextAreaElement>(null)
+  const [searchParams] = useSearchParams()
+  const paramDate = searchParams.get('date')
+
   let isAdding =
     transition.state === 'submitting' &&
     transition.submission.formData.get('formType') === 'note'
@@ -22,7 +25,12 @@ export default function NoteEl({ id, note }: Note) {
 
   return (
     <>
-      <Form ref={formRef} method="post" action="/daily/planner" id={id}>
+      <Form
+        ref={formRef}
+        method="post"
+        action={`/daily/planner${paramDate ? `?date=${paramDate}` : ''}`}
+        id={id}
+      >
         <input type="hidden" name="formType" value="note" />
         <input type="hidden" name="id" value={id} />
         <textarea

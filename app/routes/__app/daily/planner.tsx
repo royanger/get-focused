@@ -70,24 +70,28 @@ export const action: ActionFunction = async ({ request }) => {
     ? url.searchParams.get('date')
     : 'today'
 
+  console.log('DATE', date)
+
   const dateResults = await findOrCreateDate(date!)
+
+  console.log('date results', dateResults)
 
   let results
   switch (formData.get('formType')) {
     case 'wellness':
-      results = await validateWellnessForm(formData, user)
+      results = await validateWellnessForm(formData, user, dateResults.id)
       break
     case 'exercise':
       results = await validateExerciseForm(formData, user, dateResults.id)
       break
     case 'task':
-      results = await validateTaskForm(formData, user)
+      results = await validateTaskForm(formData, user, dateResults.id)
       break
     case 'note':
-      results = await validateNotesForm(formData, user)
+      results = await validateNotesForm(formData, user, dateResults.id)
       break
     case 'productivity':
-      results = await validateProductivityForm(formData, user)
+      results = await validateProductivityForm(formData, user, dateResults.id)
       break
     case 'deleteTask':
       results = await deleteTask(formData.get('id'), user)

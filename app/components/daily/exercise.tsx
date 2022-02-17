@@ -1,10 +1,14 @@
-import { Form, useTransition } from 'remix'
+import { Form, useSearchParams, useTransition } from 'remix'
 import Button from '../Button'
 import Radio from '../forms/Radio'
 import { HeaderTwo } from '../Headlines'
 
 export default function Exercise({ entries, errors }: Exercise) {
   const transition = useTransition()
+
+  const [searchParams] = useSearchParams()
+  const paramDate = searchParams.get('date')
+
   const buttonState =
     transition.state === 'submitting' &&
     transition?.submission?.formData.get('formType') === 'exercise'
@@ -17,7 +21,10 @@ export default function Exercise({ entries, errors }: Exercise) {
   return (
     <div className="m-2 p-3 border-0 rounded-lg shadow-md shadow-purple-100">
       <HeaderTwo>Did you exercise today?</HeaderTwo>
-      <Form method="post" action="/daily/planner">
+      <Form
+        method="post"
+        action={`/daily/planner${paramDate ? `?date=${paramDate}` : ''}`}
+      >
         <div>
           <input type="hidden" name="formType" value="exercise" />
           <input
@@ -51,7 +58,7 @@ export default function Exercise({ entries, errors }: Exercise) {
           </div>
         </div>
         {errors
-          ? `<div className="text-sm text-error mb-6 h-5">${errors.error}</div>`
+          ? `<div className="text-sm text-error mb-6 h-5">${errors.message}</div>`
           : ''}
       </Form>
     </div>

@@ -1,11 +1,13 @@
 import * as React from 'react'
 import { HeaderTwo } from '../Headlines'
-import { Form, useTransition } from 'remix'
+import { Form, useSearchParams, useTransition } from 'remix'
 import Button from '../Button'
 
 export default function Productivity({ entries, errors }: Productivity) {
   const transition = useTransition()
   const [rating, setRating] = React.useState(entries?.score ? entries.score : 0)
+  const [searchParams] = useSearchParams()
+  const paramDate = searchParams.get('date')
 
   const buttonState =
     transition.state === 'submitting' &&
@@ -40,7 +42,10 @@ export default function Productivity({ entries, errors }: Productivity) {
     <div className="m-2 mt-8 p-3 border-0 rounded-lg shadow-md shadow-purple-100">
       <HeaderTwo>Productivity Score?</HeaderTwo>
       <p>Rate how you productive you felt out of 10.</p>
-      <Form method="post" action="/daily/planner">
+      <Form
+        method="post"
+        action={`/daily/planner${paramDate ? `?date=${paramDate}` : ''}`}
+      >
         <input type="hidden" name="formType" value="productivity" />
         <input
           type="hidden"

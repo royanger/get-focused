@@ -241,7 +241,8 @@ type QueryInfo = {
 
 type ErrorObject = {
   formType: string
-  error: string
+  message: string
+  id?: FormDataEntryValue | null
 }
 // type DoughtnutDatasets = {
 //   label: string | number
