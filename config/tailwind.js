@@ -1,7 +1,5 @@
 module.exports = {
-  mode: 'jit',
-  purge: ['./app/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./app/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     fontSize: {
       xs: ['10px', { lineHeight: '14px', letterspacing: '-0.03em' }],
@@ -75,9 +73,6 @@ module.exports = {
         maxwidth: '1200px',
       },
     },
-  },
-  variants: {
-    extend: {},
   },
   // eslint-disable-next-line global-require
   plugins: [require('@tailwindcss/forms')],
