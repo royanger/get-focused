@@ -1,7 +1,8 @@
 import dotenv from 'dotenv'
 dotenv.config()
+import { GoogleStrategy } from 'remix-auth-socials'
 import { findOrCreateUser } from '../queries/findOrCreateUser'
-import { Authenticator, GoogleStrategy } from 'remix-auth'
+import { Authenticator } from 'remix-auth'
 import { sessionStorage } from '~/services/session.server'
 
 // Create an instance of the authenticator, pass a generic with what your
@@ -24,7 +25,7 @@ authenticator.use(
       // TODO this URL needs to change if in production mode
       callbackURL: 'http://localhost:3000/auth/google/callback',
     },
-    async (_, __, ___, profile) => {
+    async ({ profile }) => {
       let user = await findOrCreateUser(
         profile.id,
         profile.emails[0].value,
