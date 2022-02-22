@@ -4,6 +4,7 @@ import {
   LoaderFunction,
   redirect,
   useActionData,
+  useFetchers,
   useLoaderData,
   useSearchParams,
   useTransition,
@@ -96,6 +97,7 @@ function tasksByPriority({ tasks, errors, type }: WeeklyTasksByPriority) {
           placeholder="Enter task name..."
           completed={task.completed}
           type={type}
+          visibility="display"
         />
         {errors && errors.id === task.id ? (
           <div className="text-sm text-error mb-6 h-5">
@@ -112,20 +114,39 @@ function tasksByPriority({ tasks, errors, type }: WeeklyTasksByPriority) {
 export default function WeeklyPlanner() {
   const data = useLoaderData()
   const errors = useActionData()
-  const transition = useTransition()
+  const fetchers = useFetchers()
 
   // create some isAdding variables to handle optimistic UI per task type
-  const isAddingP1 =
-    transition.submission &&
-    transition.submission.formData.get('id') === 'newtask-p1'
 
-  const isAddingP2 =
-    transition.submission &&
-    transition.submission.formData.get('id') === 'newtask-p2'
+  // add these for any priority
+  let taskname
 
-  const isAddingP3 =
-    transition.submission &&
-    transition.submission.formData.get('id') === 'newtask-p3'
+  let isAddingP1, fetchStateP1
+  for (const f of fetchers) {
+    if (f.submission?.formData.get('id') === 'newtask-p1') {
+      isAddingP1 = true
+      taskname = f.submission?.formData.get('taskname')
+      fetchStateP1 = f.state
+    }
+  }
+
+  let isAddingP2, fetchStateP2
+  for (const f of fetchers) {
+    if (f.submission?.formData.get('id') === 'newtask-p2') {
+      isAddingP2 = true
+      taskname = f.submission?.formData.get('taskname')
+      fetchStateP2 = f.state
+    }
+  }
+
+  let isAddingP3, fetchStateP3
+  for (const f of fetchers) {
+    if (f.submission?.formData.get('id') === 'newtask-p3') {
+      isAddingP3 = true
+      taskname = f.submission?.formData.get('taskname')
+      fetchStateP3 = f.state
+    }
+  }
 
   const [searchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
@@ -216,18 +237,23 @@ export default function WeeklyPlanner() {
                 key={Math.random()}
                 id="addingtask-p1"
                 placeholder="Enter your task here..."
-                value={transition.submission.formData.get('taskname')}
+                value={taskname}
                 completed={false}
                 type="p1"
+                saving={true}
+                visibility="display"
               />
             )}
+
             <TaskElement
               key={`newtask-p1`}
               id={`newtask-p1`}
-              placeholder="Create a new task"
+              placeholder="Create a new task sdf"
               completed={false}
               type="p1"
+              visibility={fetchStateP1 ? 'hidden' : 'display'}
             />
+            {/* </div> */}
             {errors && errors.id === 'newtask-p1' ? (
               <div className="text-sm text-error mb-6 h-5">
                 {errors ? errors.msg : ''}
@@ -249,9 +275,10 @@ export default function WeeklyPlanner() {
                 key={Math.random()}
                 id="addingtask-p2"
                 placeholder="Enter your task here..."
-                value={transition.submission.formData.get('taskname')}
+                value={taskname}
                 completed={false}
                 type="p2"
+                visibility="display"
               />
             )}
             <TaskElement
@@ -260,6 +287,7 @@ export default function WeeklyPlanner() {
               placeholder="Create a new task"
               completed={false}
               type="p2"
+              visibility={fetchStateP2 ? 'hidden' : 'display'}
             />
             {errors && errors.id === 'newtask-p2' ? (
               <div className="text-sm text-error mb-6 h-5">
@@ -282,9 +310,10 @@ export default function WeeklyPlanner() {
                 key={Math.random()}
                 id="addingtask-p3"
                 placeholder="Enter your task here..."
-                value={transition.submission.formData.get('taskname')}
+                value={taskname}
                 completed={false}
                 type="p3"
+                visibility="display"
               />
             )}
             <TaskElement
@@ -293,6 +322,7 @@ export default function WeeklyPlanner() {
               placeholder="Create a new task"
               completed={false}
               type="p3"
+              visibility={fetchStateP3 ? 'hidden' : 'display'}
             />
             {errors && errors.id === 'newtask-p3' ? (
               <div className="text-sm text-error mb-6 h-5">

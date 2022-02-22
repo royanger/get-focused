@@ -5,7 +5,7 @@ import { Form, useFetcher, useSearchParams, useTransition } from 'remix'
 import Input from '../forms/Input'
 import TaskCancel from '../forms/TaskCancel'
 import TaskSave from '../forms/TaskSave'
-import DeleteIcon from '../icons/delete'
+import DeleteIcon from '../icons/DeleteIcon'
 
 export default function ReviewElement({
   id,

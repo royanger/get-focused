@@ -1,5 +1,5 @@
-import ForwardIcon from '../icons/forward'
-import BackIcon from '../icons/back'
+import ForwardIcon from '../icons/ForwardIcon'
+import BackIcon from '../icons/BackIcon'
 import { useSearchParams } from 'remix'
 
 export default function WeeklyNav({ navigation, dates }: WeeklyNav) {

@@ -127,7 +127,7 @@ type Wellness = {
 type Checkbox = {
   status?: boolean
   label: string
-  handleClick: (values: any) => void | undefined
+  handleClick?: (values: any) => void | undefined
 }
 
 type Radio = {
@@ -168,6 +168,8 @@ type WeeklyTaskElement = {
   completed?: boolean
   value?: string | FormDataEntryValue | null
   type: string
+  saving?: true
+  visibility: string
 }
 
 type CompleteCheckbox = {

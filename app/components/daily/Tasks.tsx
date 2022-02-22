@@ -1,4 +1,3 @@
-import * as React from 'react'
 import TasksTitle from './TasksTitle'
 import TaskElement from '../forms/TaskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
