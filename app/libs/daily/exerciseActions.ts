@@ -5,8 +5,6 @@ export async function validateExerciseForm(
   user: { id: string },
   date: string
 ) {
-  console.log('date', date)
-
   const errors = {} as ErrorObject
 
   // make sure that value is not null

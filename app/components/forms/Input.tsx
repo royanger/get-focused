@@ -23,6 +23,7 @@ export default function Input({
         aria-label={placeholder}
         defaultValue={value}
         onClick={() => setEditing(true)}
+        onChange={() => setEditing(true)}
       />
     </div>
   )
