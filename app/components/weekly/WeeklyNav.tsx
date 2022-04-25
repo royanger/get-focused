@@ -1,6 +1,6 @@
 import ForwardIcon from '../icons/ForwardIcon'
 import BackIcon from '../icons/BackIcon'
-import { useSearchParams } from 'remix'
+import { useSearchParams } from '@remix-run/react'
 
 export default function WeeklyNav({ navigation, dates }: WeeklyNav) {
   const [searchParams, setSearchParams] = useSearchParams()

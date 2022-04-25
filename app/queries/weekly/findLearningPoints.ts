@@ -1,4 +1,4 @@
-import { prisma } from '~/../prisma/db'
+import { prisma } from '../../../prisma/db'
 
 export default async function findLearningPoints(week: string, userId: string) {
   async function queryLearningPoints(week: string, userId: string) {

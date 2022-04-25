@@ -1,5 +1,6 @@
-import { LoaderFunction, MetaFunction, useLoaderData, Form } from 'remix'
-import { authenticator } from '~/services/auth.server'
+import { useLoaderData, Form } from '@remix-run/react'
+import type { LoaderFunction, MetaFunction } from '@remix-run/node'
+import { authenticator } from '../services/auth.server'
 import { SocialsProvider } from 'remix-auth-socials'
 
 interface SocialButtonProps {

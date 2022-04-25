@@ -1,4 +1,4 @@
-import { updateOrCreateExercise } from '~/queries/daily/updateorCreateExercise'
+import { updateOrCreateExercise } from '../../queries/daily/updateorCreateExercise'
 
 export async function validateExerciseForm(
   formData: FormData,

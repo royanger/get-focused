@@ -1,5 +1,7 @@
-import { ActionFunction, json, LoaderFunction, redirect } from 'remix'
-import { destroySession, getSession } from '~/services/session.server'
+import { json, redirect } from '@remix-run/node'
+import type { ActionFunction, LoaderFunction } from '@remix-run/node'
+
+import { destroySession, getSession } from '../services/session.server'
 
 export let action: ActionFunction = async ({ request }) => {
   return redirect('/', {

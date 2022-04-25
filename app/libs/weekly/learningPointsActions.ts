@@ -1,6 +1,6 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { deleteLearningPointQuery } from '~/queries/weekly/deleteLearningPoints'
-import { updateOrCreateLearningPoint } from '~/queries/weekly/updateOrCreateLearningPoint'
+import { deleteLearningPointQuery } from '../../queries/weekly/deleteLearningPoints'
+import { updateOrCreateLearningPoint } from '../../queries/weekly/updateOrCreateLearningPoint'
 
 export async function validateLearningPointsForm(
   formData: FormData,

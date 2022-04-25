@@ -1,34 +1,34 @@
 import * as React from 'react'
 import {
-  ActionFunction,
-  LoaderFunction,
-  redirect,
   useActionData,
   useFetchers,
   useLoaderData,
   useSearchParams,
   useTransition,
-} from 'remix'
-import { authenticator } from '~/services/auth.server'
+} from '@remix-run/react'
+import { redirect } from '@remix-run/node'
+import type { ActionFunction, LoaderFunction } from '@remix-run/node'
+
+import { authenticator } from '../../../services/auth.server'
 
 // components
-import Container from '~/components/Container'
-import { HeaderOne } from '~/components/Headlines'
-import TaskElement from '~/components/weekly/TaskElement'
-import TasksTitle from '~/components/daily/TasksTitle'
-import WeeklyNav from '~/components/weekly/WeeklyNav'
+import Container from '../../../components/Container'
+import { HeaderOne } from '../../../components/Headlines'
+import TaskElement from '../../../components/weekly/TaskElement'
+import TasksTitle from '../../../components/daily/TasksTitle'
+import WeeklyNav from '../../../components/weekly/WeeklyNav'
 
 // libs for queries and actions
-import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '~/libs/priorityIds'
-import { findTasks } from '~/queries/weekly/findTasks'
-import { deleteTask, validateTaskForm } from '~/libs/weekly/taskActions'
+import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../../libs/priorityIds'
+import { findTasks } from '../../../queries/weekly/findTasks'
+import { deleteTask, validateTaskForm } from '../../../libs/weekly/taskActions'
 import {
   createDateInstance,
   formatDateRange,
   startDateAndEndDateFromWeek,
   createDateFromWeekAndYear,
   returnNextAndPreviousWeeks,
-} from '~/libs/dateFunctions'
+} from '../../../libs/dateFunctions'
 import { DateTime } from 'luxon'
 
 export const loader: LoaderFunction = async ({ request }) => {

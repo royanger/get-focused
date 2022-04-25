@@ -1,5 +1,5 @@
-import { prisma } from '~/../prisma/db'
-import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
+import { prisma } from '../../../prisma/db'
+import { findOrCreateWeek } from '../../queries/findOrCreateWeek'
 
 export async function updateOrCreateImprovement(
   id: string,

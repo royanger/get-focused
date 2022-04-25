@@ -8,13 +8,12 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
-  LoaderFunction,
   useLoaderData,
   useLocation,
   Form,
-} from 'remix'
-import type { LinksFunction } from 'remix'
-import { authenticator } from '~/services/auth.server'
+} from '@remix-run/react'
+import type { LoaderFunction, LinksFunction } from '@remix-run/node'
+import { authenticator } from './services/auth.server'
 import Logo from './components/icons/logo'
 import Container from './components/Container'
 

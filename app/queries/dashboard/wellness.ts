@@ -1,4 +1,4 @@
-import { prisma } from '~/../prisma/db'
+import { prisma } from '../../../prisma/db'
 
 async function wellnessQuery(userId: string) {
   await prisma.$connect()

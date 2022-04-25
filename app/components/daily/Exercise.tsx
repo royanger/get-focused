@@ -1,4 +1,4 @@
-import { Form, useSearchParams, useTransition } from 'remix'
+import { Form, useSearchParams, useTransition } from '@remix-run/react'
 import Button from '../Button'
 import Radio from '../forms/Radio'
 import { HeaderTwo } from '../Headlines'

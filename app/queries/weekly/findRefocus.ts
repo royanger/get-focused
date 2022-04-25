@@ -1,4 +1,4 @@
-import { prisma } from '~/../prisma/db'
+import { prisma } from '../../../prisma/db'
 
 export default async function findRefocus(week: string, userId: string) {
   async function queryRefocus(week: string, userId: string) {

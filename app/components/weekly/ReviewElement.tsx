@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { Form, useFetcher, useSearchParams, useTransition } from 'remix'
+import {
+  Form,
+  useFetcher,
+  useSearchParams,
+  useTransition,
+} from '@remix-run/react'
 
 // components
 import Input from '../forms/Input'

@@ -1,5 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { updateOrCreateRefocus } from '~/queries/weekly/updateOrCreateRefocus'
+import { updateOrCreateRefocus } from '../../queries/weekly/updateOrCreateRefocus'
 
 export async function validateRefocusForm(
   formData: FormData,

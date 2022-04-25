@@ -1,5 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { updateOrCreateWin } from '~/queries/weekly/updateOrCreateWin'
+import { updateOrCreateWin } from '../../queries/weekly/updateOrCreateWin'
 
 export async function validateWinsForm(
   formData: FormData,

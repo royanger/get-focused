@@ -1,5 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { updateOrCreateTask } from '~/queries/daily/updateOrCreateTask'
+import { updateOrCreateTask } from '../../queries/daily/updateOrCreateTask'
 
 export async function validateTaskForm(
   formData: FormData,

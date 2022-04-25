@@ -1,6 +1,6 @@
-import { updateOrCreateTask } from '~/queries/weekly/updateOrCreateTask'
+import { updateOrCreateTask } from '../../queries/weekly/updateOrCreateTask'
 import DOMPurify from 'isomorphic-dompurify'
-import { deleteTaskQuery } from '~/queries/weekly/deleteTask'
+import { deleteTaskQuery } from '../../queries/weekly/deleteTask'
 
 export async function validateTaskForm(
   formData: FormData,

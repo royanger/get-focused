@@ -1,4 +1,4 @@
-import { findAllProductivityEntries } from '~/queries/dashboard/productivity'
+import { findAllProductivityEntries } from '../../queries/dashboard/productivity'
 
 interface Results {
   score: number

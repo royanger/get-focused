@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Input from './Input'
 import Edit from '../icons/EditIcon'
-import { useFetcher, useSearchParams } from 'remix'
+import { useFetcher, useSearchParams } from '@remix-run/react'
 import CompleteCheckbox from './CompleteCheckbox'
 import TimeTracker from './TimeTracker'
 import DeleteIcon from '../icons/DeleteIcon'
