@@ -22,8 +22,7 @@ authenticator.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      // TODO this URL needs to change if in production mode
-      callbackURL: `${process.env.URL}auth/google/callback`,
+      callbackURL: `${process.env.GOOGLE_CALLBACK_URL}`,
     },
     async ({ profile }) => {
       let user = await findOrCreateUser(
