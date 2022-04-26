@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { HeaderTwo } from '../Headlines'
-import { Form, useSearchParams, useTransition } from 'remix'
+import { Form, useSearchParams, useTransition } from '@remix-run/react'
 import Button from '../Button'
 
 export default function Productivity({ entries, errors }: Productivity) {

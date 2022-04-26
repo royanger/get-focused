@@ -1,40 +1,38 @@
-import {
-  useLoaderData,
-  ActionFunction,
-  LoaderFunction,
-  useActionData,
-  redirect,
-  useSearchParams,
-} from 'remix'
-import { authenticator } from '~/services/auth.server'
+import { useLoaderData, useActionData, useSearchParams } from '@remix-run/react'
+import { redirect } from '@remix-run/node'
+import type { ActionFunction, LoaderFunction } from '@remix-run/node'
+import { authenticator } from '../../../services/auth.server'
 
 // components
-import Container from '~/components/Container'
-import { HeaderOne } from '~/components/Headlines'
-import Wellness from '~/components/daily/Wellness'
-import Exercise from '~/components/daily/Exercise'
-import Tasks from '~/components/daily/Tasks'
-import Notes from '~/components/daily/Notes'
-import Productivity from '~/components/daily/Productivity'
-import DailyNav from '~/components/daily/DailyNav'
+import Container from '../../../components/Container'
+import { HeaderOne } from '../../../components/Headlines'
+import Wellness from '../../../components/daily/Wellness'
+import Exercise from '../../../components/daily/Exercise'
+import Tasks from '../../../components/daily/Tasks'
+import Notes from '../../../components/daily/Notes'
+import Productivity from '../../../components/daily/Productivity'
+import DailyNav from '../../../components/daily/DailyNav'
 
 // libs for handling queries
-import { findWellnessEntries } from '~/queries/daily/findWellness'
-import { findExerciseEntries } from '~/queries/daily/findExercise'
-import { findTasksEntries } from '~/queries/daily/findTasks'
-import { findNotesEntries } from '~/queries/daily/findNotes'
-import { findProductivityEntries } from '~/queries/daily/findProductivity'
-import { deleteTask } from '~/libs/daily/deleteTask'
-import { completeTask } from '~/libs/daily/completeTask'
+import { findWellnessEntries } from '../../../queries/daily/findWellness'
+import { findExerciseEntries } from '../../../queries/daily/findExercise'
+import { findTasksEntries } from '../../../queries/daily/findTasks'
+import { findNotesEntries } from '../../../queries/daily/findNotes'
+import { findProductivityEntries } from '../../../queries/daily/findProductivity'
+import { deleteTask } from '../../../libs/daily/deleteTask'
+import { completeTask } from '../../../libs/daily/completeTask'
 
 // validators for form submissions
-import { validateWellnessForm } from '~/libs/daily/wellnessActions'
-import { validateExerciseForm } from '~/libs/daily/exerciseActions'
-import { validateTaskForm } from '~/libs/daily/taskActions'
-import { validateNotesForm } from '~/libs/daily/noteActions'
-import { validateProductivityForm } from '~/libs/daily/productivityActions'
-import { findOrCreateDate } from '~/queries/findOrCreateDate'
-import { createDateInstance, allWeekDaysFromWeek } from '~/libs/dateFunctions'
+import { validateWellnessForm } from '../../../libs/daily/wellnessActions'
+import { validateExerciseForm } from '../../../libs/daily/exerciseActions'
+import { validateTaskForm } from '../../../libs/daily/taskActions'
+import { validateNotesForm } from '../../../libs/daily/noteActions'
+import { validateProductivityForm } from '../../../libs/daily/productivityActions'
+import { findOrCreateDate } from '../../../queries/findOrCreateDate'
+import {
+  createDateInstance,
+  allWeekDaysFromWeek,
+} from '../../../libs/dateFunctions'
 
 export let loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)

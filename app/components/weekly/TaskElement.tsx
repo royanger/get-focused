@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useFetcher, useSearchParams } from 'remix'
+import { useFetcher, useSearchParams } from '@remix-run/react'
 
 // components
 import Checkbox from '../forms/Checkbox'

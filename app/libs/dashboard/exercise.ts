@@ -1,4 +1,4 @@
-import { findAllExerciseEntries } from '~/queries/dashboard/exercise'
+import { findAllExerciseEntries } from '../../queries/dashboard/exercise'
 
 interface Results {
   completed: boolean

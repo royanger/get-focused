@@ -1,4 +1,4 @@
-import { updateOrCreateProductivity } from '~/queries/daily/updateOrCreateProductivity'
+import { updateOrCreateProductivity } from '../../queries/daily/updateOrCreateProductivity'
 
 export async function validateProductivityForm(
   formData: FormData,

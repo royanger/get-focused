@@ -1,7 +1,7 @@
 import TasksTitle from './TasksTitle'
 import TaskElement from '../forms/TaskElement'
 import { PRIORITY_1, PRIORITY_2, PRIORITY_3 } from '../../libs/priorityIds'
-import { useFetchers } from 'remix'
+import { useFetchers } from '@remix-run/react'
 
 function tasksByPriority({ tasks, type, errors }: TasksByPriority) {
   let taskList

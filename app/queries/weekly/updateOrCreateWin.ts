@@ -1,6 +1,6 @@
-import { createDateInstance } from '~/libs/dateFunctions'
-import { prisma } from '~/../prisma/db'
-import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
+import { createDateInstance } from '../../libs/dateFunctions'
+import { prisma } from '../../../prisma/db'
+import { findOrCreateWeek } from '../../queries/findOrCreateWeek'
 
 export async function updateOrCreateWin(
   id: string,

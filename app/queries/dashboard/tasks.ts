@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { prisma } from '~/../prisma/db'
+import { prisma } from '../../../prisma/db'
 
 async function tasksByRange(
   startDate: string,

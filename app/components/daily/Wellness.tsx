@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, useSearchParams, useTransition } from 'remix'
+import { Form, useSearchParams, useTransition } from '@remix-run/react'
 import Button from '../Button'
 import { HeaderTwo } from '../Headlines'
 

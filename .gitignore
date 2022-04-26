@@ -13,3 +13,9 @@ node_modules
 .env.production.local
 
 tailwind.css
+
+/build/
+/public/build
+/api/index.js
+/api/index.js.map
+/testing/

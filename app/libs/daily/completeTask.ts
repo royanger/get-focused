@@ -1,4 +1,4 @@
-import { completeTaskQuery } from '~/queries/daily/completeTask'
+import { completeTaskQuery } from '../../queries/daily/completeTask'
 
 export async function completeTask(formData: FormData, user: { id: string }) {
   const status = (await formData.get('completed')) === 'on' ? true : false

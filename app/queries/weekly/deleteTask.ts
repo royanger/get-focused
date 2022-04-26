@@ -1,4 +1,4 @@
-import { prisma } from '~/../prisma/db'
+import { prisma } from '../../../prisma/db'
 
 async function tasksQuery(id: FormDataEntryValue, userId: string) {
   await prisma.$connect()

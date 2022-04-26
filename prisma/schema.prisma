@@ -3,7 +3,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
+//   previewFeatures = ["mongodb"]
 }
 
 datasource db {
@@ -12,7 +12,7 @@ datasource db {
 }
 
 model User {
-   id             String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id             String   @id @default(auto()) @map("_id") @db.ObjectId
    email          String
    googleId       String   @unique
    givenName      String
@@ -30,7 +30,7 @@ model User {
 }
 
 model Date {
-   id             String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id             String      @id @default(auto()) @map("_id") @db.ObjectId
    date           DateTime    @db.Date @unique
    wellness       Wellness[]
    exercise       Exercise[]
@@ -40,7 +40,7 @@ model Date {
 }
 
 model Week {
-   id             String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id             String      @id @default(auto()) @map("_id") @db.ObjectId
    week           Int
    year           Int
    weeklyTask     Weeklytask[]
@@ -51,7 +51,7 @@ model Week {
 }
 
 model Task {
-   id          String      @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String      @id @default(auto()) @map("_id") @db.ObjectId
    name        String
    userId      String      @db.ObjectId
    user        User        @relation(fields: [userId], references:[id])
@@ -64,7 +64,7 @@ model Task {
 }
 
 model Exercise {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields: [userId], references:[id])
    completed   Boolean  @default(false)
@@ -73,7 +73,7 @@ model Exercise {
 }
 
 model Wellness {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields: [userId], references:[id])
    rating      Int
@@ -82,7 +82,7 @@ model Wellness {
 }
 
 model Productivity {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields: [userId], references:[id])
    score       Int
@@ -91,7 +91,7 @@ model Productivity {
 }
 
 model Note {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    note        String
@@ -100,7 +100,7 @@ model Note {
 }
 
 model Weeklytask {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    task        String
@@ -111,7 +111,7 @@ model Weeklytask {
 }
 
 model Wins {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
@@ -120,7 +120,7 @@ model Wins {
 }
 
 model Improvements {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
@@ -129,7 +129,7 @@ model Improvements {
 }
 
 model Learning {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String
@@ -138,7 +138,7 @@ model Learning {
 }
 
 model Refocus {
-   id          String   @id @default(dbgenerated()) @map("_id") @db.ObjectId
+   id          String   @id @default(auto()) @map("_id") @db.ObjectId
    userId      String   @db.ObjectId
    user        User     @relation(fields:[userId], references:[id])
    item        String

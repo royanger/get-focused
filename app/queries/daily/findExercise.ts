@@ -1,4 +1,4 @@
-import { prisma } from '~/../prisma/db'
+import { prisma } from '../../../prisma/db'
 
 async function exerciseQuery(date: string, userId: string) {
   await prisma.$connect()

@@ -1,4 +1,4 @@
-import { findAllWellnessEntries } from '~/queries/dashboard/wellness'
+import { findAllWellnessEntries } from '../../queries/dashboard/wellness'
 
 interface Results {
   rating: number

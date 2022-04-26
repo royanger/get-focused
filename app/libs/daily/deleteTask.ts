@@ -1,4 +1,4 @@
-import { deleteTaskQuery } from '~/queries/daily/deleteTask'
+import { deleteTaskQuery } from '../../queries/daily/deleteTask'
 
 export const deleteTask = async (id: string, user: { id: string }) => {
   try {

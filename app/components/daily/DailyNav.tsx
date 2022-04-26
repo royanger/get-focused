@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useSearchParams } from 'remix'
+import { useSearchParams } from '@remix-run/react'
 import {
   formatDateForDailyNav,
   formatDate,
@@ -7,7 +7,7 @@ import {
   createDateInstance,
   createDateFromWeekAndYear,
   returnNextAndPreviousWeeks,
-} from '~/libs/dateFunctions'
+} from '../../libs/dateFunctions'
 import BackIcon from '../icons/BackIcon'
 import ForwardIcon from '../icons/ForwardIcon'
 

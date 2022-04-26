@@ -1,6 +1,6 @@
 import DOMPurify from 'isomorphic-dompurify'
-import { deleteImprovementQuery } from '~/queries/weekly/deleteImprovement'
-import { updateOrCreateImprovement } from '~/queries/weekly/updateOrCreateImprovement'
+import { deleteImprovementQuery } from '../../queries/weekly/deleteImprovement'
+import { updateOrCreateImprovement } from '../../queries/weekly/updateOrCreateImprovement'
 
 export async function validateImprovementsForm(
   formData: FormData,

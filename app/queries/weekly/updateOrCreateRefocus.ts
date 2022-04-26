@@ -1,6 +1,6 @@
-import { prisma } from '~/../prisma/db'
+import { prisma } from '../../../prisma/db'
 
-import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
+import { findOrCreateWeek } from '../../queries/findOrCreateWeek'
 
 export async function updateOrCreateRefocus(
   id: string,

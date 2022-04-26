@@ -1,4 +1,5 @@
-import { createCookieSessionStorage, Session } from 'remix'
+import { createCookieSessionStorage } from '@remix-run/node'
+import type { Session } from '@remix-run/node'
 
 export let sessionStorage = createCookieSessionStorage({
   cookie: {

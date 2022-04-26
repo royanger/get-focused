@@ -4,44 +4,39 @@ import {
   startDateAndEndDateFromWeek,
   createDateFromWeekAndYear,
   returnNextAndPreviousWeeks,
-} from '~/libs/dateFunctions'
+} from '../../../libs/dateFunctions'
 
-import {
-  LoaderFunction,
-  ActionFunction,
-  useLoaderData,
-  useActionData,
-  useSearchParams,
-  redirect,
-} from 'remix'
-import { authenticator } from '~/services/auth.server'
-import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
+import { useLoaderData, useActionData, useSearchParams } from '@remix-run/react'
+import { redirect } from '@remix-run/node'
+import type { ActionFunction, LoaderFunction } from '@remix-run/node'
+import { authenticator } from '../../../services/auth.server'
+import { findOrCreateWeek } from '../../../queries/findOrCreateWeek'
 
 // loaders
-import findWin from '~/queries/weekly/findWin'
-import findImprovements from '~/queries/weekly/findImprovements'
-import findLearningPoints from '~/queries/weekly/findLearningPoints'
-import findRefocus from '~/queries/weekly/findRefocus'
-import WeeklyNav from '~/components/weekly/WeeklyNav'
+import findWin from '../../../queries/weekly/findWin'
+import findImprovements from '../../../queries/weekly/findImprovements'
+import findLearningPoints from '../../../queries/weekly/findLearningPoints'
+import findRefocus from '../../../queries/weekly/findRefocus'
+import WeeklyNav from '../../../components/weekly/WeeklyNav'
 
 // actions
-import { validateWinsForm } from '~/libs/weekly/winsActions'
+import { validateWinsForm } from '../../../libs/weekly/winsActions'
 import {
   deleteImprovements,
   validateImprovementsForm,
-} from '~/libs/weekly/improvementsActions'
+} from '../../../libs/weekly/improvementsActions'
 import {
   deleteLearningPoints,
   validateLearningPointsForm,
-} from '~/libs/weekly/learningPointsActions'
-import { validateRefocusForm } from '~/libs/weekly/refocusActions'
+} from '../../../libs/weekly/learningPointsActions'
+import { validateRefocusForm } from '../../../libs/weekly/refocusActions'
 
 // components
-import Container from '~/components/Container'
-import { HeaderOne, HeaderTwo } from '~/components/Headlines'
-import ReviewElement from '~/components/weekly/ReviewElement'
-import ListSection from '~/components/weekly/ListSection'
-import ReviewSingleElement from '~/components/weekly/ReviewSingleElement'
+import Container from '../../../components/Container'
+import { HeaderOne, HeaderTwo } from '../../../components/Headlines'
+import ReviewElement from '../../../components/weekly/ReviewElement'
+import ListSection from '../../../components/weekly/ListSection'
+import ReviewSingleElement from '../../../components/weekly/ReviewSingleElement'
 import { DateTime } from 'luxon'
 
 export let loader: LoaderFunction = async ({ request }) => {

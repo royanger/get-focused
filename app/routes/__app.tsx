@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { LoaderFunction } from '@remix-run/node'
 import {
   Link,
   Links,
@@ -8,15 +9,14 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
-  LoaderFunction,
   useLoaderData,
   useLocation,
   Form,
-} from 'remix'
-import type { LinksFunction } from 'remix'
-import { authenticator } from '~/services/auth.server'
-import Logo from '~/components/icons/logo'
-import Container from '~/components/Container'
+} from '@remix-run/react'
+import type { LinksFunction } from '@remix-run/node'
+import { authenticator } from '../services/auth.server'
+import Logo from '../components/icons/Logo'
+import Container from '../components/Container'
 
 import tailwindUrl from './styles/tailwind.css'
 

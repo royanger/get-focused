@@ -1,5 +1,5 @@
-import { prisma } from '~/../prisma/db'
-import { findOrCreateWeek } from '~/queries/findOrCreateWeek'
+import { prisma } from '../../../prisma/db'
+import { findOrCreateWeek } from '../../queries/findOrCreateWeek'
 
 export async function findTasks(year: number, week: number, userId: string) {
   const weekResults = await findOrCreateWeek(year, week)

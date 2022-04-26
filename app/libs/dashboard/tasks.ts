@@ -1,4 +1,4 @@
-import { findAllTasks } from '~/queries/dashboard/tasks'
+import { findAllTasks } from '../../queries/dashboard/tasks'
 import { createDateInstance, formatDate, weeksInMonth } from '../dateFunctions'
 
 export async function generateTasksData(user: string) {
