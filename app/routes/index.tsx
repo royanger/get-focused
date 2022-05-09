@@ -51,7 +51,10 @@ export default function Index() {
               label="Login with Google"
             />
             <form action="/auth/google" method="post">
-              <button>Log In</button>
+              <button>Google Log In</button>
+            </form>
+            <form action="/auth/twitter" method="post">
+              <button>Twitter Log In</button>
             </form>
           </>
         )}
