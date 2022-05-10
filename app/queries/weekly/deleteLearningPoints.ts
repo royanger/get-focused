@@ -5,7 +5,7 @@ async function learningPointQuery(id: FormDataEntryValue, userId: string) {
   let learningPointResults = await prisma.learning.findFirst({
     where: {
       userId: userId,
-      id: id,
+      id: id as string,
     },
   })
   return learningPointResults
@@ -15,7 +15,7 @@ async function learningPointDelete(id: FormDataEntryValue) {
   await prisma.$connect()
   let learningPointResults = await prisma.learning.delete({
     where: {
-      id: id,
+      id: id as string,
     },
   })
   return learningPointResults

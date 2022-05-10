@@ -16,6 +16,7 @@ import type { LoaderFunction, LinksFunction } from '@remix-run/node'
 import { authenticator } from './services/auth.server'
 import Logo from './components/icons/logo'
 import Container from './components/Container'
+import type { User } from './services/auth.server'
 
 import tailwindUrl from './styles/tailwind.css'
 import chartColorsUrl from './styles/chartcolors.css'

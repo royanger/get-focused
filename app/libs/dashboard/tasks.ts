@@ -57,11 +57,11 @@ export async function generateTasksData(user: string) {
       ],
     },
     tasksByWeek: {
-      labels: tasksByWeek.map((_: any, i: number) => i + 1),
+      labels: tasksByWeek?.map((_: any, i: number) => i + 1),
       datasets: [
         {
           label: 'Tasks by Week',
-          data: tasksByWeek.map((week, i) => {
+          data: tasksByWeek?.map((week, i) => {
             return week?.partial?.length
           }),
           backgroundColor: [

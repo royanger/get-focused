@@ -1,15 +1,10 @@
 import { useLoaderData, Form } from '@remix-run/react'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { authenticator } from '../services/auth.server'
-import type { SocialsProvider } from 'remix-auth-socials'
+// import type { SocialsProvider } from 'remix-auth-socials'
 import Logo from '../components/icons/logo'
+import type { User } from '../services/auth.server'
 
-interface SocialButtonProps {
-  provider: SocialsProvider
-  label: string
-}
-
-// https://remix.run/api/conventions#meta
 export let meta: MetaFunction = () => {
   return {
     title: 'Get Focused',
@@ -23,14 +18,7 @@ export let loader: LoaderFunction = async ({ request }) => {
   return { user }
 }
 
-// https://remix.run/guides/routing#index-routes
 export default function Index() {
-  const SocialButton: React.FC<SocialButtonProps> = ({ provider, label }) => (
-    <Form action={`/auth/${provider}`} method="post">
-      <button>{label}</button>
-    </Form>
-  )
-
   let data = useLoaderData<{ user: User; message: string }>()
   return (
     <div className="remix__page">
@@ -94,7 +82,7 @@ export default function Index() {
               <div className="flex flex-row-reverse">
                 <img
                   className="w-52"
-                  src="/images/get-focused-daily-planner.jpg"
+                  src="/images/get-focused-weekly-planner.jpg"
                   alt="Daily Planner"
                 />
                 <div className="text-right px-6">
@@ -133,12 +121,12 @@ export default function Index() {
               <div className="flex flex-row-reverse">
                 <img
                   className="w-52"
-                  src="/images/get-focused-daily-planner.jpg"
+                  src="/images/get-focused-weekly-review.jpg"
                   alt="Daily Planner"
                 />
                 <div className="text-right px-6">
                   <h3 className="text-lg text-purple mb-2 uppercase">
-                    Weekly Planner
+                    Weekly Review
                   </h3>
                   <p>
                     Take some time to reflect on the week that just passed. What
@@ -151,7 +139,7 @@ export default function Index() {
               <div className="flex">
                 <img
                   className="w-52"
-                  src="/images/get-focused-daily-planner.jpg"
+                  src="/images/get-focused-dashboard.jpg"
                   alt="Daily Planner"
                 />
                 <div className="px-6">

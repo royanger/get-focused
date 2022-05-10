@@ -51,27 +51,27 @@ export default function Dashboard() {
                 <HeadlessTab.Panel className="grid grid-cols-3 ">
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px] ">
                     <HeaderTwo>Productivity</HeaderTwo>
-                    <DoughnutChart data={productivity} />
+                    {/* <DoughnutChart data={productivity} /> */}
                   </div>
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
                     <HeaderTwo>Exercise</HeaderTwo>
-                    <BarChart data={exercise} title="Exercise Activity" />
+                    {/* <BarChart data={exercise} title="Exercise Activity" /> */}
                   </div>
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
                     <HeaderTwo>Wellness</HeaderTwo>
-                    <DoughnutChart data={wellness} />
+                    {/* <DoughnutChart data={wellness} /> */}
                   </div>
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
                     <HeaderTwo>Tasks by Month</HeaderTwo>
-                    <DoughnutChart data={tasks?.monthly} />
+                    {/* <DoughnutChart data={tasks?.monthly} /> */}
                   </div>
 
                   <div className="m-4 p-2 drop-shadow-xl bg-purewhite border-grey-200 border-[1px]">
                     <HeaderTwo>Tasks By Week</HeaderTwo>
-                    <DoughnutChart data={tasks?.tasksByWeek} />
+                    {/* <DoughnutChart data={tasks?.tasksByWeek} /> */}
                   </div>
                 </HeadlessTab.Panel>
                 <HeadlessTab.Panel>Content 2</HeadlessTab.Panel>
