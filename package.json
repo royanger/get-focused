@@ -39,6 +39,7 @@
     "react-dom": "^17.0.2",
     "remix-auth": "^3.2.1",
     "remix-auth-socials": "^1.0.1",
+    "remix-auth-twitter": "^0.0.4",
     "tailwindcss": "^3.0.23",
     "uuid": "^8.3.2"
   },

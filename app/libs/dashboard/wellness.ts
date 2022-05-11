@@ -25,7 +25,7 @@ export async function generateWellnessData(user: string) {
   }
 
   return {
-    labels: results.map(result => result.rating),
+    labels: results?.map(result => result.rating),
     datasets: [
       {
         label: 'Rating by Count',

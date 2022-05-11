@@ -1,33 +1,30 @@
 import { prisma } from '../../prisma/db'
 
-export async function findOrCreateUser(
-  googleId: string,
-  email: string,
-  givenName: string,
-  familyName: string
+export async function findOrCreateTwitterUser(
+  twitterId: number,
+  email: string | undefined,
+  displayName: string
 ) {
   await prisma.$connect()
-  let user = await prisma.user.upsert({
+  const user = await prisma.user.upsert({
     where: {
-      googleId: googleId,
+      twitterId: twitterId,
     },
     update: {
       email: email,
-      givenName: givenName,
-      familyName: familyName,
+      displayName: displayName,
     },
     create: {
-      googleId: googleId,
+      twitterId: twitterId,
       email: email,
-      givenName: givenName,
-      familyName: familyName,
+      displayName: displayName,
     },
   })
 
-  let results = await prisma.user
+  const results = await prisma.user
     .findUnique({
       where: {
-        googleId: googleId,
+        twitterId: twitterId,
       },
     })
     .catch(e => {

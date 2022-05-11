@@ -3,7 +3,6 @@
 
 generator client {
   provider        = "prisma-client-js"
-//   previewFeatures = ["mongodb"]
 }
 
 datasource db {
@@ -13,10 +12,10 @@ datasource db {
 
 model User {
    id             String   @id @default(auto()) @map("_id") @db.ObjectId
-   email          String
-   googleId       String   @unique
-   givenName      String
-   familyName     String
+   email          String?
+   googleId       String?  @unique
+   twitterId      Int?     @unique
+   displayName    String
    task           Task[]
    wellness       Wellness[]
    exercise       Exercise[]

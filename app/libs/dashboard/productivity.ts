@@ -25,7 +25,7 @@ export async function generateProductivityData(user: string) {
   }
 
   return {
-    labels: results.map(result => result.score),
+    labels: results?.map(result => result.score),
     datasets: [
       {
         label: 'Rating by Count',

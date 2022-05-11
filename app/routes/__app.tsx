@@ -1,24 +1,10 @@
 import * as React from 'react'
 import type { LoaderFunction } from '@remix-run/node'
-import {
-  Link,
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useCatch,
-  useLoaderData,
-  useLocation,
-  Form,
-} from '@remix-run/react'
-import type { LinksFunction } from '@remix-run/node'
+import { Link, Outlet, useLoaderData, Form } from '@remix-run/react'
 import { authenticator } from '../services/auth.server'
 import Logo from '../components/icons/Logo'
 import Container from '../components/Container'
-
-import tailwindUrl from './styles/tailwind.css'
+import type { User } from '../services/auth.server'
 
 export let loader: LoaderFunction = async ({ request }) => {
   let user = await authenticator.isAuthenticated(request)

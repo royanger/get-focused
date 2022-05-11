@@ -5,7 +5,7 @@ async function improvementsQuery(id: FormDataEntryValue, userId: string) {
   let improvementResults = await prisma.improvements.findFirst({
     where: {
       userId: userId,
-      id: id,
+      id: id as string,
     },
   })
   return improvementResults
@@ -15,7 +15,7 @@ async function improvementDelete(id: FormDataEntryValue) {
   await prisma.$connect()
   let improvementResults = await prisma.improvements.delete({
     where: {
-      id: id,
+      id: id as string,
     },
   })
   return improvementResults
