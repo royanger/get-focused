@@ -17,6 +17,12 @@ export let findOrCreateDate = async (targetDate: string) => {
       ? DateTime.fromISO(targetDate).setZone('America/New_York')
       : DateTime.now().setZone('America/New_York')
 
+  // set hour/min/sec/millisecond to 0
+  // new Date entry is made only based on day/month/year this way
+  const queryDate = date
+    .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+    .toISO()
+
   // query to see if date entry exists
   async function dateQuery(date: string) {
     await prisma.$connect()
@@ -39,7 +45,7 @@ export let findOrCreateDate = async (targetDate: string) => {
   }
 
   // check if date exists using above query
-  let results = await dateQuery(date.toISO())
+  let results = await dateQuery(queryDate)
     .catch(e => {
       throw new Error(e)
     })
@@ -49,7 +55,7 @@ export let findOrCreateDate = async (targetDate: string) => {
 
   // if date doesn't exist, create a new entry and return data
   if (!results) {
-    let newDateResults = await createDateEntry(date.toISO())
+    let newDateResults = await createDateEntry(queryDate)
       .catch(e => {
         throw new Error(e)
       })
