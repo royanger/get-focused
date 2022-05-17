@@ -16,6 +16,7 @@ import DeleteIcon from '../icons/DeleteIcon'
 import Edit from '../icons/EditIcon'
 import SaveIcon from '../icons/SaveIcon'
 import SyncIcon from '../icons/SyncIcon'
+import CompleteCheckbox from '../forms/CompleteCheckbox'
 
 export default function TaskElement({
   id,
@@ -26,6 +27,9 @@ export default function TaskElement({
   visibility,
 }: WeeklyTaskElement) {
   const [editing, setEditing] = React.useState(false)
+  const [completedStatus, setCompletedStatus] = React.useState(
+    completed ? completed : false
+  )
   const formRef = React.useRef<HTMLFormElement>(null)
   const inputRef = React.useRef<HTMLInputElement>(null)
   const fetcher = useFetcher()
@@ -63,7 +67,7 @@ export default function TaskElement({
 
   return (
     <li
-      className={`p-4 border-2 rounded ${
+      className={`py-4 border-2 rounded ${
         editing
           ? 'border-2 border-transparent bg-grey-200 shadow-lg'
           : 'border-2 border-transparent '
@@ -73,33 +77,50 @@ export default function TaskElement({
     >
       <div className="flex flex-row">
         <div className="flex-grow">
-          <Form
-            ref={formRef}
-            method="post"
-            action={`/weekly/planner${
-              paramWeek ? `?year=${paramYear}&week=${paramWeek}` : ''
-            }`}
-          >
-            <div className="flex-grow flex flex-row">
-              <div className="flex-grow flex flex-row">
-                <input type="hidden" name="formType" value="weeklyTask" />
-                <input type="hidden" name="id" value={id} />
-                <input type="hidden" name="status" value={`status-${type}`} />
-
-                <div className="flex flex-row flex-grow items-center font-input">
-                  <Checkbox status={completed} label="Completed" />
-                  <Input
-                    value={value}
-                    editing={editing}
-                    name="taskname"
-                    placeholder={placeholder}
-                    setEditing={setEditing}
-                    width="flex-grow"
-                  />
-                </div>
+          <div className="flex-grow flex flex-row">
+            <div className="flex flex-row">
+              <div className="flex flex-row items-center font-input">
+                {/* <Checkbox status={completed} label="Completed" /> */}
+                <CompleteCheckbox
+                  label="completed"
+                  id={id}
+                  status={completedStatus}
+                  setCompletedStatus={setCompletedStatus}
+                />
               </div>
-              <div>
-                <div className="flex flex-col justify-center">
+            </div>
+            <div className="flex flex-grow">
+              <Form
+                className="flex flex-grow"
+                ref={formRef}
+                method="post"
+                action={`/weekly/planner${
+                  paramWeek ? `?year=${paramYear}&week=${paramWeek}` : ''
+                }`}
+              >
+                <div className="flex flex-row flex-grow justify-center">
+                  <div className="flex flex-grow">
+                    <input type="hidden" name="formType" value="weeklyTask" />
+                    <input type="hidden" name="id" value={id} />
+                    <input
+                      type="hidden"
+                      name="status"
+                      value={`status-${type}`}
+                    />
+                    <div className="flex flex-row flex-grow items-center font-input">
+                      <Input
+                        value={value}
+                        editing={editing}
+                        name="taskname"
+                        placeholder={placeholder}
+                        setEditing={setEditing}
+                        width="flex-grow"
+                        completed={
+                          completedStatus ? 'line-through text-grey-700' : ''
+                        }
+                      />
+                    </div>
+                  </div>
                   <div className="w-12 h-full text-purple flex justify-center items-end">
                     <button
                       type="submit"
@@ -137,11 +158,11 @@ export default function TaskElement({
                     </button>
                   </div>
                 </div>
-              </div>
+              </Form>
             </div>
-          </Form>
+          </div>
         </div>
-        <div className="flex flex-col items-center justify-start w-12">
+        <div className="flex flex-col items-center justify-end w-12">
           <div className={`w-12 ${editing ? 'display' : 'hidden'}`}>
             <button
               //   ref={inputRef}
@@ -166,7 +187,7 @@ export default function TaskElement({
               <div className="w-12">
                 <input type="hidden" name="formType" value="deleteWeeklyTask" />
                 <input type="hidden" name="id" value={id} />
-                <div className="flex flex-col items-center justify-start h-8">
+                <div className="flex flex-col items-center justify-end h-8">
                   <button
                     aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
                     type="submit"
