@@ -28,6 +28,7 @@ import {
   createDateFromWeekAndYear,
   returnNextAndPreviousWeeks,
 } from '../../../libs/dateFunctions'
+import { completeTask } from '../../../libs/weekly/completeTask'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
@@ -85,6 +86,9 @@ export const action: ActionFunction = async ({ request }) => {
       break
     case 'deleteWeeklyTask':
       results = await deleteTask(formData.get('id'), user)
+      break
+    case 'completeTask':
+      results = await completeTask(formData, user)
       break
     default:
       results = 'Type does not meet valid action'

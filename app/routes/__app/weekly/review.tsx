@@ -34,7 +34,6 @@ import { validateRefocusForm } from '../../../libs/weekly/refocusActions'
 // components
 import Container from '../../../components/Container'
 import { HeaderOne, HeaderTwo } from '../../../components/Headlines'
-import ReviewElement from '../../../components/weekly/ReviewElement'
 import ListSection from '../../../components/weekly/ListSection'
 import ReviewSingleElement from '../../../components/weekly/ReviewSingleElement'
 import { DateTime } from 'luxon'
