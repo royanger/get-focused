@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { useFetcher, useSearchParams } from '@remix-run/react'
+import {
+  Form,
+  useFetcher,
+  useSearchParams,
+  useTransition,
+} from '@remix-run/react'
 
 // components
 import Checkbox from '../forms/Checkbox'
@@ -18,32 +23,31 @@ export default function TaskElement({
   completed,
   value,
   type,
-  saving,
   visibility,
 }: WeeklyTaskElement) {
   const [editing, setEditing] = React.useState(false)
   const formRef = React.useRef<HTMLFormElement>(null)
+  const inputRef = React.useRef<HTMLInputElement>(null)
   const fetcher = useFetcher()
 
   const [searchParams] = useSearchParams()
   const paramWeek = searchParams.get('week')
   const paramYear = searchParams.get('year')
 
-  const isAdding =
-    fetcher.submission &&
-    fetcher.submission.formData.get('formType') === 'addWeeklyTask' &&
-    fetcher.submission.formData.get('id') === id
+  const transition = useTransition()
+
+  const isSubmitting =
+    transition.state === 'submitting' &&
+    transition.submission?.formData.get('formType') === 'weeklyTask'
 
   React.useEffect(() => {
-    if (isAdding) {
-      formRef.current?.reset()
-      if (fetcher.state === 'loading') {
-        setEditing(false)
-      }
-    }
-  }, [isAdding, fetcher])
+    formRef.current?.reset()
+    setEditing(false)
+  }, [isSubmitting])
 
-  const isDeleting = fetcher.submission?.formData.get('id') === id
+  const isDeleting =
+    fetcher.submission?.formData.get('id') === id &&
+    fetcher.submission.formData.get('formType') === 'deleteWeeklyTask'
   const deleteFailed = fetcher.data?.error
 
   function handleReset() {
@@ -51,19 +55,25 @@ export default function TaskElement({
     formRef.current?.reset()
   }
 
+  function handleSubmit() {
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
+  }
+
   return (
     <li
       className={`p-4 border-2 rounded ${
         editing
-          ? 'border-2 border-transparent bg-grey-200 rounded shadow-lg'
-          : 'border-2 border-transparent rounded'
-      } ${deleteFailed && 'border-red'}  ${
-        isDeleting && 'hidden'
+          ? 'border-2 border-transparent bg-grey-200 shadow-lg'
+          : 'border-2 border-transparent '
+      } ${deleteFailed ? 'border-red' : ''}  ${
+        isDeleting ? 'hidden' : ''
       } ${visibility}`}
     >
       <div className="flex flex-row">
         <div className="flex-grow">
-          <fetcher.Form
+          <Form
             ref={formRef}
             method="post"
             action={`/weekly/planner${
@@ -72,7 +82,7 @@ export default function TaskElement({
           >
             <div className="flex-grow flex flex-row">
               <div className="flex-grow flex flex-row">
-                <input type="hidden" name="formType" value="addWeeklyTask" />
+                <input type="hidden" name="formType" value="weeklyTask" />
                 <input type="hidden" name="id" value={id} />
                 <input type="hidden" name="status" value={`status-${type}`} />
 
@@ -94,15 +104,15 @@ export default function TaskElement({
                     <button
                       type="submit"
                       className={`w-full flex flex-col items-center ${
-                        editing ||
-                        id === 'newtask-p1' ||
-                        id === 'newtask-p2' ||
-                        id === 'newtask-p3'
-                          ? 'display'
-                          : 'hidden'
+                        editing ? 'display' : 'hidden'
                       }`}
+                      onClick={() => handleSubmit()}
                     >
-                      <SaveIcon className="h-6" />
+                      {isSubmitting ? (
+                        <SyncIcon className="h-6 text-purple animate-spin" />
+                      ) : (
+                        <SaveIcon className="h-6" />
+                      )}
                     </button>
 
                     <button
@@ -117,7 +127,9 @@ export default function TaskElement({
                       }`}
                       onClick={() => setEditing(true)}
                     >
-                      {saving ? (
+                      {id === 'addingtask-p1' ||
+                      id === 'addingtask-p2' ||
+                      id === 'addingtask-p3' ? (
                         <SyncIcon className="h-6 text-purple animate-spin" />
                       ) : (
                         <Edit className="h-6" />
@@ -127,20 +139,12 @@ export default function TaskElement({
                 </div>
               </div>
             </div>
-          </fetcher.Form>
+          </Form>
         </div>
         <div className="flex flex-col items-center justify-start w-12">
-          <div
-            className={`w-12 ${
-              editing ||
-              id === 'newtask-p1' ||
-              id === 'newtask-p2' ||
-              id === 'newtask-p3'
-                ? 'display'
-                : 'hidden'
-            }`}
-          >
+          <div className={`w-12 ${editing ? 'display' : 'hidden'}`}>
             <button
+              //   ref={inputRef}
               onClick={() => handleReset()}
               className="w-full text-purple flex flex-col items-center"
             >

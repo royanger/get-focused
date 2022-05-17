@@ -14,10 +14,10 @@ export default function Wellness({ wellness, errors }: Wellness) {
   const buttonState =
     transition.state === 'submitting' &&
     transition?.submission?.formData.get('formType') === 'wellness'
-      ? { text: 'Saving', variant: 'warning' }
+      ? { text: 'Saving', variant: 'saving' }
       : transition.state === 'loading' &&
         transition?.submission?.formData.get('formType') === 'wellness'
-      ? { text: 'Saved!', variant: 'success' }
+      ? { text: 'Saved!', variant: 'saved' }
       : { text: 'Save', variant: 'default' }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -29,7 +29,7 @@ export default function Wellness({ wellness, errors }: Wellness) {
     const filled = score > index ? 'bg-purple' : 'bg-transparent'
     return (
       <div
-        className={`border-2 border-purple rounded-full w-6 h-6 mr-4 ${filled}`}
+        className={`border-2 border-purple rounded-full w-5 h-5 mr-4 ${filled}`}
         onClick={e => handleClick(e)}
         id={`wellness-${index + 1}`}
         tabIndex={0}
@@ -43,7 +43,7 @@ export default function Wellness({ wellness, errors }: Wellness) {
   return (
     <div className="m-2 p-3 border-0 rounded-lg shadow-md shadow-purple-100">
       <HeaderTwo>How do you feel?</HeaderTwo>
-      <p className="mb-2">Rate how you are feeling out of 10.</p>
+      <p className="mb-4">Rate how you are feeling out of 10.</p>
       <Form
         method="post"
         action={`/daily/planner${paramDate ? `?date=${paramDate}` : ''}`}
@@ -55,12 +55,13 @@ export default function Wellness({ wellness, errors }: Wellness) {
           name="id"
         />
         <input type="hidden" name="rating" value={score} />
-        <div className="flex flex-direction">{inputs}</div>
+        <div className="flex flex-direction mb-8">{inputs}</div>
         <Button
           type="submit"
           title={buttonState.text}
           variant={buttonState.variant}
           width="w-28"
+          size="sm"
         />
       </Form>
     </div>

@@ -1,14 +1,13 @@
 import * as React from 'react'
 import {
   useActionData,
-  useFetchers,
   useLoaderData,
   useSearchParams,
   useTransition,
 } from '@remix-run/react'
 import { redirect } from '@remix-run/node'
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
-
+import { DateTime } from 'luxon'
 import { authenticator } from '../../../services/auth.server'
 
 // components
@@ -29,11 +28,11 @@ import {
   createDateFromWeekAndYear,
   returnNextAndPreviousWeeks,
 } from '../../../libs/dateFunctions'
-import { DateTime } from 'luxon'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request)
 
+  // if there is no logged in user, redirect to landing page
   if (!user) {
     return redirect('/')
   }
@@ -43,6 +42,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   let year
   let week
 
+  // either get the week and year from the URL Params, or create a new
+  // instance to use as a needed
   if (
     url.searchParams.get('week') === null ||
     url.searchParams.get('year') === null
@@ -63,6 +64,11 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const user = await authenticator.isAuthenticated(request)
 
+  // if there is no logged in user, redirect to landing page
+  if (!user) {
+    return redirect('/')
+  }
+
   const url = new URL(request.url)
   const date = DateTime.now().setZone('America/New_York')
   const year = url.searchParams.get('year')
@@ -74,7 +80,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   let results
   switch (formData.get('formType')) {
-    case 'addWeeklyTask':
+    case 'weeklyTask':
       results = await validateTaskForm(formData, user, year, week)
       break
     case 'deleteWeeklyTask':
@@ -114,39 +120,47 @@ function tasksByPriority({ tasks, errors, type }: WeeklyTasksByPriority) {
 export default function WeeklyPlanner() {
   const data = useLoaderData()
   const errors = useActionData()
-  const fetchers = useFetchers()
+  const transition = useTransition()
 
-  // create some isAdding variables to handle optimistic UI per task type
+  // see if a new P1 task was submitted, and if so we will end up hiding the
+  // form for a new task while the UI updates
+  const transitionStateP1 =
+    transition.submission?.formData.get('id') === 'newtask-p1'
+      ? transition.state
+      : null
 
-  // add these for any priority
-  let taskname
+  // confirm that a new P1 task is being added
+  const isAddingP1 =
+    transition.submission &&
+    transition.submission?.formData.get('formType') === 'weeklyTask' &&
+    transition.submission?.formData.get('id') === `newtask-p1`
 
-  let isAddingP1, fetchStateP1
-  for (const f of fetchers) {
-    if (f.submission?.formData.get('id') === 'newtask-p1') {
-      isAddingP1 = true
-      taskname = f.submission?.formData.get('taskname')
-      fetchStateP1 = f.state
-    }
-  }
+  // repeat of above for P2 tasks
+  const transitionStateP2 =
+    transition.submission?.formData.get('id') === 'newtask-p2'
+      ? transition.state
+      : null
 
-  let isAddingP2, fetchStateP2
-  for (const f of fetchers) {
-    if (f.submission?.formData.get('id') === 'newtask-p2') {
-      isAddingP2 = true
-      taskname = f.submission?.formData.get('taskname')
-      fetchStateP2 = f.state
-    }
-  }
+  const isAddingP2 =
+    transition.submission &&
+    transition.submission?.formData.get('formType') === 'weeklyTask' &&
+    transition.submission?.formData.get('id') === `newtask-p2`
 
-  let isAddingP3, fetchStateP3
-  for (const f of fetchers) {
-    if (f.submission?.formData.get('id') === 'newtask-p3') {
-      isAddingP3 = true
-      taskname = f.submission?.formData.get('taskname')
-      fetchStateP3 = f.state
-    }
-  }
+  // repeat of above for P2 tasks
+  const transitionStateP3 =
+    transition.submission?.formData.get('id') === 'newtask-p3'
+      ? transition.state
+      : null
+
+  const isAddingP3 =
+    transition.submission &&
+    transition.submission?.formData.get('formType') === 'weeklyTask' &&
+    transition.submission?.formData.get('id') === `newtask-p3`
+
+  const taskname =
+    isAddingP1 || isAddingP2 || isAddingP3
+      ? transition.submission?.formData.get('taskname')
+      : ''
 
   const [searchParams] = useSearchParams()
   const paramYear = searchParams.get('year')
@@ -240,7 +254,6 @@ export default function WeeklyPlanner() {
                 value={taskname}
                 completed={false}
                 type="p1"
-                saving={true}
                 visibility="display"
               />
             )}
@@ -248,12 +261,11 @@ export default function WeeklyPlanner() {
             <TaskElement
               key={`newtask-p1`}
               id={`newtask-p1`}
-              placeholder="Create a new task sdf"
+              placeholder="Create a new task"
               completed={false}
               type="p1"
-              visibility={fetchStateP1 ? 'hidden' : 'display'}
+              visibility={transitionStateP1 ? 'hidden' : 'display'}
             />
-            {/* </div> */}
             {errors && errors.id === 'newtask-p1' ? (
               <div className="text-sm text-error mb-6 h-5">
                 {errors ? errors.msg : ''}
@@ -287,7 +299,7 @@ export default function WeeklyPlanner() {
               placeholder="Create a new task"
               completed={false}
               type="p2"
-              visibility={fetchStateP2 ? 'hidden' : 'display'}
+              visibility={transitionStateP2 ? 'hidden' : 'display'}
             />
             {errors && errors.id === 'newtask-p2' ? (
               <div className="text-sm text-error mb-6 h-5">
@@ -322,7 +334,7 @@ export default function WeeklyPlanner() {
               placeholder="Create a new task"
               completed={false}
               type="p3"
-              visibility={fetchStateP3 ? 'hidden' : 'display'}
+              visibility={transitionStateP3 ? 'hidden' : 'display'}
             />
             {errors && errors.id === 'newtask-p3' ? (
               <div className="text-sm text-error mb-6 h-5">

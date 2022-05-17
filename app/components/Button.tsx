@@ -1,5 +1,8 @@
+import { SyncIcon, CheckIcon } from './icons'
+
 const Button = ({ title, variant, size, type, onClick, width }: ButtonType) => {
-  let baseStyles = 'rounded shadow-lg uppercase w-28'
+  let baseStyles =
+    'rounded shadow-lg uppercase w-28 flex flex-row items-center justify-center'
 
   let stylesMap: any = {
     default: 'bg-purple text-yellow',
@@ -7,6 +10,8 @@ const Button = ({ title, variant, size, type, onClick, width }: ButtonType) => {
     error: 'bg-error text-black',
     success: 'bg-success text-black',
     cancel: 'bg-cancel text-white',
+    saving: 'bg-purple-300 text-yellow',
+    saved: 'bg-yellow text-purple-300',
   }
 
   let buttonSize
@@ -26,16 +31,24 @@ const Button = ({ title, variant, size, type, onClick, width }: ButtonType) => {
     variant === 'warning' ||
     variant === 'cancel' ||
     variant === 'success' ||
-    variant === 'error'
+    variant === 'error' ||
+    variant === 'saving' ||
+    variant === `saved`
   ) {
     return (
       <button
         className={`${baseStyles} ${stylesMap[variant]} ${
           sizeMap[buttonSize]
-        } ${width ? width : ''}`}
+        } ${width ? width : ''} `}
         onClick={() => onClick('default')}
         type={type ? type : 'button'}
       >
+        {variant === 'saving' ? (
+          <SyncIcon className="w-4 mr-2 animate-spin" />
+        ) : (
+          ''
+        )}
+        {variant === 'saved' ? <CheckIcon className="w-4 mr-2" /> : ''}
         {title}
       </button>
     )

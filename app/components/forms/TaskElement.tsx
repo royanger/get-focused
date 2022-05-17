@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Input from './Input'
 import Edit from '../icons/EditIcon'
-import { useFetcher, useSearchParams } from '@remix-run/react'
+import { useFetcher, useSearchParams, useTransition } from '@remix-run/react'
 import CompleteCheckbox from './CompleteCheckbox'
 import TimeTracker from './TimeTracker'
 import DeleteIcon from '../icons/DeleteIcon'
@@ -51,6 +51,7 @@ export default function TaskElement({
   function handleReset() {
     setEditing(false)
     formRef.current?.reset()
+    setTracker(timeTracker)
   }
 
   return (
@@ -71,7 +72,7 @@ export default function TaskElement({
           setCompletedStatus={setCompletedStatus}
         />
       </div>
-      <div className=" grow">
+      <div className="grow">
         <fetcher.Form
           ref={formRef}
           method="post"
@@ -185,8 +186,14 @@ export default function TaskElement({
             onClick={() => handleReset()}
             className="w-full text-purple flex flex-col items-center"
           >
-            <CancelIcon className="h-6" />
-            <span className="text-sm h-6">Cancel</span>
+            {editing ? (
+              <>
+                <CancelIcon className="h-6" />
+                <span className="text-sm h-6">Cancel</span>
+              </>
+            ) : (
+              ''
+            )}
           </button>
         </div>
 
