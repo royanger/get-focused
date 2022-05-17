@@ -226,7 +226,7 @@ export default function WeeklyPlanner() {
 
   return (
     <Container>
-      <>
+      <div className="mt-10">
         <HeaderOne>Weekly Planner</HeaderOne>
 
         <WeeklyNav
@@ -240,114 +240,121 @@ export default function WeeklyPlanner() {
               week: nextAndPrev.next.week,
             },
           }}
+          week={week}
           dates={dates}
         />
-        <TasksTitle
-          title="Primary Tasks"
-          info="These are the most important tasks for your week, the tasks that need to be completed."
-          key="p1"
-        />
-        <div className="mt-2 mb-8">
-          <ol key="list-p1">
-            {generatedP1Tasks}
-            {isAddingP1 && (
+        <div className="p-5 mb-10 border-0 rounded-lg shadow-md shadow-purple-100">
+          <TasksTitle
+            title="Primary Tasks"
+            info="These are the most important tasks for your week, the tasks that need to be completed."
+            key="p1"
+          />
+          <div className="mt-2 mb-8 ">
+            <ol key="list-p1">
+              {generatedP1Tasks}
+              {isAddingP1 && (
+                <TaskElement
+                  key={Math.random()}
+                  id="addingtask-p1"
+                  placeholder="Enter your task here..."
+                  value={taskname}
+                  completed={false}
+                  type="p1"
+                  visibility="display"
+                />
+              )}
+
               <TaskElement
-                key={Math.random()}
-                id="addingtask-p1"
-                placeholder="Enter your task here..."
-                value={taskname}
+                key={`newtask-p1`}
+                id={`newtask-p1`}
+                placeholder="Create a new task"
                 completed={false}
                 type="p1"
-                visibility="display"
+                visibility={transitionStateP1 ? 'hidden' : 'display'}
               />
-            )}
-
-            <TaskElement
-              key={`newtask-p1`}
-              id={`newtask-p1`}
-              placeholder="Create a new task"
-              completed={false}
-              type="p1"
-              visibility={transitionStateP1 ? 'hidden' : 'display'}
-            />
-            {errors && errors.id === 'newtask-p1' ? (
-              <div className="text-sm text-error mb-6 h-5">
-                {errors ? errors.msg : ''}
-              </div>
-            ) : null}
-          </ol>
+              {errors && errors.id === 'newtask-p1' ? (
+                <div className="text-sm text-error mb-6 h-5">
+                  {errors ? errors.msg : ''}
+                </div>
+              ) : null}
+            </ol>
+          </div>
         </div>
 
-        <TasksTitle
-          title="Secondary Tasks"
-          info="The tasks here should be completed, but only after you complete the primary tasks."
-          key="p2"
-        />
-        <div className="mt-2 mb-8">
-          <ol key="list-p2">
-            {generatedP2Tasks}
-            {isAddingP2 && (
+        <div className="p-5 mb-10 border-0 rounded-lg shadow-md shadow-purple-100">
+          <TasksTitle
+            title="Secondary Tasks"
+            info="The tasks here should be completed, but only after you complete the primary tasks."
+            key="p2"
+          />
+          <div className="mt-2 mb-8">
+            <ol key="list-p2">
+              {generatedP2Tasks}
+              {isAddingP2 && (
+                <TaskElement
+                  key={Math.random()}
+                  id="addingtask-p2"
+                  placeholder="Enter your task here..."
+                  value={taskname}
+                  completed={false}
+                  type="p2"
+                  visibility="display"
+                />
+              )}
               <TaskElement
-                key={Math.random()}
-                id="addingtask-p2"
-                placeholder="Enter your task here..."
-                value={taskname}
+                key={`newtask-p2`}
+                id={`newtask-p2`}
+                placeholder="Create a new task"
                 completed={false}
                 type="p2"
-                visibility="display"
+                visibility={transitionStateP2 ? 'hidden' : 'display'}
               />
-            )}
-            <TaskElement
-              key={`newtask-p2`}
-              id={`newtask-p2`}
-              placeholder="Create a new task"
-              completed={false}
-              type="p2"
-              visibility={transitionStateP2 ? 'hidden' : 'display'}
-            />
-            {errors && errors.id === 'newtask-p2' ? (
-              <div className="text-sm text-error mb-6 h-5">
-                {errors ? errors.msg : ''}
-              </div>
-            ) : null}
-          </ol>
+              {errors && errors.id === 'newtask-p2' ? (
+                <div className="text-sm text-error mb-6 h-5">
+                  {errors ? errors.msg : ''}
+                </div>
+              ) : null}
+            </ol>
+          </div>
         </div>
 
-        <TasksTitle
-          title="Non-Essential Tasks"
-          info="These are the most important tasks for your week, the tasks that need to be completed."
-          key="p3"
-        />
-        <div className="mt-2 mb-8">
-          <ol key="list-p3">
-            {generatedP3Tasks}
-            {isAddingP3 && (
+        <div className="p-5 mb-10 border-0 rounded-lg shadow-md shadow-purple-100">
+          <TasksTitle
+            title="Non-Essential Tasks"
+            info="These are the most important tasks for your week, the tasks that need to be completed."
+            key="p3"
+          />
+          <div className="mt-2 mb-8">
+            <ol key="list-p3">
+              {generatedP3Tasks}
+              {isAddingP3 && (
+                <TaskElement
+                  key={Math.random()}
+                  id="addingtask-p3"
+                  placeholder="Enter your task here..."
+                  value={taskname}
+                  completed={false}
+                  type="p3"
+                  visibility="display"
+                />
+              )}
               <TaskElement
-                key={Math.random()}
-                id="addingtask-p3"
-                placeholder="Enter your task here..."
-                value={taskname}
+                key={`newtask-p3`}
+                id={`newtask-p3`}
+                placeholder="Create a new task"
                 completed={false}
                 type="p3"
-                visibility="display"
+                visibility={transitionStateP3 ? 'hidden' : 'display'}
               />
-            )}
-            <TaskElement
-              key={`newtask-p3`}
-              id={`newtask-p3`}
-              placeholder="Create a new task"
-              completed={false}
-              type="p3"
-              visibility={transitionStateP3 ? 'hidden' : 'display'}
-            />
-            {errors && errors.id === 'newtask-p3' ? (
-              <div className="text-sm text-error mb-6 h-5">
-                {errors ? errors.msg : ''}
-              </div>
-            ) : null}
-          </ol>
+              {errors && errors.id === 'newtask-p3' ? (
+                <div className="text-sm text-error mb-6 h-5">
+                  {errors ? errors.msg : ''}
+                </div>
+              ) : null}
+            </ol>
+          </div>
         </div>
-      </>
+      </div>
     </Container>
   )
 }

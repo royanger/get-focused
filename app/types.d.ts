@@ -211,6 +211,7 @@ type WeeklyNav = {
     back: WeeklyNavOptions
     forward: WeeklyNavOptions
   }
+  week: number
   dates: string
 }
 
