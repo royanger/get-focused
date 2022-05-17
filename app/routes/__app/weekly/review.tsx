@@ -77,6 +77,10 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   let user = await authenticator.isAuthenticated(request)
 
+  if (!user) {
+    return redirect('/')
+  }
+
   const url = new URL(request.url)
   const date = DateTime.now().setZone('America/New_York')
   const year = url.searchParams.get('year')

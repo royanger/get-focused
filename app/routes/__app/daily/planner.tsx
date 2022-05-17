@@ -63,6 +63,10 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   let user = await authenticator.isAuthenticated(request)
 
+  if (!user) {
+    return redirect('/')
+  }
+
   const url = new URL(request.url)
   const date = url.searchParams.get('year')
     ? url.searchParams.get('year')

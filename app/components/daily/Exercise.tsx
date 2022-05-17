@@ -12,10 +12,10 @@ export default function Exercise({ entries, errors }: Exercise) {
   const buttonState =
     transition.state === 'submitting' &&
     transition?.submission?.formData.get('formType') === 'exercise'
-      ? { text: 'Saving', variant: 'warning' }
+      ? { text: 'Saving', variant: 'saving' }
       : transition.state === 'loading' &&
         transition?.submission?.formData.get('formType') === 'exercise'
-      ? { text: 'Saved!', variant: 'success' }
+      ? { text: 'Saved!', variant: 'saved' }
       : { text: 'Save', variant: 'default' }
 
   return (
@@ -49,11 +49,12 @@ export default function Exercise({ entries, errors }: Exercise) {
             </div>
           </div>
 
-          <div>
+          <div className="mt-8">
             <Button
               type="submit"
               title={buttonState.text}
               variant={buttonState.variant}
+              size="sm"
             />
           </div>
         </div>

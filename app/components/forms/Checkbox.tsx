@@ -8,7 +8,7 @@ export default function Checkbox({ status, label, handleClick }: Checkbox) {
         name={label.toLowerCase()}
         type="checkbox"
         defaultChecked={status}
-        className="outline-none focus:ring-0 border-[1px] border-purple text-purple"
+        className="outline-none focus:ring-0 border-[1px] border-purple text-purple mr-2"
         onClick={e => handleClick(e)}
       />
     </>
