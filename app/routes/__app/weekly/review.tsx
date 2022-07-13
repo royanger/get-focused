@@ -157,6 +157,7 @@ export default function WeeklyReview() {
               },
             }}
             dates={dates}
+            week={week}
           />
           <HeaderTwo>Primary Win</HeaderTwo>
 

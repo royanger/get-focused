@@ -4,7 +4,6 @@ interface Results {
   rating: number
   count: number
 }
-;[]
 
 export async function generateWellnessData(user: string) {
   const data = await findAllWellnessEntries(user)
@@ -29,7 +28,7 @@ export async function generateWellnessData(user: string) {
     datasets: [
       {
         label: 'Rating by Count',
-        data: results.map(result => result.count),
+        data: results.map(result => results.count),
         backgroundColor: [
           'rgb(63, 81, 181)',
           'rgb(255, 87, 34)',

@@ -39,7 +39,6 @@ export async function findOrCreateGoogleUser(
   }
 
   if (results) {
-    console.log('results', results)
     return results
   } else {
     throw new Error('failed to query new/updated user successfully')

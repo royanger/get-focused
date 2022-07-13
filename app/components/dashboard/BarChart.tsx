@@ -7,9 +7,15 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
+import type { ChartData } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 
-export default function BarChart({ data, title }) {
+interface Props {
+  data: ChartData<'bar', number[], unknown>
+  title: string
+}
+
+export default function BarChart({ data, title }: Props) {
   ChartJS.register(
     CategoryScale,
     LinearScale,

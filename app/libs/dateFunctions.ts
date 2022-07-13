@@ -100,3 +100,7 @@ export function formatDateForDailyNav(date: string) {
     shortDate: dt.toLocaleString(DateTime.DATE_MED),
   }
 }
+
+export function currentDayCountInMonth() {
+  return DateTime.local().day
+}
