@@ -10,7 +10,7 @@ import {
 import Input from '../forms/Input'
 import TaskCancel from '../forms/TaskCancel'
 import TaskSave from '../forms/TaskSave'
-import DeleteIcon from '../icons/DeleteIcon'
+import { DeleteIcon } from '../icons'
 
 export default function ReviewElement({
   id,

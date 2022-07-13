@@ -8,8 +8,7 @@ import {
   createDateFromWeekAndYear,
   returnNextAndPreviousWeeks,
 } from '../../libs/dateFunctions'
-import BackIcon from '../icons/BackIcon'
-import ForwardIcon from '../icons/ForwardIcon'
+import { ForwardIcon, BackIcon } from '../icons'
 
 export default function DailyNav({ week }: DailyNav) {
   const [searchParams, setSearchParams] = useSearchParams()

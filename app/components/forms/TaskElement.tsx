@@ -1,12 +1,9 @@
 import * as React from 'react'
 import Input from './Input'
-import Edit from '../icons/EditIcon'
 import { useFetcher, useSearchParams } from '@remix-run/react'
 import CompleteCheckbox from './CompleteCheckbox'
 import TimeTracker from './TimeTracker'
-import DeleteIcon from '../icons/DeleteIcon'
-import CancelIcon from '../icons/CancelIcon'
-import SaveIcon from '../icons/SaveIcon'
+import { EditIcon, DeleteIcon, CancelIcon, SaveIcon } from '../icons'
 
 export default function TaskElement({
   id,
@@ -163,7 +160,7 @@ export default function TaskElement({
                   }`}
                   onClick={() => setEditing(true)}
                 >
-                  <Edit className="h-6" />
+                  <EditIcon className="h-6" />
                   <span className="text-sm h-6">Edit</span>
                 </button>
               </div>

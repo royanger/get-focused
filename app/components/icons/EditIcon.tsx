@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 
-const Edit = (props: SVGProps<SVGSVGElement>) => {
+const EditIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,4 +13,4 @@ const Edit = (props: SVGProps<SVGSVGElement>) => {
   )
 }
 
-export default Edit
+export default EditIcon

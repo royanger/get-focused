@@ -11,6 +11,7 @@ import Button from '../Button'
 import Input from '../forms/Input'
 import TaskCancel from '../forms/TaskCancel'
 import TaskSave from '../forms/TaskSave'
+import { SaveIcon, CancelIcon } from '../icons'
 
 export default function ReviewSingleElement({
   id,
@@ -74,16 +75,13 @@ export default function ReviewSingleElement({
               width="flex-grow"
               aria-label={value ? value : placeholder}
             />
-          </div>
 
-          <div className={`${editing ? 'display' : 'hidden'} col-span-7`}>
-            <Button
-              type="submit"
-              title={buttonState.text}
-              variant={buttonState.variant}
-            />
-            <TaskSave />
-            <TaskCancel setEditing={setEditing} />
+            <div className={`${editing ? 'display' : 'hidden'} col-span-7`}>
+              <SaveIcon className="h-6" />
+            </div>
+            <div className={`${editing ? 'display' : 'hidden'} col-span-7`}>
+              <CancelIcon className="h-6" />
+            </div>
           </div>
         </Form>
       </div>

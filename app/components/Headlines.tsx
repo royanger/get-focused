@@ -1,6 +1,8 @@
 export const HeaderOne = ({ classes, children }: Headlines) => {
   return (
-    <div className={`text-3xl font-title font-semibold mb-2 ${classes}`}>
+    <div
+      className={`flex justify-center text-3xl font-title font-semibold mb-2 ${classes}`}
+    >
       <h1>{children}</h1>
     </div>
   )

@@ -11,11 +11,7 @@ import Checkbox from '../forms/Checkbox'
 import Input from '../forms/Input'
 
 // icons
-import CancelIcon from '../icons/CancelIcon'
-import DeleteIcon from '../icons/DeleteIcon'
-import Edit from '../icons/EditIcon'
-import SaveIcon from '../icons/SaveIcon'
-import SyncIcon from '../icons/SyncIcon'
+import { CancelIcon, DeleteIcon, EditIcon, SaveIcon, SyncIcon } from '../icons'
 import CompleteCheckbox from '../forms/CompleteCheckbox'
 
 export default function TaskElement({
@@ -153,7 +149,7 @@ export default function TaskElement({
                       id === 'addingtask-p3' ? (
                         <SyncIcon className="h-6 text-purple animate-spin" />
                       ) : (
-                        <Edit className="h-6" />
+                        <EditIcon className="h-6" />
                       )}
                     </button>
                   </div>
