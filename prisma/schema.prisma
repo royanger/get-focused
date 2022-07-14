@@ -20,7 +20,6 @@ model User {
    wellness       Wellness[]
    exercise       Exercise[]
    productivity   Productivity[]
-   note           Note[]
    weeklyTask     Weeklytask[]
    wins           Wins[]
    improvements   Improvements[]
@@ -34,7 +33,6 @@ model Date {
    wellness       Wellness[]
    exercise       Exercise[]
    tasks          Task[]
-   notes          Note[]
    productivity   Productivity[]
 }
 
@@ -85,15 +83,6 @@ model Productivity {
    userId      String   @db.ObjectId
    user        User     @relation(fields: [userId], references:[id])
    score       Int
-   dateId      String   @db.ObjectId
-   date        Date     @relation(fields: [dateId], references:[id])
-}
-
-model Note {
-   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-   userId      String   @db.ObjectId
-   user        User     @relation(fields:[userId], references:[id])
-   note        String
    dateId      String   @db.ObjectId
    date        Date     @relation(fields: [dateId], references:[id])
 }

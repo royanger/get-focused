@@ -9,7 +9,6 @@ import { HeaderOne } from '../../../components/Headlines'
 import Wellness from '../../../components/daily/Wellness'
 import Exercise from '../../../components/daily/Exercise'
 import Tasks from '../../../components/daily/Tasks'
-import Notes from '../../../components/daily/Notes'
 import Productivity from '../../../components/daily/Productivity'
 import DailyNav from '../../../components/daily/DailyNav'
 
@@ -17,7 +16,6 @@ import DailyNav from '../../../components/daily/DailyNav'
 import { findWellnessEntries } from '../../../queries/daily/findWellness'
 import { findExerciseEntries } from '../../../queries/daily/findExercise'
 import { findTasksEntries } from '../../../queries/daily/findTasks'
-import { findNotesEntries } from '../../../queries/daily/findNotes'
 import { findProductivityEntries } from '../../../queries/daily/findProductivity'
 import { deleteTask } from '../../../libs/daily/deleteTask'
 import { completeTask } from '../../../libs/daily/completeTask'
@@ -26,7 +24,6 @@ import { completeTask } from '../../../libs/daily/completeTask'
 import { validateWellnessForm } from '../../../libs/daily/wellnessActions'
 import { validateExerciseForm } from '../../../libs/daily/exerciseActions'
 import { validateTaskForm } from '../../../libs/daily/taskActions'
-import { validateNotesForm } from '../../../libs/daily/noteActions'
 import { validateProductivityForm } from '../../../libs/daily/productivityActions'
 import { findOrCreateDate } from '../../../queries/findOrCreateDate'
 import {
@@ -48,15 +45,14 @@ export let loader: LoaderFunction = async ({ request }) => {
 
   const dateResults = await findOrCreateDate(date!)
 
-  const [wellness, exercise, tasks, notes, productivity] = await Promise.all([
+  const [wellness, exercise, tasks, productivity] = await Promise.all([
     findWellnessEntries(dateResults.id, user.id),
     findExerciseEntries(dateResults.id, user.id),
     findTasksEntries(dateResults.id, user.id),
-    findNotesEntries(dateResults.id, user.id),
     findProductivityEntries(dateResults.id, user.id),
   ])
 
-  return { wellness, exercise, tasks, notes, productivity }
+  return { wellness, exercise, tasks, productivity }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -84,9 +80,6 @@ export const action: ActionFunction = async ({ request }) => {
       break
     case 'task':
       results = await validateTaskForm(formData, user, dateResults.id)
-      break
-    case 'note':
-      results = await validateNotesForm(formData, user, dateResults.id)
       break
     case 'productivity':
       results = await validateProductivityForm(formData, user, dateResults.id)
@@ -149,11 +142,6 @@ export default function DailyPlanner() {
           <Productivity
             entries={productivity}
             errors={errors?.formType === 'productivity' ? errors : null}
-          />
-
-          <Notes
-            entries={notes}
-            errors={errors?.formType === 'note' ? errors : null}
           />
         </div>
       </Container>
