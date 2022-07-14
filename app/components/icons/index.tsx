@@ -10,6 +10,9 @@ import Logo from './Logo'
 import Save from './Save'
 import SaveIcon from './SaveIcon'
 import StarsIcon from './StarsIcon'
+import TwitterIcon from './TwitterIcon'
+import LinkedInIcon from './LinkedInIcon'
+import GitHubIcon from './GitHubIcon'
 
 export {
   CheckIcon,
@@ -24,4 +27,7 @@ export {
   Save,
   SaveIcon,
   StarsIcon,
+  LinkedInIcon,
+  TwitterIcon,
+  GitHubIcon,
 }
