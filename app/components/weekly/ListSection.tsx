@@ -44,7 +44,6 @@ export default function ListSection({
           placeholder="Enter an area to improve"
           value={transition.submission.formData.get('item')}
           formType={formType}
-          reset={true}
           errors={errors}
         />
       )}
@@ -53,7 +52,6 @@ export default function ListSection({
         id={`new-${formType}`}
         placeholder="Enter an area to improve"
         formType={formType}
-        reset={true}
         errors={errors}
       />
     </React.Fragment>

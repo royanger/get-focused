@@ -198,7 +198,6 @@ type Reviews = {
   value?: string | FormDataEntryValue | null
   placeholder: string
   formType: string
-  reset?: boolean
   errors?: ErrorObject
 }
 

@@ -5,20 +5,16 @@ import {
   useSearchParams,
   useTransition,
 } from '@remix-run/react'
-import Button from '../Button'
 
 // components
 import Input from '../forms/Input'
-import TaskCancel from '../forms/TaskCancel'
-import TaskSave from '../forms/TaskSave'
-import { SaveIcon, CancelIcon } from '../icons'
+import { SaveIcon, CancelIcon, SyncIcon } from '../icons'
 
 export default function ReviewSingleElement({
   id,
   value,
   placeholder,
   formType,
-  reset,
   errors,
 }: Reviews) {
   const [editing, setEditing] = React.useState(false)
@@ -30,20 +26,22 @@ export default function ReviewSingleElement({
   const paramWeek = searchParams.get('week')
   const paramYear = searchParams.get('year')
 
-  const buttonState =
-    transition.state === 'submitting' &&
+  const isSubmitting =
+    (transition.state === 'submitting' || transition.state === 'loading') &&
     transition.submission?.formData.get('formType') === formType
-      ? { text: 'Saving', variant: 'warning' }
-      : transition.state === 'loading' &&
-        transition?.submission?.formData.get('formType') === formType
-      ? { text: 'Saved!', variant: 'success' }
-      : { text: 'Save', variant: 'default' }
 
-  //   React.useEffect(() => {
-  //     setFormState('default')
-  //   }, [isSubmitting])
+  React.useEffect(() => {
+    if (transition.state === 'idle') {
+      setEditing(false)
+    }
+  }, [transition])
 
   const deleteFailed = fetcher.data?.error
+
+  function handleReset() {
+    setEditing(false)
+    formRef.current?.reset()
+  }
 
   return (
     <div className={`flex flew-grow flex-row ${deleteFailed && 'border-red'}`}>
@@ -76,11 +74,30 @@ export default function ReviewSingleElement({
               aria-label={value ? value : placeholder}
             />
 
-            <div className={`${editing ? 'display' : 'hidden'} col-span-7`}>
-              <SaveIcon className="h-6" />
+            <div
+              className={`w-12 h-full text-purple flex justify-center items-center col-span-7`}
+            >
+              <button
+                type="submit"
+                className={`w-full flex flex-col items-center ${
+                  editing ? 'display' : 'hidden'
+                }`}
+              >
+                {isSubmitting ? (
+                  <SyncIcon className="h-6 text-purple animate-spin" />
+                ) : (
+                  <SaveIcon className="h-6" />
+                )}
+              </button>
             </div>
             <div className={`${editing ? 'display' : 'hidden'} col-span-7`}>
-              <CancelIcon className="h-6" />
+              <button
+                type="button"
+                className="w-full text-purple flex flex-col items-center"
+                onClick={() => handleReset()}
+              >
+                <CancelIcon className="h-6" />
+              </button>
             </div>
           </div>
         </Form>

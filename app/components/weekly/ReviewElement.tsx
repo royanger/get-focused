@@ -8,16 +8,13 @@ import {
 
 // components
 import Input from '../forms/Input'
-import TaskCancel from '../forms/TaskCancel'
-import TaskSave from '../forms/TaskSave'
-import { DeleteIcon } from '../icons'
+import { CancelIcon, DeleteIcon, SaveIcon, SyncIcon } from '../icons'
 
 export default function ReviewElement({
   id,
   value,
   placeholder,
   formType,
-  reset,
   errors,
 }: Reviews) {
   //   const [formState, setFormState] = React.useState('default')
@@ -32,8 +29,7 @@ export default function ReviewElement({
 
   const isAdding =
     transition.state === 'submitting' &&
-    transition.submission?.formData.get('formType') === formType &&
-    reset === true
+    transition.submission?.formData.get('formType') === formType
 
   React.useEffect(() => {
     formRef.current?.reset()
@@ -45,10 +41,18 @@ export default function ReviewElement({
 
   React.useEffect(() => {
     formRef.current?.reset()
-  }, [isSubmitting])
+    if (transition.state === 'idle') {
+      setEditing(false)
+    }
+  }, [isSubmitting, transition.state])
 
   const isDeleting = fetcher.submission?.formData.get('id') === id
   const deleteFailed = fetcher.data?.error
+
+  function handleReset() {
+    setEditing(false)
+    formRef.current?.reset()
+  }
 
   return (
     <div
@@ -65,6 +69,7 @@ export default function ReviewElement({
       >
         <Form
           className="flex-grow"
+          id={`form-${id}`}
           ref={formRef}
           method="post"
           action={`/weekly/review${
@@ -74,7 +79,7 @@ export default function ReviewElement({
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="formType" value={formType} />
 
-          <div className="flex flex-row flex-grow items-center font-input">
+          <div className="flex flex-row flex-grow items-center font-input ">
             <Input
               value={value}
               editing={editing}
@@ -85,32 +90,50 @@ export default function ReviewElement({
               aria-label={value ? value : placeholder}
             />
           </div>
-
-          <div className={`${editing ? 'display' : 'hidden'} col-span-7`}>
-            <TaskSave />
-            <TaskCancel setEditing={setEditing} />
-          </div>
         </Form>
-        <div>
-          <fetcher.Form method="post">
-            <div className="w-12">
-              <input
-                type="hidden"
-                name="formType"
-                value={`delete${formType}`}
-              />
-              <input type="hidden" name="id" value={id} />
-              <div className="flex flex-col items-center justify-start h-8">
+        <div className="w-16 h-full text-purple grid grid-cols-2">
+          <div className="w-full flex flex-row items-center justify-center">
+            {editing ? (
+              isSubmitting ? (
+                <SyncIcon className="w-6 animate-spin" />
+              ) : (
                 <button
-                  aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
                   type="submit"
-                  className="first:w-6 w-full text-purple"
+                  form={`form-${id}`}
+                  className="w-ful flex flex-col items-center"
                 >
-                  <DeleteIcon />
+                  <SaveIcon className="h-6" />
                 </button>
-              </div>
-            </div>
-          </fetcher.Form>
+              )
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="w-full flex flex-row items-center justify-center">
+            {editing ? (
+              <button type="button" onClick={() => handleReset()}>
+                <CancelIcon className="h-6" />
+              </button>
+            ) : (
+              <fetcher.Form method="post">
+                <input
+                  type="hidden"
+                  name="formType"
+                  value={`delete${formType}`}
+                />
+                <input type="hidden" name="id" value={id} />
+                <div className="flex flex-col items-center justify-start">
+                  <button
+                    aria-label={deleteFailed ? 'Retry Delete' : 'Delete'}
+                    type="submit"
+                    className="w-full text-purple"
+                  >
+                    <DeleteIcon className="h-6" />
+                  </button>
+                </div>
+              </fetcher.Form>
+            )}
+          </div>
         </div>
       </div>
       {errors && errors.id === id ? (

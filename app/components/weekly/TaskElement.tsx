@@ -27,7 +27,6 @@ export default function TaskElement({
     completed ? completed : false
   )
   const formRef = React.useRef<HTMLFormElement>(null)
-  const inputRef = React.useRef<HTMLInputElement>(null)
   const fetcher = useFetcher()
 
   const [searchParams] = useSearchParams()
@@ -55,12 +54,6 @@ export default function TaskElement({
     formRef.current?.reset()
   }
 
-  function handleSubmit() {
-    if (inputRef.current) {
-      inputRef.current.value = ''
-    }
-  }
-
   return (
     <li
       className={`py-4 border-2 rounded ${
@@ -76,7 +69,6 @@ export default function TaskElement({
           <div className="flex-grow flex flex-row">
             <div className="flex flex-row">
               <div className="flex flex-row items-center font-input">
-                {/* <Checkbox status={completed} label="Completed" /> */}
                 <CompleteCheckbox
                   label="completed"
                   id={id}
@@ -123,7 +115,6 @@ export default function TaskElement({
                       className={`w-full flex flex-col items-center ${
                         editing ? 'display' : 'hidden'
                       }`}
-                      onClick={() => handleSubmit()}
                     >
                       {isSubmitting ? (
                         <SyncIcon className="h-6 text-purple animate-spin" />
@@ -146,7 +137,9 @@ export default function TaskElement({
                     >
                       {id === 'addingtask-p1' ||
                       id === 'addingtask-p2' ||
-                      id === 'addingtask-p3' ? (
+                      id === 'addingtask-p3' ||
+                      (isSubmitting &&
+                        transition.submission?.formData.get('id') === id) ? (
                         <SyncIcon className="h-6 text-purple animate-spin" />
                       ) : (
                         <EditIcon className="h-6" />
@@ -161,7 +154,7 @@ export default function TaskElement({
         <div className="flex flex-col items-center justify-end w-12">
           <div className={`w-12 ${editing ? 'display' : 'hidden'}`}>
             <button
-              //   ref={inputRef}
+              type="button"
               onClick={() => handleReset()}
               className="w-full text-purple flex flex-col items-center"
             >

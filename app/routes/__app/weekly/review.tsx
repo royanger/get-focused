@@ -143,7 +143,7 @@ export default function WeeklyReview() {
   return (
     <>
       <Container>
-        <div className="mt-8">
+        <div className="mt-8 ">
           <HeaderOne>Weekly Review</HeaderOne>
           <WeeklyNav
             navigation={{
@@ -159,44 +159,52 @@ export default function WeeklyReview() {
             dates={dates}
             week={week}
           />
-          <HeaderTwo>Primary Win</HeaderTwo>
+          <div className="p-5 mb-10 border-0 rounded-lg shadow-md shadow-purple-100">
+            <HeaderTwo>Primary Win</HeaderTwo>
 
-          <p>What was great about your week? What was a solid win for you?</p>
+            <p>What was great about your week? What was a solid win for you?</p>
 
-          <ReviewSingleElement
-            id={win ? win.id : 'win-new'}
-            value={win?.item}
-            placeholder="Enter your win for the week"
-            formType="win"
-            errors={errors}
-          />
+            <ReviewSingleElement
+              id={win ? win.id : 'win-new'}
+              value={win?.item}
+              placeholder="Enter your win for the week"
+              formType="win"
+              errors={errors}
+            />
+          </div>
 
-          <ListSection
-            items={improvements}
-            errors={errors}
-            title="Tasks and Areas to Improve"
-            info="What tasks were not completed? What areas can you improve next week?"
-            formType="improvements"
-          />
+          <div className="p-5 mb-10 border-0 rounded-lg shadow-md shadow-purple-100">
+            <ListSection
+              items={improvements}
+              errors={errors}
+              title="Tasks and Areas to Improve"
+              info="What tasks were not completed? What areas can you improve next week?"
+              formType="improvements"
+            />
+          </div>
 
-          <ListSection
-            items={learningpoints}
-            errors={errors}
-            title="Learning Points"
-            info="List the things that you learned from or the ways you improved this week."
-            formType="learningpoints"
-          />
+          <div className="p-5 mb-10 border-0 rounded-lg shadow-md shadow-purple-100">
+            <ListSection
+              items={learningpoints}
+              errors={errors}
+              title="Learning Points"
+              info="List the things that you learned from or the ways you improved this week."
+              formType="learningpoints"
+            />
+          </div>
 
-          <HeaderTwo>Refocus for Next Week</HeaderTwo>
-          <p>What can you do to focus for next week?</p>
+          <div className="p-5 mb-10 border-0 rounded-lg shadow-md shadow-purple-100">
+            <HeaderTwo>Refocus for Next Week</HeaderTwo>
+            <p>What can you do to focus for next week?</p>
 
-          <ReviewSingleElement
-            id={refocus ? refocus.id : 'refocus-new'}
-            value={refocus?.item}
-            placeholder="What will you refocus on next week?"
-            formType="refocus"
-            errors={errors}
-          />
+            <ReviewSingleElement
+              id={refocus ? refocus.id : 'refocus-new'}
+              value={refocus?.item}
+              placeholder="What will you refocus on next week?"
+              formType="refocus"
+              errors={errors}
+            />
+          </div>
         </div>
       </Container>
     </>
