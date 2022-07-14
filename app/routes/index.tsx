@@ -2,7 +2,7 @@ import { useLoaderData, Form } from '@remix-run/react'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { authenticator } from '../services/auth.server'
 // import type { SocialsProvider } from 'remix-auth-socials'
-import Logo from '../components/icons/logo'
+import Logo from '../components/icons/Logo'
 import type { User } from '../services/auth.server'
 
 export let meta: MetaFunction = () => {
