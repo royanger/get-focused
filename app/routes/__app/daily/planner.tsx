@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { useLoaderData, useActionData, useSearchParams } from '@remix-run/react'
 import { redirect } from '@remix-run/node'
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
@@ -64,8 +65,8 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const url = new URL(request.url)
-  const date = url.searchParams.get('year')
-    ? url.searchParams.get('year')
+  const date = url.searchParams.get('date')
+    ? url.searchParams.get('date')
     : 'today'
 
   const dateResults = await findOrCreateDate(date!)
@@ -98,7 +99,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function DailyPlanner() {
-  const { wellness, exercise, tasks, notes, productivity } = useLoaderData()
+  const { wellness, exercise, tasks, productivity } = useLoaderData()
 
   const errors = useActionData()
 
@@ -129,7 +130,7 @@ export default function DailyPlanner() {
             />
 
             <Exercise
-              entries={exercise}
+              exercise={exercise}
               errors={errors?.formType === 'exercise' ? errors : null}
             />
           </div>
@@ -140,7 +141,7 @@ export default function DailyPlanner() {
           />
 
           <Productivity
-            entries={productivity}
+            productivity={productivity}
             errors={errors?.formType === 'productivity' ? errors : null}
           />
         </div>

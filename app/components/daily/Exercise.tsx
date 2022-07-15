@@ -3,7 +3,7 @@ import Button from '../Button'
 import Radio from '../forms/Radio'
 import { HeaderTwo } from '../Headlines'
 
-export default function Exercise({ entries, errors }: Exercise) {
+export default function Exercise({ exercise, errors }: Exercise) {
   const transition = useTransition()
 
   const [searchParams] = useSearchParams()
@@ -30,21 +30,21 @@ export default function Exercise({ entries, errors }: Exercise) {
           <input
             type="hidden"
             name="id"
-            value={entries?.id ? entries.id : 'new'}
+            value={exercise?.id ? exercise.id : 'new'}
           />
           <div>
             <div key="yes">
               <Radio
                 value="yes"
                 name="exercise"
-                checked={entries?.completed ? !entries.completed : false}
+                checked={exercise?.completed === true ? true : false}
               />
             </div>
             <div key="no">
               <Radio
                 value="no"
                 name="exercise"
-                checked={entries?.completed ? !entries.completed : false}
+                checked={exercise?.completed === false ? true : false}
               />
             </div>
           </div>

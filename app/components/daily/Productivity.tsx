@@ -3,11 +3,17 @@ import { HeaderTwo } from '../Headlines'
 import { Form, useSearchParams, useTransition } from '@remix-run/react'
 import Button from '../Button'
 
-export default function Productivity({ entries, errors }: Productivity) {
+export default function Productivity({ productivity, errors }: Productivity) {
   const transition = useTransition()
-  const [rating, setRating] = React.useState(entries?.score ? entries.score : 0)
+  const [rating, setRating] = React.useState(
+    productivity?.score ? productivity.score : 0
+  )
   const [searchParams] = useSearchParams()
   const paramDate = searchParams.get('date')
+
+  React.useEffect(() => {
+    setRating(productivity?.score ? productivity.score : 0)
+  }, [productivity])
 
   const buttonState =
     transition.state === 'submitting' &&
@@ -49,7 +55,7 @@ export default function Productivity({ entries, errors }: Productivity) {
         <input type="hidden" name="formType" value="productivity" />
         <input
           type="hidden"
-          value={entries?.id ? entries.id : 'new'}
+          value={productivity?.id ? productivity.id : 'new'}
           name="id"
         />
         <input type="hidden" name="rating" value={rating} />

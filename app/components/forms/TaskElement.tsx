@@ -3,7 +3,7 @@ import Input from './Input'
 import { useFetcher, useSearchParams } from '@remix-run/react'
 import CompleteCheckbox from './CompleteCheckbox'
 import TimeTracker from './TimeTracker'
-import { EditIcon, DeleteIcon, CancelIcon, SaveIcon } from '../icons'
+import { EditIcon, DeleteIcon, CancelIcon, SaveIcon, SyncIcon } from '../icons'
 
 export default function TaskElement({
   id,
@@ -29,6 +29,7 @@ export default function TaskElement({
     fetcher.submission &&
     fetcher.submission.formData.get('formType') === 'task' &&
     fetcher.submission.formData.get('id') === id
+
   const addFailed = fetcher.data?.error && fetcher.data.type == 'task'
 
   React.useEffect(() => {
@@ -136,16 +137,20 @@ export default function TaskElement({
                 <button
                   type="submit"
                   className={`w-full flex flex-col items-center ${
-                    editing ||
-                    id === 'newtask-p1' ||
-                    id === 'newtask-p2' ||
-                    id === 'newtask-p3'
-                      ? 'display'
-                      : 'hidden'
+                    editing ? 'display' : 'hidden'
                   }`}
                 >
-                  <SaveIcon className="h-6" />
-                  <span className="h-6 text-sm ">Save</span>
+                  {isAdding ? (
+                    <>
+                      <SyncIcon className="h-6 animate-spin" />
+                      <span className="h-6 text-sm ">Saving</span>
+                    </>
+                  ) : (
+                    <>
+                      <SaveIcon className="h-6" />
+                      <span className="h-6 text-sm ">Save</span>
+                    </>
+                  )}
                 </button>
 
                 <button

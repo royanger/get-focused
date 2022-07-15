@@ -1,4 +1,4 @@
-import { useLoaderData, Form } from '@remix-run/react'
+import { useLoaderData, Form, Link } from '@remix-run/react'
 import type { LoaderFunction, MetaFunction } from '@remix-run/node'
 import { authenticator } from '../services/auth.server'
 // import type { SocialsProvider } from 'remix-auth-socials'
@@ -23,7 +23,7 @@ export default function Index() {
   return (
     <div className="remix__page">
       <main
-        className="h-screen bg-center bg-no-repeat bg-cover"
+        className="h-[550px] bg-center bg-no-repeat bg-cover"
         style={{
           backgroundImage:
             'url("/images/gradient-dynamic-purple-lines-background.jpg")',
@@ -32,6 +32,11 @@ export default function Index() {
         <nav className="flex justify-end px-4 py-2">
           {data?.user ? (
             <>
+              <Link to="/dashboard">
+                <button className="bg-yellow-700 text-purple-300 border-0 text-lg font-bold px-4 py-2 mr-2">
+                  Dashboard
+                </button>
+              </Link>
               <Form action="/logout" method="post">
                 <button className="bg-yellow-700 text-purple-300 border-0 text-lg font-bold px-4 py-2 mr-2">
                   Logout

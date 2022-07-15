@@ -10,9 +10,7 @@ export default function Radio({ value, checked, name }: Radio) {
         className="outline-none focus:ring-0 border-[1px] border-purple text-purple"
       />
       <label htmlFor={`${name}-${value}`}>
-        {' '}
-        {value?.charAt(0).toUpperCase()}
-        {value?.slice(1)}
+        {`${value?.charAt(0).toUpperCase()}${value?.slice(1)}`}
       </label>
     </>
   )

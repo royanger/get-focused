@@ -11,6 +11,10 @@ export default function Wellness({ wellness, errors }: Wellness) {
   const [searchParams] = useSearchParams()
   const paramDate = searchParams.get('date')
 
+  React.useEffect(() => {
+    setScore(wellness?.rating ? wellness.rating : 0)
+  }, [wellness])
+
   const buttonState =
     transition.state === 'submitting' &&
     transition?.submission?.formData.get('formType') === 'wellness'

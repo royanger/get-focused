@@ -3,7 +3,7 @@ type DailyNav = {
 }
 
 type Productivity = {
-  entries: {
+  productivity: {
     id: string
     userId: string
     dateId: string
@@ -35,7 +35,7 @@ type Entries = {
 }
 
 type Exercise = {
-  entries: Entries
+  exercise: Entries
   errors: any
 }
 
