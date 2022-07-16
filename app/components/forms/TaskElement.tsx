@@ -41,6 +41,10 @@ export default function TaskElement({
     }
   }, [isAdding, fetcher])
 
+  React.useEffect(() => {
+    if (addFailed === true) setEditing(true)
+  }, [addFailed, fetcher])
+
   const isDeleting =
     fetcher.submission?.formData.get('id') === id &&
     fetcher.submission.formData.get('formType') === 'deleteTask'
@@ -68,6 +72,7 @@ export default function TaskElement({
           id={id}
           status={completedStatus}
           setCompletedStatus={setCompletedStatus}
+          paramString={`/daily/planner${paramDate ? `?date${paramDate}` : ''}`}
         />
       </div>
       <div className="grow">
@@ -137,6 +142,21 @@ export default function TaskElement({
                 <button
                   type="submit"
                   className={`w-full flex flex-col items-center ${
+                    (id === 'updatingtask-p1' ||
+                      id === 'updatingtask-p2' ||
+                      id === 'updatingtask-p3') &&
+                    !editing
+                      ? 'display'
+                      : 'hidden'
+                  }`}
+                >
+                  <SyncIcon className="h-6 animate-spin" />
+                  <span className="h-6 text-sm ">Saving</span>
+                </button>
+
+                <button
+                  type="submit"
+                  className={`w-full flex flex-col items-center ${
                     editing ? 'display' : 'hidden'
                   }`}
                 >
@@ -159,14 +179,17 @@ export default function TaskElement({
                     editing ||
                     id === 'newtask-p1' ||
                     id === 'newtask-p2' ||
-                    id === 'newtask-p3'
+                    id === 'newtask-p3' ||
+                    id === 'updatingtask-p1' ||
+                    id === 'updatingtask-p2' ||
+                    id === 'updatingtask-p3'
                       ? 'hidden'
                       : 'display'
                   }`}
                   onClick={() => setEditing(true)}
                 >
                   <EditIcon className="h-6" />
-                  <span className="text-sm h-6">Edit</span>
+                  <span className="text-sm h-6">Edit sdf</span>
                 </button>
               </div>
             </div>

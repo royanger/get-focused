@@ -7,7 +7,6 @@ import {
 } from '@remix-run/react'
 
 // components
-import Checkbox from '../forms/Checkbox'
 import Input from '../forms/Input'
 
 // icons
@@ -74,6 +73,11 @@ export default function TaskElement({
                   id={id}
                   status={completedStatus}
                   setCompletedStatus={setCompletedStatus}
+                  paramString={`/weekly/planner${
+                    paramWeek && paramYear
+                      ? `?year=${paramYear}&week=${paramWeek}`
+                      : ''
+                  }`}
                 />
               </div>
             </div>

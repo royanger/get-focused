@@ -5,13 +5,13 @@ export default function WeeklyNav({ navigation, week, dates }: WeeklyNav) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   function handleClick(type: string) {
-    // this appears to resolve the current type error, but creates a new one
-    //   if ( type === 'next') {
-    //    searchParams.set('year', navigation['forward'].year)
-    //    searchParams.set('week', navigation['forward'].week)
-    //   }
-    searchParams.set('year', navigation[type].year)
-    searchParams.set('week', navigation[type].week)
+    if (type === 'forward') {
+      searchParams.set('year', navigation['forward'].year)
+      searchParams.set('week', navigation['forward'].week)
+    } else if (type === 'back') {
+      searchParams.set('year', navigation['back'].year)
+      searchParams.set('week', navigation['back'].week)
+    }
     setSearchParams(searchParams, { replace: true })
   }
 
