@@ -63,7 +63,7 @@ export default function DailyNav({ week }: DailyNav) {
         >
           <button
             onClick={() => handleClick(formatDate(day))}
-            className="flex  flex-col"
+            className="flex flex-col justify-center items-center w-full h-full"
           >
             {formatDateForDailyNav(day.toString().split('T')[0]).dayName}
             <span className="text-xs">

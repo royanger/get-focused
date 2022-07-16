@@ -60,11 +60,18 @@ export default function Productivity({ productivity, errors }: Productivity) {
         />
         <input type="hidden" name="rating" value={rating} />
         <div className="flex flex-direction mb-8">{inputs}</div>
-        <Button
-          type="submit"
-          title={buttonState.text}
-          variant={buttonState.variant}
-        />
+        <div className="flex flex-row items-center justify-center">
+          <div>
+            <Button
+              type="submit"
+              title={buttonState.text}
+              variant={buttonState.variant}
+            />
+          </div>
+          <div className="text-sm text-error ml-4 h-5 grow">
+            {errors ? errors.message : ''}
+          </div>
+        </div>
       </Form>
     </div>
   )

@@ -60,13 +60,20 @@ export default function Wellness({ wellness, errors }: Wellness) {
         />
         <input type="hidden" name="rating" value={score} />
         <div className="flex flex-direction mb-8">{inputs}</div>
-        <Button
-          type="submit"
-          title={buttonState.text}
-          variant={buttonState.variant}
-          width="w-28"
-          size="sm"
-        />
+        <div className="flex flex-row items-center justify-center">
+          <div>
+            <Button
+              type="submit"
+              title={buttonState.text}
+              variant={buttonState.variant}
+              width="w-28"
+              size="sm"
+            />
+          </div>
+          <div className="text-sm text-error h-5 ml-4 grow">
+            {errors ? errors.message : ''}
+          </div>
+        </div>
       </Form>
     </div>
   )
