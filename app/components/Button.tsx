@@ -1,6 +1,6 @@
 import { SyncIcon, CheckIcon } from './icons'
 
-const Button = ({ title, variant, size, type, onClick, width }: ButtonType) => {
+const Button = ({ title, variant, size, type, width }: ButtonType) => {
   let baseStyles =
     'rounded shadow-lg uppercase w-28 flex flex-row items-center justify-center'
 
@@ -40,7 +40,6 @@ const Button = ({ title, variant, size, type, onClick, width }: ButtonType) => {
         className={`${baseStyles} ${stylesMap[variant]} ${
           sizeMap[buttonSize]
         } ${width ? width : ''} `}
-        onClick={() => onClick('default')}
         type={type ? type : 'button'}
       >
         {variant === 'saving' ? (

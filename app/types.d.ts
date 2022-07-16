@@ -26,7 +26,6 @@ type ButtonType = {
   children?: string
   width?: string
   type?: any
-  onClick?: (values: string) => void
 }
 
 type Entries = {
@@ -127,7 +126,7 @@ type Wellness = {
 type Checkbox = {
   status?: boolean
   label: string
-  handleClick?: (values: any) => void | undefined
+  handleClick: (values: any) => void | undefined
 }
 
 type Radio = {
@@ -177,6 +176,7 @@ type CompleteCheckbox = {
   setCompletedStatus: React.Dispatch<React.SetStateAction<boolean>>
   label: string
   id: string
+  paramString: string
 }
 type Items = {
   id: string
@@ -202,8 +202,8 @@ type Reviews = {
 }
 
 type WeeklyNavOptions = {
-  year: number
-  week: number
+  year: string
+  week: string
 }
 type WeeklyNav = {
   navigation: {
@@ -212,6 +212,10 @@ type WeeklyNav = {
   }
   week: number
   dates: string
+}
+type Navigation = {
+  back: WeeklyNavOptions
+  forward: WeeklyNavOptions
 }
 
 type Tab = {

@@ -14,7 +14,7 @@ export async function validateWellnessForm(
     // create entry in database
     const results = await updateOrCreateWellness(
       formData.get('id')?.toString(),
-      parseInt(rating),
+      parseInt(rating!),
       user.id,
       date
     )
@@ -23,7 +23,7 @@ export async function validateWellnessForm(
   }
 
   const errors = {} as ErrorObject
-  if (parseInt(rating) < 1) {
+  if (parseInt(rating!) < 1) {
     errors.formType = 'wellness'
     errors.message = 'Please enter a wellness score'
   }
@@ -34,7 +34,7 @@ export async function validateWellnessForm(
 
   const results = await updateOrCreateWellness(
     formData.get('id')?.toString(),
-    parseInt(formData.get('rating')?.toString()),
+    parseInt(rating!),
     user.id,
     date
   )

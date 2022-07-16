@@ -28,7 +28,7 @@ export async function generateWellnessData(user: string) {
     datasets: [
       {
         label: 'Rating by Count',
-        data: results.map(result => results.count),
+        data: results.map(result => result.count),
         backgroundColor: [
           'rgb(63, 81, 181)',
           'rgb(255, 87, 34)',

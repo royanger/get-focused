@@ -7,11 +7,14 @@ export default function CompleteCheckbox({
   setCompletedStatus,
   id,
   label,
+  paramString,
 }: CompleteCheckbox) {
-  function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  function handleClick(e: React.ChangeEvent<HTMLInputElement>) {
     setCompletedStatus(e.currentTarget.checked)
-    const key: string = `completed-${id}`
-    document.forms[key].submit()
+    const form = document.querySelector<HTMLFormElement>(
+      `form[name='completed-${id}']`
+    )
+    form?.submit()
   }
   return (
     <div className="w-12 first:w-7 text-purple h-auto flex justify-center">
@@ -20,6 +23,7 @@ export default function CompleteCheckbox({
           method="post"
           id={`completed-${id}`}
           name={`completed-${id}`}
+          action={paramString}
           className="m-2"
         >
           <input type="hidden" name="formType" value="completeTask" />

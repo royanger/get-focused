@@ -1,5 +1,14 @@
+import type { Task } from '@prisma/client'
+
 import { findAllTasks } from '../../queries/dashboard/tasks'
 import { createDateInstance, formatDate, weeksInMonth } from '../dateFunctions'
+
+type WeeklyTasks = {
+  all: Task[]
+  partial: Task[]
+  allLength: number
+  partialLength: number
+} | null
 
 export async function generateTasksData(user: string) {
   const dt = createDateInstance('today')
@@ -16,7 +25,7 @@ export async function generateTasksData(user: string) {
   // TODO use parameter when Dashboard is expanded
   const weeks = weeksInMonth(dt.weekNumber, dt.weekYear)
 
-  let tasksByWeek
+  let tasksByWeek: WeeklyTasks[] = []
   await Promise.all(
     weeks.weekRange.map(week => {
       return findAllTasks(
@@ -37,8 +46,8 @@ export async function generateTasksData(user: string) {
           label: 'Status by Count',
           data: [
             completed?.length,
-            data?.partial?.length - completed?.length,
-            data?.all?.length - data?.partial?.length,
+            data?.partial?.length! - completed?.length!,
+            data?.all?.length! - data?.partial?.length!,
           ],
           backgroundColor: [
             'rgb(63, 81, 181)',
@@ -62,7 +71,7 @@ export async function generateTasksData(user: string) {
         {
           label: 'Tasks by Week',
           data: tasksByWeek?.map((week, i) => {
-            return week?.partial?.length
+            return week?.all?.length
           }),
           backgroundColor: [
             'rgb(63, 81, 181)',

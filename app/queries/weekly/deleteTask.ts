@@ -1,6 +1,6 @@
 import { prisma } from '../../../prisma/db'
 
-async function tasksQuery(id: FormDataEntryValue, userId: string) {
+async function tasksQuery(id: string, userId: string) {
   await prisma.$connect()
   let tasksResults = await prisma.weeklytask.findFirst({
     where: {
@@ -12,7 +12,7 @@ async function tasksQuery(id: FormDataEntryValue, userId: string) {
   return tasksResults
 }
 
-async function taskDelete(id: FormDataEntryValue) {
+async function taskDelete(id: string) {
   await prisma.$connect()
   let tasksResults = await prisma.weeklytask.delete({
     where: {
@@ -23,7 +23,7 @@ async function taskDelete(id: FormDataEntryValue) {
 }
 
 export let deleteTaskQuery = async (
-  id: FormDataEntryValue | null,
+  id: string | null,
   userId: string | undefined
 ) => {
   if (id && userId) {

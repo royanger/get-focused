@@ -148,12 +148,12 @@ export default function WeeklyReview() {
           <WeeklyNav
             navigation={{
               back: {
-                year: nextAndPrev.prev.year,
-                week: nextAndPrev.prev.week,
+                year: nextAndPrev.prev.year.toString(),
+                week: nextAndPrev.prev.week.toString(),
               },
               forward: {
-                year: nextAndPrev.next.year,
-                week: nextAndPrev.next.week,
+                year: nextAndPrev.next.year.toString(),
+                week: nextAndPrev.next.week.toString(),
               },
             }}
             dates={dates}

@@ -85,7 +85,7 @@ export const action: ActionFunction = async ({ request }) => {
       results = await validateTaskForm(formData, user, year, week)
       break
     case 'deleteWeeklyTask':
-      results = await deleteTask(formData.get('id'), user)
+      results = await deleteTask(formData.get('id') as string, user)
       break
     case 'completeTask':
       results = await completeTask(formData, user)
@@ -232,12 +232,12 @@ export default function WeeklyPlanner() {
         <WeeklyNav
           navigation={{
             back: {
-              year: nextAndPrev.prev.year,
-              week: nextAndPrev.prev.week,
+              year: nextAndPrev.prev.year.toString(),
+              week: nextAndPrev.prev.week.toString(),
             },
             forward: {
-              year: nextAndPrev.next.year,
-              week: nextAndPrev.next.week,
+              year: nextAndPrev.next.year.toString(),
+              week: nextAndPrev.next.week.toString(),
             },
           }}
           week={week}
